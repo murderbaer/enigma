@@ -9,9 +9,9 @@ BIN_DIR = bin
 # set up modules
 MODULES = enigma math
 
+# set up source files
 SRC = $(foreach module, $(MODULES), $(wildcard $(SRC_DIR)/$(module)/*.c)) $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
-
 
 # set up unity testing framework
 TEST_DIR = test
@@ -19,6 +19,7 @@ TESTS = $(wildcard $(TEST_DIR)/src/*.c)
 UNITY_PATH = $(TEST_DIR)/unity
 UNITY_SRC = $(wildcard $(UNITY_PATH)/*.c)
 
+#############################################
 
 all: enigma
 
@@ -37,12 +38,11 @@ clean:
 run: enigma
 	./$(BIN_DIR)/enigma
 
-
 # unity testing framework and link to enigma
-test: $(TESTS)
-	$(CC) $(CFLAGS) -I$(UNITY_PATH) -o $(BIN_DIR)/$@ $^ $(UNITY_SRC) $(filter-out $(OBJ_DIR)/main.o, $(OBJ))
+test: $(TESTS) $(filter-out $(OBJ_DIR)/main.o, $(OBJ))
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) -I$(UNITY_PATH) -o $(BIN_DIR)/$@ $^ $(UNITY_SRC) 
 	./$(BIN_DIR)/$@
-
 # debug target, maybe use debug flags instead of manipulating CFLAGS
 debug: CFLAGS += -DDEBUG -g
 debug: enigma

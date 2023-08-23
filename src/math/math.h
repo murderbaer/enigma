@@ -14,3 +14,5 @@ typedef struct {
 Vector createVector(int size);
 
 Vector permute(Vector v, Vector p);
+
+Vector rotate(Vector v, int n);

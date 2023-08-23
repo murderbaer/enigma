@@ -23,3 +23,12 @@ Vector permute(Vector v, Vector p) {
 
     return result;
 }
+
+Vector rotate(Vector v, int n) {
+    Vector result = createVector(v.size);
+    for (int i = 0; i < v.size; i++) {
+        result.data[i] = v.data[(i + n) % v.size];
+    }
+
+    return result;
+}

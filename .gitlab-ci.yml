@@ -9,3 +9,9 @@ build:
     - linux
   script:
     - make
+
+test:
+  tags:
+    - linux
+  script:
+    - make test

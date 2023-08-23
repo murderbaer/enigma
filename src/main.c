@@ -1,6 +1,8 @@
 #include "math/math.h"
+#include "helper/helper.h"
 
 #include <stdio.h>
+
 
 int main() {
     Vector v = createVector(5);
@@ -17,13 +19,49 @@ int main() {
     p.data[3] = 1;
     p.data[4] = 0;
 
-    Vector result = permute(v, p);
+    // Vector result = permute(v, p);
 
-    for (int i = 0; i < result.size; i++) {
-        printf("%d ", result.data[i]);
+    char test[] = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
+
+    int size = sizeof(test) / sizeof(test[0]) - 1;
+
+    int * test_int = capitlaized_word_to_int_array(test, size);
+    char * test_char = int_array_to_capitalized_word(test_int, size);
+
+    for (int i = 0; i < size; i++) {
+        printf("%d ", test_int[i]);
     }
 
     printf("\n");
+
+    int j = 0;
+
+    for (int i = 0; i < size; i++) {
+        j++;
+        printf("%c ", test_char[i]);
+    }
+
+    printf("\n");
+
+    printf("%d\n", j);
+
+    v = createVector(size);
+
+    for (int i = 0; i < size; i++) {
+        v.data[i] = test_int[i];
+    }
+
+    p = createVector(size);
+
+    for (int i = size - 1; i >= 0; i--) {
+        p.data[i] = size - i - 1;
+    }
+
+    Vector result = permute(v, p);
+
+    for (int i = 0; i < size; i++) {
+        printf("%d ", result.data[i]);
+    }
 
     return 0;
 }

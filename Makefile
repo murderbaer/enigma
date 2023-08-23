@@ -1,13 +1,13 @@
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -pedantic -std=c99 -g
+CFLAGS = -Wall -Wextra -Werror -pedantic -std=c99 -O2
 
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
 
 # set up modules
-MODULES = enigma math
+MODULES = enigma math helper
 
 # set up source files
 SRC = $(foreach module, $(MODULES), $(wildcard $(SRC_DIR)/$(module)/*.c)) $(wildcard $(SRC_DIR)/*.c)

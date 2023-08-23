@@ -1,0 +1,11 @@
+default:
+  image: debian:latest
+  before_script:
+    - apt-get update
+    - apt-get install -y build-essential
+  
+build:
+  tags:
+    - linux
+  script:
+    - make

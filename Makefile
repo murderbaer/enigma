@@ -43,9 +43,9 @@ test: $(TESTS) $(filter-out $(OBJ_DIR)/main.o, $(OBJ))
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -I$(UNITY_PATH) -o $(BIN_DIR)/$@ $^ $(UNITY_SRC) 
 	./$(BIN_DIR)/$@
+
 # debug target, maybe use debug flags instead of manipulating CFLAGS
 debug: CFLAGS += -DDEBUG -g
 debug: enigma
-
 
 .PHONY: all clean debug run test

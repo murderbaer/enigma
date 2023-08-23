@@ -11,5 +11,3 @@ First steps are to create a CLI interface for the program, later a REST API will
 
 ### Compilation
 To compile the program, simply run `make` in the root directory. This will create a binary called `enigma` in the `bin` directory.
-
-

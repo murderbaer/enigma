@@ -1,30 +1,30 @@
-SRC_DIR := src
-OBJ_DIR := obj
-BIN_DIR := bin
+CC = gcc
 
-EXE := $(BIN_DIR)/hellomake
-SRC := $(wildcard $(SRC_DIR)/*.c)
-OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+CFLAGS = -Wall -Wextra -Werror -pedantic -std=c99 -g
 
-CPPFLAGS := -Iinclude -MMD -MP
-CFLAGS   := -Wall
-LDFLAGS  := -Llib
-LDLIBS   := -lm
+SRC_DIR = src
+OBJ_DIR = obj
+BIN_DIR = bin
 
-.PHONY: all clean
+MODULES = enigma math
 
-all: $(EXE)
+SRC = $(foreach module, $(MODULES), $(wildcard $(SRC_DIR)/$(module)/*.c)) $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
-$(EXE): $(OBJ) | $(BIN_DIR)
-	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+all: enigma
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+enigma: $(OBJ)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) -o $(BIN_DIR)/$@ $^
 
-$(BIN_DIR) $(OBJ_DIR):
-	mkdir -p $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(foreach module, $(MODULES), $(OBJ_DIR)/$(module))
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+
 
 clean:
-	@$(RM) -rv $(BIN_DIR) $(OBJ_DIR)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
--include $(OBJ:.o=.d)
+.PHONY: all clean

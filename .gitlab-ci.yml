@@ -3,7 +3,11 @@ default:
   before_script:
     - apt-get update
     - apt-get install -y build-essential
-  
+
+stages:
+  - build
+  - test
+
 build:
   tags:
     - linux

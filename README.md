@@ -1,6 +1,6 @@
 # Enigma Backend
 
-[![pipeline status](https://gitlab.rivercry.com/arifhasanic/enigma_backend/badges/main/pipeline.svg)](https://gitlab.rivercry.com/arifhasanic/enigma_backenduserproject/commits/main)
+[![pipeline status](https://gitlab.rivercry.com/arifhasanic/enigma_backend/badges/main/pipeline.svg)](https://gitlab.rivercry.com/arifhasanic/enigma_backend/commits/main)
 
 
 ## Description

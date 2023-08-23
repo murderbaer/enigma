@@ -6,7 +6,7 @@
 Vector createVector(int size) {
     Vector v;
     v.size = size;
-    v.data = (int *) malloc(size * sizeof(int));
+    v.data = (int *)malloc(size * sizeof(int));
     return v;
 }
 

@@ -1,4 +1,2 @@
 
-void nothing() {
-    return;
-}
+void nothing() { return; }

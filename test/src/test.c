@@ -1,12 +1,11 @@
-#include "../unity/unity.h"
 #include "../../src/math/math.h"
+#include "../unity/unity.h"
 
 void setUp() {}
 
 void tearDown() {}
 
-void permutateIdentityTest()
-{
+void permutateIdentityTest() {
     Vector v = createVector(5);
     v.data[0] = 0;
     v.data[1] = 1;
@@ -33,7 +32,7 @@ void permutateIdentityTest()
 }
 
 int main() {
-   UNITY_BEGIN();
-   RUN_TEST(permutateIdentityTest);
-   UNITY_END();
+    UNITY_BEGIN();
+    RUN_TEST(permutateIdentityTest);
+    UNITY_END();
 }

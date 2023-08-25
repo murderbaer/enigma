@@ -42,7 +42,9 @@ run: enigma
 test: $(TESTS) $(filter-out $(OBJ_DIR)/main.o, $(OBJ))
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -I$(UNITY_PATH) -o $(BIN_DIR)/$@ $^ $(UNITY_SRC) 
-	./$(BIN_DIR)/$@
+
+runtest: test
+	./$(BIN_DIR)/test
 
 # debug target, maybe use debug flags instead of manipulating CFLAGS
 debug: CFLAGS += -DDEBUG -g

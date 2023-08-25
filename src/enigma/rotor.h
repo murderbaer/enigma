@@ -12,6 +12,8 @@ struct Rotor {
     int turnover;
 } typedef Rotor;
 
+int nothing(void);
+
 // Rotor createRotor(int size, Vector *wiring, Vector *notch, int turnover);
 // Rotor createRotorFromWiring(int size, Vector *wiring, Vector *notch, int turnover);
 // Rotor createRotorFromWiringString(int size, char *wiring, char *notch, int turnover);

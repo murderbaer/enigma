@@ -4,7 +4,7 @@
 #include "helper/helper.h"
 #include "math/math.h"
 
-int main() {
+int main(void) {
     char rotorOne[26] = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
     char rotorTwo[26] = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
     char rotorThree[26] = "BDFHJLCPRTXVZNYEIWGAKMUSQO";

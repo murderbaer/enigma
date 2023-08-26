@@ -1,16 +1,20 @@
 #pragma once
 
-#include "math/math.h"
+#include "../math/math.h"
+#include "rotor.h"
 
-struct Rotor {
+#define NO_NOTCH -1
+
+typedef struct {
     int size;
     Vector *wiring;
-    Vector *invWiring;
-    Vector *notch;
+    Vector *inverseWiring;
+    int notch_1;
+    int notch_2;
     int position;
     int ringSetting;
     int turnover;
-} typedef Rotor;
+} Rotor;
 
 int nothing(void);
 

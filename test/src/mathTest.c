@@ -58,10 +58,26 @@ void permutateCyclicVectorTest() {
     }
 }
 
+void permuteVectorInverseTest() {
+    int size = 5;
+    Vector v = createVector(size);
+
+    for (int i = 0; i < size; i++) {
+        v.data[i] = i + 1 % size;
+    }
+
+    Vector inverse = vectorInverseUnderPermutation(v);
+
+    for (int i = 0; i < size; i++) {
+        TEST_ASSERT_EQUAL_INT(i, inverse.data[v.data[i]]);
+    }
+}
+
 int main() {
     UNITY_BEGIN();
     RUN_TEST(permutateVectorIdentityTest);
     RUN_TEST(permutateVecorInverseTest);
     RUN_TEST(permutateCyclicVectorTest);
+    RUN_TEST(permuteVectorInverseTest);
     UNITY_END();
 }

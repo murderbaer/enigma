@@ -3,32 +3,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Vector createVector(int size) {
-    Vector v;
-    v.size = size;
-    v.data = (int *)malloc(size * sizeof(int));
+Vector *createVector(int size, int *data) {
+    Vector *v = malloc(sizeof(Vector));
+    v->size = size;
+    v->data = data;
+
     return v;
 }
 
-Vector permute(Vector v, Vector p) {
-    if (v.size != p.size) {
+void permute(Vector *vector, Vector permutation) {
+    if (vector->size != permutation.size) {
         printf("Error: Vector sizes do not match\n");
         exit(1);
     }
 
-    Vector result = createVector(v.size);
-    for (int i = 0; i < v.size; i++) {
-        result.data[i] = v.data[p.data[i]];
+    int *data = malloc(sizeof(int) * vector->size);
+
+    for (int i = 0; i < vector->size; i++) {
+        data[i] = vector->data[permutation.data[i]];
     }
 
-    return result;
+    vector->data = data;
 }
 
-Vector rotate(Vector v, int n) {
-    Vector result = createVector(v.size);
+Vector *vectorInverseUnderPermutation(Vector v) {
+    int *data = malloc(sizeof(int) * v.size);
+
     for (int i = 0; i < v.size; i++) {
-        result.data[i] = v.data[(i + n) % v.size];
+        data[v.data[i]] = i;
     }
 
-    return result;
+    return createVector(v.size, data);
 }

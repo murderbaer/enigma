@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "math.h": "c",
-        "helper.h": "c"
+        "helper.h": "c",
+        "rotor.h": "c",
+        "plugboard h": "c",
+        "reflector.h": "c"
     }
 }

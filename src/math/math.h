@@ -1,18 +1,14 @@
 #pragma once
 
 typedef struct {
-    int rows;
-    int cols;
-    int *data;
-} Matrix;
-
-typedef struct {
     int size;
     int *data;
 } Vector;
 
-Vector createVector(int size);
+Vector *createVector(int size, int *data);
 
-Vector permute(Vector v, Vector p);
+void permute(Vector *vector, Vector permutation);
+
+Vector *vectorInverseUnderPermutation(Vector v);
 
 Vector rotate(Vector v, int n);

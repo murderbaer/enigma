@@ -1,24 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "cli/cli.h"
 #include "helper/helper.h"
 #include "math/math.h"
 
 int main(int argc, char **argv) {
-    char rotorOne[26] = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
-    char rotorTwo[26] = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
-    char rotorThree[26] = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
-    char reflector[26] = "YRUHQSLDPXNGOKMIEBFZCWVJAT";
+    ParsedOptions *parsedOptions = parse_options(argc, argv);
 
-    int *rotorOneInt = word_to_int_array(rotorOne, 26);
-    int *rotorTwoInt = word_to_int_array(rotorTwo, 26);
-    int *rotorThreeInt = word_to_int_array(rotorThree, 26);
-    int *reflectorInt = word_to_int_array(reflector, 26);
+    int *rotorOne = word_to_int_array(parsedOptions->rotor_on_position_one, 26);
+    int *rotorTwo = word_to_int_array(parsedOptions->rotor_on_position_two, 26);
+    int *rotorThree = word_to_int_array(parsedOptions->rotor_on_position_three, 26);
+    int *reflector = word_to_int_array(parsedOptions->reflector, 26);
 
-    Vector *rotorOneVector = createVector(26, rotorOneInt);
-    Vector *rotorTwoVector = createVector(26, rotorTwoInt);
-    Vector *rotorThreeVector = createVector(26, rotorThreeInt);
-    Vector *reflectorVector = createVector(26, reflectorInt);
+    // if (parsedOptions->rotorCount == 4) {
+    //     int *rotorFour = word_to_int_array(parsedOptions->rotor_on_position_four, 26);
+    //     Vector *rotorFourVector = createVector(26, rotorFour);
+    // }
+
+    Vector *rotorOneVector = createVector(26, rotorOne);
+    Vector *rotorTwoVector = createVector(26, rotorTwo);
+    Vector *rotorThreeVector = createVector(26, rotorThree);
+    Vector *reflectorVector = createVector(26, reflector);
     Vector *rotorOneInverseVector = vectorInverseUnderPermutation(*rotorOneVector);
     Vector *rotorTwoInverseVector = vectorInverseUnderPermutation(*rotorTwoVector);
     Vector *rotorThreeInverseVector = vectorInverseUnderPermutation(*rotorThreeVector);

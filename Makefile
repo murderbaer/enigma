@@ -7,7 +7,7 @@ OBJ_DIR = obj
 BIN_DIR = bin
 
 # set up modules
-MODULES = enigma math helper
+MODULES = enigma math helper cli
 
 # set up source files
 SRC = $(foreach module, $(MODULES), $(wildcard $(SRC_DIR)/$(module)/*.c)) $(wildcard $(SRC_DIR)/*.c)
@@ -43,7 +43,7 @@ test: $(TESTS) $(filter-out $(OBJ_DIR)/main.o, $(OBJ))
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -I$(UNITY_PATH) -o $(BIN_DIR)/$@ $^ $(UNITY_SRC) 
 
-runtest: test
+run_test: test
 	./$(BIN_DIR)/test
 
 # debug target, maybe use debug flags instead of manipulating CFLAGS

@@ -1,71 +1,34 @@
-#define HELP "--help"
-#define HELP_SHORT "-h"
-
-#define ROTOR_POSITION_ONE "--rotor-one"
-#define ROTOR_POSITION_ONE_SHORT "-r1"
-
-#define ROTOR_POSITION_TWO "--rotor-two"
-#define ROTOR_POSITION_TWO_SHORT "-r2"
-
-#define ROTOR_POSITION_THREE "--rotor-three"
-#define ROTOR_POSITION_THREE_SHORT "-r3"
-
-#define ROTOR_POSITION_FOUR "--rotor-four"
-#define ROTOR_POSITION_FOUR_SHORT "-r4"
-
-#define REFLECTOR "--reflector"
-#define REFLECTOR_SHORT "-rf"
-
-#define PLUGBOARD "--plugboard"
-#define PLUGBOARD_SHORT "-pb"
-
-#define RING_SETTINGS "--ring-settings"
-#define RING_SETTINGS_SHORT "-rs"
-
-#define INPUT "--input"
-#define INPUT_SHORT "-i"
-
 #define ALLOWED_CHARACTERS "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-#define ROTOR_SIZE 26
+typedef struct {
+    int rotor_on_position_one;
+    char *rotor_on_position_one_value;
+    int rotor_on_position_two;
+    char *rotor_on_position_two_value;
+    int rotor_on_position_three;
+    char *rotor_on_position_three_value;
+    int rotor_on_position_four;
+    char *rotor_on_position_four_value;
+    int reflector;
+    char *reflector_value;
+    int plugboard;
+    char *plugboard_value;
+    int ring_settings;
+    char *ring_settings_value;
+    int input;
+    char *input_value;
+} EnabledOptions;
 
-#define ROTOR_ONE "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
-#define ROTOR_ONE_REVERSE "UWYGADFPVZBECKMTHXSLRINQOJ"
-#define ROTOR_TWO_SHORT "I"
+typedef struct {
+    char *rotor_on_position_one;
+    char *rotor_on_position_two;
+    char *rotor_on_position_three;
+    char *rotor_on_position_four;
+    char *reflector;
+    char *plugboard;
+    char *ring_settings;
+    char *input;
+    int rotorCount;
+} ParsedOptions;
 
-#define ROTOR_TWO "AJDKSIRUXBLHWTMCQGZNPYFVOE"
-#define ROTOR_TWO_REVERSE "AJPCZWRLFBDKOTYUQGENHXMIVS"
-#define ROTOR_TWO_SHORT "II"
-
-#define ROTOR_THREE "BDFHJLCPRTXVZNYEIWGAKMUSQO"
-#define ROTOR_THREE_REVERSE "TAGBPCSDQEUFVNZHYIXJWLRKOM"
-#define ROTOR_THREE_SHORT "III"
-
-#define ROTOR_FOUR "ESOVPZJAYQUIRHXLNFTGKDCMWB"
-#define ROTOR_FOUR_REVERSE "HZWVARTNLGUPXQCEJMBSKDYOIF"
-#define ROTOR_FOUR_SHORT "IV"
-
-#define ROTOR_FIVE "VZBRGITYUPSDNHLXAWMJQOFECK"
-#define ROTOR_FIVE_REVERSE "QCYLXWENFTZOSMVJUDKGIARPHB"
-#define ROTOR_FIVE_SHORT "V"
-
-#define ROTOR_SIX "JPGVOUMFYQBENHZRDKASXLICTW"
-#define ROTOR_SIX_REVERSE "SKXQLHCNWARVGMEBJPTYFDZUIO"
-#define ROTOR_SIX_SHORT "VI"
-
-#define ROTOR_SEVEN "NZJHGRCXMYSWBOUFAIVLPEKQDT"
-#define ROTOR_SEVEN_REVERSE "QMGYVPEDRCWTIANUXFKZOSLHJB"
-#define ROTOR_SEVEN_SHORT "VII"
-
-#define ROTOR_EIGHT "FKQHTLXOCBJSPDZRAMEWNIUYGV"
-#define ROTOR_EIGHT_REVERSE "QJINSAYDVKBFRUHMCPLEWZTGXO"
-#define ROTOR_EIGHT_SHORT "VIII"
-
-#define REFLECTOR_A "EJMZALYXVBWFCRQUONTSPIKHGD"
-#define REFLECTOR_A_SHORT "A"
-
-#define REFLECTOR_B "YRUHQSLDPXNGOKMIEBFZCWVJAT"
-#define REFLECTOR_B_SHORT "B"
-
-#define REFLECTOR_C "FVPJIAOYEDRZXWGCTKUQSBNMHL"
-#define REFLECTOR_C_SHORT "C"
+ParsedOptions *parse_options(int argc, char **argv);

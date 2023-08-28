@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "../../src/math/math.h"
 #include "../unity/unity.h"
 
@@ -7,35 +10,41 @@ void tearDown() {}
 
 void permutateVectorIdentityTest() {
     int size = 5;
-    Vector v = createVector(size);
-    Vector p = createVector(size);
+    int vData[] = {0, 1, 2, 3, 4};
+
+    Vector *v = createVector(size, vData);
+    Vector p;
+
+    int pData[] = {0, 1, 2, 3, 4};
+    p.size = size;
+
+    p.data = malloc(sizeof(int) * size);
+    p.data = pData;
+
+    permute(v, p);
 
     for (int i = 0; i < size; i++) {
-        v.data[i] = i;
-        p.data[i] = i;
-    }
-
-    Vector result = permute(v, p);
-
-    for (int i = 0; i < size; i++) {
-        TEST_ASSERT_EQUAL_INT(i, result.data[i]);
+        TEST_ASSERT_EQUAL_INT(i, v->data[i]);
     }
 }
 
 void permutateVecorInverseTest() {
     int size = 5;
-    Vector v = createVector(size);
-    Vector p = createVector(size);
+    int vData[] = {0, 1, 2, 3, 4};
+
+    Vector *v = createVector(size, vData);
+    Vector p;
+    p.size = size;
+    p.data = malloc(sizeof(int) * size);
 
     for (int i = 0; i < size; i++) {
-        v.data[i] = i;
         p.data[i] = size - i - 1;
     }
 
-    Vector result = permute(v, p);
+    permute(v, p);
 
     for (int i = 0; i < size; i++) {
-        TEST_ASSERT_EQUAL_INT(size - i - 1, result.data[i]);
+        TEST_ASSERT_EQUAL_INT(size - i - 1, v->data[i]);
     }
 }
 
@@ -43,33 +52,35 @@ void permutateCyclicVectorTest() {
     int size = 5;
     int cycles = 3;
 
-    Vector v = createVector(size);
-    Vector p = createVector(size);
+    int vData[] = {0, 1, 2, 3, 4};
+    Vector *v = createVector(size, vData);
+    Vector p;
+    p.size = size;
+
+    p.data = malloc(sizeof(int) * size);
 
     for (int i = 0; i < size; i++) {
-        v.data[i] = i;
+        v->data[i] = i;
         p.data[i] = (i + cycles) % size;
     }
 
-    Vector result = permute(v, p);
+    permute(v, p);
 
     for (int i = 0; i < size; i++) {
-        TEST_ASSERT_EQUAL_INT((i + cycles) % size, result.data[i]);
+        TEST_ASSERT_EQUAL_INT((i + cycles) % size, v->data[i]);
     }
 }
 
 void permuteVectorInverseTest() {
     int size = 5;
-    Vector v = createVector(size);
+
+    int vData[] = {0, 1, 2, 3, 4};
+    Vector *v = createVector(size, vData);
+
+    Vector *inverse = vectorInverseUnderPermutation(*v);
 
     for (int i = 0; i < size; i++) {
-        v.data[i] = i + 1 % size;
-    }
-
-    Vector inverse = vectorInverseUnderPermutation(v);
-
-    for (int i = 0; i < size; i++) {
-        TEST_ASSERT_EQUAL_INT(i, inverse.data[v.data[i]]);
+        TEST_ASSERT_EQUAL_INT(i, inverse->data[v->data[i]]);
     }
 }
 

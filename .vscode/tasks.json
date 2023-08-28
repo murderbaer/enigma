@@ -2,7 +2,7 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "run the makefile",
+            "label": "run make debug",
             "command": "/usr/bin/make",
             "args": [
                 "debug"

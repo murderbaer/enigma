@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "../enigma/rotor.h"
+#include "../helper/helper.h"
 #include "cli.h"
 
 EnabledOptions createEnabledOptionsObject() {
@@ -125,12 +126,13 @@ void printHelp() {
     printf("  -pb, --plugboard\t");
     printf("(Optional) Sets the plugboard.\n");
     printf("  -rs, --ring-settings\t");
-    printf("(Optional) Sets the ring settings.\n");
+    printf("Sets the ring settings.\n");
     printf("  -i,  --input\t");
     printf("Text to de/encrypt Sets the input.\n");
     printf("\n");
     printf("Possible values for rotors: I, II, III, IV, V, VI, VII, VIII or a string of 26 unique capitalized characters representing the wiring of the rotor.\n\n");
     printf("Possible values for reflectors: A, B or C\n\n");
+    printf("Possible values for ring settings: a string of 3 (or 4, if 4 Rotors were defined) capitalized characters representing the ring settings of the rotors.\n\n");
     printf("Possible values for plugboard: a string of 26 unique capitalized characters representing the wiring of the plugboard.\n");
 
     exit(0);
@@ -166,7 +168,7 @@ ParsedOptions *parse_enabled_options(EnabledOptions enabledOptions) {
     parsedOptions->rotor_on_position_two = parseRotorOptions(2, enabledOptions.rotor_on_position_two_value);
     parsedOptions->rotor_on_position_three = parseRotorOptions(3, enabledOptions.rotor_on_position_three_value);
     parsedOptions->reflector = reflector;
-    parsedOptions->plugboard = enabledOptions.plugboard_value;
+    parsedOptions->plugboard = enabledOptions.plugboard_value; // TODO: parse plugboard and find out how to store it
     parsedOptions->ring_settings = enabledOptions.ring_settings_value;
     parsedOptions->input = enabledOptions.input_value;
 

@@ -14,7 +14,9 @@
                 "--rotor-three",
                 "I",
                 "--reflector",
-                "B"
+                "B",
+                "--ring-settings",
+                "AAA",
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
@@ -34,7 +36,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "run the makefile"
+            "preLaunchTask": "run make debug"
         }
     ]
 }

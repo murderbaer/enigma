@@ -12,7 +12,14 @@ int main(int argc, char **argv) {
     int *rotorTwo = word_to_int_array(parsedOptions->rotor_on_position_two, 26);
     int *rotorThree = word_to_int_array(parsedOptions->rotor_on_position_three, 26);
     int *reflector = word_to_int_array(parsedOptions->reflector, 26);
+    int *ringSettings = word_to_int_array(parsedOptions->ring_settings, parsedOptions->rotorCount);
 
+    printf("Ring Settingsarray: ");
+    for (int i = 0; i < parsedOptions->rotorCount; i++) {
+        printf("%d ", ringSettings[i]);
+    }
+
+    // TODO: implement rotor four
     // if (parsedOptions->rotorCount == 4) {
     //     int *rotorFour = word_to_int_array(parsedOptions->rotor_on_position_four, 26);
     //     Vector *rotorFourVector = createVector(26, rotorFour);

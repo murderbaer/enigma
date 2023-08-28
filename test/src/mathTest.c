@@ -54,9 +54,9 @@ void permutateCyclicVectorTest() {
 
     int vData[] = {0, 1, 2, 3, 4};
     Vector *v = createVector(size, vData);
+
     Vector p;
     p.size = size;
-
     p.data = malloc(sizeof(int) * size);
 
     for (int i = 0; i < size; i++) {

@@ -1,3 +1,5 @@
+#pragma once
+
 #define ALLOWED_CHARACTERS "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 typedef struct {
@@ -30,5 +32,7 @@ typedef struct {
     char *input;
     int rotorCount;
 } ParsedOptions;
+
+int checkRotorFormatting(char *rotorName);
 
 ParsedOptions *parse_options(int argc, char **argv);

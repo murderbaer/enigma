@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,11 +22,26 @@ EnabledOptions createEnabledOptionsObject() {
 }
 
 int checkRotorFormatting(char *rotorName) {
-    if (strlen(rotorName) == 26) {
-        return 1;
-    } else {
+    if (strlen(rotorName) != 26) {
         return 0;
     }
+
+    for (int i = 0; i < 26; i++) {
+        if (!isupper(rotorName[i])) {
+            return 0;
+        }
+    }
+
+    // check for duplicates
+    for (int i = 0; i < 26; i++) {
+        for (int j = i + 1; j < 26; j++) {
+            if (rotorName[i] == rotorName[j]) {
+                return 0;
+            }
+        }
+    }
+
+    return 1;
 }
 
 int romanToArabicNumeral(char *romanNumeral) {

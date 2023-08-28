@@ -4,10 +4,6 @@
 #include "../../src/math/math.h"
 #include "../unity/unity.h"
 
-void setUp() {}
-
-void tearDown() {}
-
 void permutateVectorIdentityTest() {
     int size = 5;
     int vData[] = {0, 1, 2, 3, 4};
@@ -84,11 +80,9 @@ void permuteVectorInverseTest() {
     }
 }
 
-int main() {
-    UNITY_BEGIN();
+void runMathTests() {
     RUN_TEST(permutateVectorIdentityTest);
     RUN_TEST(permutateVecorInverseTest);
     RUN_TEST(permutateCyclicVectorTest);
     RUN_TEST(permuteVectorInverseTest);
-    UNITY_END();
 }

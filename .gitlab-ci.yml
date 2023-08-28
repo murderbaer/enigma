@@ -1,8 +1,8 @@
 default:
-  image: debian:latest
-  before_script:
-    - apt-get update
-    - apt-get install -y build-essential
+  image: gcc:latest
+  # before_script:
+  #   - apt-get update
+  #   - apt-get install -y build-essential
 
 stages:
   - build

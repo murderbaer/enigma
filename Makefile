@@ -1,7 +1,6 @@
 CC = gcc
 
-CFLAGS = -Wall -Wextra -pedantic -std=c99 -O2
-
+CFLAGS = -Wall -Wextra -Wstrict-prototypes -pedantic -std=c99 -O2
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin

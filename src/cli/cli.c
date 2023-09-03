@@ -7,7 +7,7 @@
 #include "../helper/helper.h"
 #include "cli.h"
 
-EnabledOptions createEnabledOptionsObject() {
+EnabledOptions createEnabledOptionsObject(void) {
     EnabledOptions enabledOptions;
     enabledOptions.rotor_on_position_one = 0;
     enabledOptions.rotor_on_position_two = 0;
@@ -123,7 +123,7 @@ char *parseRotorOptions(int rotooPosition, char *rotorName) {
     return fullRotorName;
 }
 
-void printHelp() {
+void printHelp(void) {
     printf("Usage: enigma [OPTION]...\n");
     printf("Encrypts or decrypts a message using the Enigma machine.\n");
     printf("\n");

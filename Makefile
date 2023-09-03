@@ -23,8 +23,8 @@ UNITY_SRC = $(wildcard $(UNITY_PATH)/*.c)
 
 all: enigma
 
+enigma: CFLAGS += -Werror
 enigma: $(OBJ)
-	CFLAGS += -Werror
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/$@ $^
 

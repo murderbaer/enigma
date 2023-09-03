@@ -1,88 +1,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../../src/enigma/rotor.h"
+#include "../../src/helper/helper.h"
 #include "../../src/math/math.h"
 #include "../unity/unity.h"
 
-void permutateVectorIdentityTest() {
-    int size = 5;
-    int vData[] = {0, 1, 2, 3, 4};
-
-    Vector *v = createVector(size, vData);
-    Vector p;
-
-    int pData[] = {0, 1, 2, 3, 4};
-    p.size = size;
-
-    p.data = malloc(sizeof(int) * size);
-    p.data = pData;
-
-    permute(v, p);
-
-    for (int i = 0; i < size; i++) {
-        TEST_ASSERT_EQUAL_INT(i, v->data[i]);
+int vectorEquals(Vector *v1, Vector *v2) {
+    for (int i = 0; i < ROTOR_SIZE; i++) {
+        if (v1->data[i] != v2->data[i]) {
+            return 0;
+        }
     }
+
+    return 1;
 }
 
 void permutateVecorInverseTest() {
-    int size = 5;
-    int vData[] = {0, 1, 2, 3, 4};
+    int *rotorData = malloc(sizeof(int) * ROTOR_SIZE);
+    rotorData = word_to_int_array(ROTOR_THREE, ROTOR_SIZE);
 
-    Vector *v = createVector(size, vData);
-    Vector p;
-    p.size = size;
-    p.data = malloc(sizeof(int) * size);
+    Vector *v = createVector(rotorData);
+    Vector *vInverse = vectorInverseUnderPermutation(v);
 
-    for (int i = 0; i < size; i++) {
-        p.data[i] = size - i - 1;
-    }
+    TEST_ASSERT_TRUE(vectorEquals(v, vInverse) == 0);
 
-    permute(v, p);
+    Vector *vInverseInverse = vectorInverseUnderPermutation(vInverse);
 
-    for (int i = 0; i < size; i++) {
-        TEST_ASSERT_EQUAL_INT(size - i - 1, v->data[i]);
-    }
+    TEST_ASSERT_TRUE(vectorEquals(v, vInverseInverse) == 1);
 }
 
 void permutateCyclicVectorTest() {
-    int size = 5;
-    int cycles = 3;
+    int *rotorData = malloc(sizeof(int) * ROTOR_SIZE);
+    rotorData = word_to_int_array(ROTOR_THREE, ROTOR_SIZE);
 
-    int vData[] = {0, 1, 2, 3, 4};
-    Vector *v = createVector(size, vData);
+    Vector *v = createVector(rotorData);
+    Vector *vCopy = createVector(rotorData);
 
-    Vector p;
-    p.size = size;
-    p.data = malloc(sizeof(int) * size);
+    vectorRotate(v, 1);
 
-    for (int i = 0; i < size; i++) {
-        v->data[i] = i;
-        p.data[i] = (i + cycles) % size;
-    }
+    TEST_ASSERT_TRUE(vectorEquals(v, vCopy) == 0);
 
-    permute(v, p);
+    vectorRotate(v, ROTOR_SIZE - 1);
 
-    for (int i = 0; i < size; i++) {
-        TEST_ASSERT_EQUAL_INT((i + cycles) % size, v->data[i]);
-    }
-}
-
-void permuteVectorInverseTest() {
-    int size = 5;
-
-    int vData[] = {0, 1, 2, 3, 4};
-    Vector *v = createVector(size, vData);
-
-    Vector *inverse = vectorInverseUnderPermutation(*v);
-
-    for (int i = 0; i < size; i++) {
-        TEST_ASSERT_EQUAL_INT(i, inverse->data[v->data[i]]);
-    }
+    TEST_ASSERT_TRUE(vectorEquals(v, vCopy) == 1);
 }
 
 void runMathTests() {
-    RUN_TEST(permutateVectorIdentityTest);
     RUN_TEST(permutateVecorInverseTest);
     RUN_TEST(permutateCyclicVectorTest);
-    RUN_TEST(permuteVectorInverseTest);
 }

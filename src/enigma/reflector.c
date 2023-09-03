@@ -2,7 +2,7 @@
 
 #include "reflector.h"
 
-Reflector *reflectorCreate(Vector *wiring) {
+Reflector *createReflector(Vector *wiring) {
     Reflector *reflector = malloc(sizeof(Reflector));
     reflector->wiring = wiring;
 

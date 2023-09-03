@@ -171,20 +171,12 @@ ParsedOptions *parse_enabled_options(EnabledOptions enabledOptions) {
 
     ParsedOptions *parsedOptions = malloc(sizeof(ParsedOptions));
 
-    if (strncmp(enabledOptions.rotor_on_position_four_value, "EMPTY", 5) == 0) {
-        parsedOptions->rotorCount = 3;
-    } else {
-        parsedOptions->rotorCount = 4;
-        parsedOptions->rotor_on_position_four = parseRotorOptions(4, enabledOptions.rotor_on_position_four_value);
-    }
-
     char *reflector = parseReflectorOptions(enabledOptions.reflector_value);
 
     parsedOptions->rotor_on_position_one = parseRotorOptions(1, enabledOptions.rotor_on_position_one_value);
     parsedOptions->rotor_on_position_two = parseRotorOptions(2, enabledOptions.rotor_on_position_two_value);
     parsedOptions->rotor_on_position_three = parseRotorOptions(3, enabledOptions.rotor_on_position_three_value);
     parsedOptions->reflector = reflector;
-    parsedOptions->plugboard = enabledOptions.plugboard_value; // TODO: parse plugboard and find out how to store it
     parsedOptions->ring_settings = enabledOptions.ring_settings_value;
     parsedOptions->input = enabledOptions.input_value;
 
@@ -220,10 +212,6 @@ ParsedOptions *parse_options(int argc, char **argv) {
             enabledOptions.rotor_on_position_three = 1;
             enabledOptions.rotor_on_position_three_value = parseRotorOptions(3, argv[i + 1]);
             i += 2;
-        } else if (strncmp("-r4", argv[i], 3) == 0 || strncmp("--rotor-four", argv[i], 13) == 0) {
-            enabledOptions.rotor_on_position_four = 1;
-            enabledOptions.rotor_on_position_four_value = parseRotorOptions(4, argv[i + 1]);
-            i += 2;
         } else if (strncmp("-rf", argv[i], 3) == 0 || strncmp("--reflector", argv[i], 12) == 0) {
             enabledOptions.reflector = 1;
             enabledOptions.reflector_value = argv[i + 1];
@@ -244,6 +232,15 @@ ParsedOptions *parse_options(int argc, char **argv) {
             printf("Unknown option: %s\n", argv[i]);
             exit(1);
         }
+    }
+
+    if (enabledOptions.rotor_on_position_one == 0 ||
+        enabledOptions.rotor_on_position_two == 0 ||
+        enabledOptions.rotor_on_position_three == 0 ||
+        enabledOptions.reflector == 0 ||
+        enabledOptions.ring_settings == 0) {
+        printf("Rotor on position one is not set.\n");
+        exit(1);
     }
 
     ParsedOptions *parsedOptions = parse_enabled_options(enabledOptions);

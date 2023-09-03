@@ -7,3 +7,5 @@
 typedef struct {
     Vector *wiring;
 } Reflector;
+
+Reflector *createReflector(Vector *wiring);

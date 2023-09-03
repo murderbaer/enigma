@@ -4,6 +4,15 @@
         "rotor.h": "c",
         "cli.h": "c",
         "math.h": "c",
-        "helper.h": "c"
+        "helper.h": "c",
+        "enigma.h": "c",
+        "mutex": "c",
+        "valarray": "c",
+        "array": "c",
+        "string_view": "c",
+        "format": "c",
+        "initializer_list": "c",
+        "span": "c",
+        "reflector.h": "c"
     }
 }

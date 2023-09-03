@@ -25,12 +25,9 @@ typedef struct {
     char *rotor_on_position_one;
     char *rotor_on_position_two;
     char *rotor_on_position_three;
-    char *rotor_on_position_four;
     char *reflector;
-    char *plugboard;
     char *ring_settings;
     char *input;
-    int rotorCount;
 } ParsedOptions;
 
 int checkRotorFormatting(char *rotorName);

@@ -1,6 +1,6 @@
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -pedantic -std=c99 -O2
+CFLAGS = -Wall -Wextra -pedantic -std=c99 -O2
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -24,6 +24,7 @@ UNITY_SRC = $(wildcard $(UNITY_PATH)/*.c)
 all: enigma
 
 enigma: $(OBJ)
+	CFLAGS += -Werror
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/$@ $^
 

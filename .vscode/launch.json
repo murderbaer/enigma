@@ -37,6 +37,30 @@
                 }
             ],
             "preLaunchTask": "run make debug"
+        },
+        {
+            "name": "(lldb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/enigma",
+            "args": [
+                "--rotor-one",
+                "III",
+                "--rotor-two",
+                "II",
+                "--rotor-three",
+                "I",
+                "--reflector",
+                "B",
+                "--ring-settings",
+                "AAA",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "run make debug"
         }
     ]
 }

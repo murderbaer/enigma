@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 
     Enigma *enigma = enigmaCreate(rotorOneEnigma, rotorTwoEnigma, rotorThreeEnigma, reflectorEnigma);
 
-    char *result = enigmaEncrypt(enigma, "HELLOWORLD");
+    char *result = enigmaEncrypt(enigma, parsedOptions->input);
 
     printf("Result: %s\n", result);
 

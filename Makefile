@@ -1,6 +1,6 @@
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Wstrict-prototypes -pedantic -std=c99 -O2
+CFLAGS = -Wall -Wextra -Wstrict-prototypes -pedantic -std=c99
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
@@ -20,9 +20,11 @@ UNITY_SRC = $(wildcard $(UNITY_PATH)/*.c)
 
 #############################################
 
-all: enigma
+all: release
 
-enigma: CFLAGS += -Werror
+release: CFLAGS += -Werror -O3
+release: enigma 
+
 enigma: $(OBJ)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/$@ $^

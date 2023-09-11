@@ -22,9 +22,8 @@ typedef struct {
 } EnabledOptions;
 
 typedef struct {
-    char *rotor_on_position_one;
-    char *rotor_on_position_two;
-    char *rotor_on_position_three;
+    char *rotors[3];
+    char notches[3];
     char *reflector;
     char *ring_settings;
     char *input;

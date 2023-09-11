@@ -80,47 +80,45 @@ int romanToArabicNumeral(char *romanNumeral) {
     return arabicNumeral;
 }
 
-char *parseRotorOptions(int rotooPosition, char *rotorName) {
-    char *fullRotorName = malloc(sizeof(char) * ROTOR_SIZE);
-
-    int rotorNameLength = strlen(rotorName);
-
-    if (rotorNameLength > 0 && rotorNameLength < 26) {
-        switch (romanToArabicNumeral(rotorName)) {
-        case 1:
-            return ROTOR_ONE;
-        case 2:
-            return ROTOR_TWO;
-        case 3:
-            return ROTOR_THREE;
-        case 4:
-            return ROTOR_FOUR;
-        case 5:
-            return ROTOR_FIVE;
-        case 6:
-            return ROTOR_SIX;
-        case 7:
-            return ROTOR_SEVEN;
-        case 8:
-            return ROTOR_EIGHT;
-
-        default:
-            printf("Unknown rotor: %s\n", rotorName);
-            exit(1);
-        }
-    } else if (rotorNameLength == 26) {
-        if (checkRotorFormatting(rotorName)) {
-            fullRotorName = rotorName;
-        } else {
-            printf("Rotor %d is not formatted correctly.\n", rotooPosition);
-            exit(1);
-        }
-    } else {
-        printf("Rotor %d is not formatted correctly.\n", rotooPosition);
+void parseRotorOptions(int rotorPosition, char *rotorName, ParsedOptions *parsedOptions) {
+    switch (romanToArabicNumeral(rotorName)) {
+    case 1:
+        parsedOptions->rotors[rotorPosition - 1] = ROTOR_ONE;
+        parsedOptions->notches[rotorPosition - 1] = 'Q';
+        break;
+    case 2:
+        parsedOptions->rotors[rotorPosition - 1] = ROTOR_TWO;
+        parsedOptions->notches[rotorPosition - 1] = 'E';
+        break;
+    case 3:
+        parsedOptions->rotors[rotorPosition - 1] = ROTOR_THREE;
+        parsedOptions->notches[rotorPosition - 1] = 'V';
+        break;
+    case 4:
+        parsedOptions->rotors[rotorPosition - 1] = ROTOR_FOUR;
+        parsedOptions->notches[rotorPosition - 1] = 'J';
+        break;
+    case 5:
+        parsedOptions->rotors[rotorPosition - 1] = ROTOR_FIVE;
+        parsedOptions->notches[rotorPosition - 1] = 'Z';
+        break;
+    // TODO: add the rest of the rotors
+    // case 6:
+    //     parsedOptions->rotors[rotorPosition - 1] = ROTOR_SIX;
+    //     parsedOptions->notches[rotorPosition - 1] = 'ZM';
+    //     break;
+    // case 7:
+    //     parsedOptions->rotors[rotorPosition - 1] = ROTOR_SEVEN;
+    //     parsedOptions->notches[rotorPosition - 1] = 'ZM';
+    //     break;
+    // case 8:
+    //     parsedOptions->rotors[rotorPosition - 1] = ROTOR_EIGHT;
+    //     parsedOptions->notches[rotorPosition - 1] = 'ZM';
+    //     break;
+    default:
+        printf("Unknown rotor: %s\n", rotorName);
         exit(1);
     }
-
-    return fullRotorName;
 }
 
 void printHelp(void) {
@@ -173,9 +171,10 @@ ParsedOptions *parse_enabled_options(EnabledOptions enabledOptions) {
 
     char *reflector = parseReflectorOptions(enabledOptions.reflector_value);
 
-    parsedOptions->rotor_on_position_one = parseRotorOptions(1, enabledOptions.rotor_on_position_one_value);
-    parsedOptions->rotor_on_position_two = parseRotorOptions(2, enabledOptions.rotor_on_position_two_value);
-    parsedOptions->rotor_on_position_three = parseRotorOptions(3, enabledOptions.rotor_on_position_three_value);
+    parseRotorOptions(1, enabledOptions.rotor_on_position_one_value, parsedOptions);
+    parseRotorOptions(2, enabledOptions.rotor_on_position_two_value, parsedOptions);
+    parseRotorOptions(3, enabledOptions.rotor_on_position_three_value, parsedOptions);
+
     parsedOptions->reflector = reflector;
     parsedOptions->ring_settings = enabledOptions.ring_settings_value;
     parsedOptions->input = enabledOptions.input_value;
@@ -202,15 +201,15 @@ ParsedOptions *parse_options(int argc, char **argv) {
     while (i < argc) {
         if (strncmp("-r1", argv[i], 3) == 0 || strncmp("--rotor-one", argv[i], 12) == 0) {
             enabledOptions.rotor_on_position_one = 1;
-            enabledOptions.rotor_on_position_one_value = parseRotorOptions(1, argv[i + 1]);
+            enabledOptions.rotor_on_position_one_value = argv[i + 1];
             i += 2;
         } else if (strncmp("-r2", argv[i], 3) == 0 || strncmp("--rotor-two", argv[i], 12) == 0) {
             enabledOptions.rotor_on_position_two = 1;
-            enabledOptions.rotor_on_position_two_value = parseRotorOptions(2, argv[i + 1]);
+            enabledOptions.rotor_on_position_two_value = argv[i + 1];
             i += 2;
         } else if (strncmp("-r3", argv[i], 3) == 0 || strncmp("--rotor-three", argv[i], 14) == 0) {
             enabledOptions.rotor_on_position_three = 1;
-            enabledOptions.rotor_on_position_three_value = parseRotorOptions(3, argv[i + 1]);
+            enabledOptions.rotor_on_position_three_value = argv[i + 1];
             i += 2;
         } else if (strncmp("-rf", argv[i], 3) == 0 || strncmp("--reflector", argv[i], 12) == 0) {
             enabledOptions.reflector = 1;

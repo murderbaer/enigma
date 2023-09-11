@@ -8,33 +8,50 @@
 #include "helper/helper.h"
 #include "math/math.h"
 
+void printWithSpaceEveryNChars(char *string, int n) {
+    int stringLength = strlen(string);
+
+    for (int i = 0; i < stringLength; i++) {
+        printf("%c", string[i]);
+
+        if ((i + 1) % n == 0) {
+            printf(" ");
+        }
+    }
+
+    printf("\n");
+}
+
 int main(int argc, char **argv) {
     ParsedOptions *parsedOptions = parse_options(argc, argv);
 
-    int *rotorOne = word_to_int_array(parsedOptions->rotor_on_position_one, 26);
-    int *rotorTwo = word_to_int_array(parsedOptions->rotor_on_position_two, 26);
-    int *rotorThree = word_to_int_array(parsedOptions->rotor_on_position_three, 26);
-    int *reflector = word_to_int_array(parsedOptions->reflector, 26);
+    int *rotorOne = word_to_int_array(parsedOptions->rotors[0], ROTOR_SIZE);
+    int *rotorTwo = word_to_int_array(parsedOptions->rotors[1], ROTOR_SIZE);
+    int *rotorThree = word_to_int_array(parsedOptions->rotors[2], ROTOR_SIZE);
+    int *reflector = word_to_int_array(parsedOptions->reflector, ROTOR_SIZE);
+    int *ekw = word_to_int_array(EKW, ROTOR_SIZE);
     int *ringSettings = word_to_int_array(parsedOptions->ring_settings, 3);
 
     Vector *rotorOneVector = createVector(rotorOne);
     Vector *rotorTwoVector = createVector(rotorTwo);
     Vector *rotorThreeVector = createVector(rotorThree);
     Vector *reflectorVector = createVector(reflector);
+    Vector *ekwVector = createVector(ekw);
     Vector *rotorOneInverseVector = vectorInverseUnderPermutation(rotorOneVector);
     Vector *rotorTwoInverseVector = vectorInverseUnderPermutation(rotorTwoVector);
     Vector *rotorThreeInverseVector = vectorInverseUnderPermutation(rotorThreeVector);
 
-    Rotor *rotorThreeEnigma = createRotor(rotorOneVector, rotorOneInverseVector, ringSettings[0], 17);
-    Rotor *rotorTwoEnigma = createRotor(rotorTwoVector, rotorTwoInverseVector, ringSettings[1], 5);
-    Rotor *rotorOneEnigma = createRotor(rotorThreeVector, rotorThreeInverseVector, ringSettings[2], 22);
+    Rotor *rotorOneEnigma = createRotor(rotorOneVector, rotorOneInverseVector, ringSettings[0], letter_to_int(parsedOptions->notches[0]));
+    Rotor *rotorTwoEnigma = createRotor(rotorTwoVector, rotorTwoInverseVector, ringSettings[1], letter_to_int(parsedOptions->notches[1]));
+    Rotor *rotorThreeEnigma = createRotor(rotorThreeVector, rotorThreeInverseVector, ringSettings[2], letter_to_int(parsedOptions->notches[2]));
+    Rotor *ekwEnigma = createRotor(ekwVector, ekwVector, 0, 0);
     Reflector *reflectorEnigma = createReflector(reflectorVector);
 
-    Enigma *enigma = enigmaCreate(rotorOneEnigma, rotorTwoEnigma, rotorThreeEnigma, reflectorEnigma);
+    Enigma *enigma = enigmaCreate(rotorOneEnigma, rotorTwoEnigma, rotorThreeEnigma, reflectorEnigma, ekwEnigma);
 
     char *result = enigmaEncrypt(enigma, parsedOptions->input);
 
-    printf("Result: %s\n", result);
+    printWithSpaceEveryNChars(result, 5);
 
     return 0;
 }

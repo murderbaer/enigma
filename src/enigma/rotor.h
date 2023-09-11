@@ -17,6 +17,8 @@
 #define REFLECTOR_B "YRUHQSLDPXNGOKMIEBFZCWVJAT"
 #define REFLECTOR_C "FVPJIAOYEDRZXWGCTKUQSBNMHL"
 
+#define EKW "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 typedef struct {
     Vector *wiring;
     Vector *inverseWiring;

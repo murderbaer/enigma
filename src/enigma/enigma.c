@@ -5,56 +5,74 @@
 #include "enigma.h"
 #include "rotor.h"
 
-Enigma *enigmaCreate(Rotor *rotorOne, Rotor *rotorTwo, Rotor *rotorThree, Reflector *reflector) {
+Enigma *enigmaCreate(Rotor *rotorOne, Rotor *rotorTwo, Rotor *rotorThree, Reflector *reflector, Rotor *ekw) {
     Enigma *enigma = malloc(sizeof(Enigma));
     enigma->rotorOne = rotorOne;
     enigma->rotorTwo = rotorTwo;
     enigma->rotorThree = rotorThree;
     enigma->reflector = reflector;
+    enigma->ekw = ekw;
 
     return enigma;
 }
 
 char *enigmaEncrypt(Enigma *enigma, char *message) {
-    Rotor *rotorOne = enigma->rotorOne;
-    Rotor *rotorTwo = enigma->rotorTwo;
-    Rotor *rotorThree = enigma->rotorThree;
+    Rotor *rotorRight = enigma->rotorOne;
+    Rotor *rotorMid = enigma->rotorTwo;
+    Rotor *rotorLeft = enigma->rotorThree;
+    Rotor *ekw = enigma->ekw;
     Reflector *reflector = enigma->reflector;
 
-    int intMessage[strlen(message)];
+    int messageLength = strlen(message);
+    int newMessageLength = messageLength + messageLength / 4;
 
-    for (size_t i = 0; i < strlen(message); i++) {
+    int intMessage[newMessageLength];
+
+    for (size_t i = 0; i < messageLength; i++) {
         int letter = letter_to_int(message[i]);
+        char letterChar = int_to_letter(letter);
 
         // if (enigma->plugboard != NULL) {
         //     letter = plugboardEncrypt(enigma->plugboard, letter);
         // }
 
-        turnRotor(rotorOne);
+        if (rotorRight->position == rotorRight->notch_1) {
+            turnRotor(rotorMid);
 
-        if (rotorOne->position == rotorOne->notch_1) {
-            turnRotor(rotorTwo);
+            if (rotorMid->position == rotorMid->notch_1) {
+                turnRotor(rotorLeft);
+            }
         }
 
-        if (rotorTwo->position == rotorTwo->notch_1) {
-            turnRotor(rotorThree);
-        }
+        turnRotor(rotorRight);
 
-        letter = rotorOne->wiring->data[letter];
-        letter = rotorTwo->wiring->data[(letter + ROTOR_SIZE - rotorOne->position) % ROTOR_SIZE];
-        letter = rotorThree->wiring->data[(letter + ROTOR_SIZE - rotorTwo->position) % ROTOR_SIZE];
+        letter = rotorRight->wiring->data[letter];
+        letterChar = int_to_letter(letter);
 
-        letter = reflector->wiring->data[(letter + ROTOR_SIZE - rotorThree->position) % ROTOR_SIZE];
+        letter = rotorMid->wiring->data[(letter - rotorRight->position) % ROTOR_SIZE];
+        letterChar = int_to_letter(letter);
 
-        letter = rotorThree->inverseWiring->data[letter];
-        letter = rotorTwo->inverseWiring->data[letter];
-        letter = rotorOne->inverseWiring->data[letter];
+        letter = rotorLeft->wiring->data[(letter - rotorMid->position) % ROTOR_SIZE];
+        letterChar = int_to_letter(letter);
+
+        letter = reflector->wiring->data[letter];
+        letterChar = int_to_letter(letter);
+
+        letter = rotorLeft->inverseWiring->data[letter];
+        letterChar = int_to_letter(letter);
+
+        letter = rotorMid->inverseWiring->data[letter];
+        letterChar = int_to_letter(letter);
+
+        letter = rotorRight->inverseWiring->data[letter];
+        letterChar = int_to_letter(letter);
 
         // if (enigma->plugboard != NULL) {
         //     letter = plugboardEncrypt(enigma->plugboard, letter);
         // }
 
-        intMessage[i] = (letter + ROTOR_SIZE - rotorOne->position) % ROTOR_SIZE;
+        intMessage[i] = ekw->wiring->data[(letter - rotorRight->position) % ROTOR_SIZE];
+        letterChar = int_to_letter(intMessage[i]);
     }
 
     char *result = int_array_to_word(intMessage, strlen(message));

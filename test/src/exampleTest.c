@@ -1,7 +1,7 @@
-#include "exampleTest.h"
+#include <unity.h>
 
 #include "../../src/example_module/example.h"
-#include "../unity/unity.h"
+#include "exampleTest.h"
 
 void exampleToTest(void) {
     example_function();

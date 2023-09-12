@@ -1,5 +1,6 @@
-CC = gcc
+NAME = skeleton
 
+CC = gcc
 CFLAGS = -Wall -Wextra -Wstrict-prototypes -pedantic -std=c99
 SRC_DIR = src
 OBJ_DIR = obj
@@ -15,7 +16,7 @@ OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 # set up unity testing framework
 TEST_DIR = test
 TESTS = $(wildcard $(TEST_DIR)/src/*.c)
-UNITY_PATH = $(TEST_DIR)/unity
+UNITY_PATH = libraries/Unity/src
 UNITY_SRC = $(wildcard $(UNITY_PATH)/*.c)
 
 #############################################
@@ -23,9 +24,9 @@ UNITY_SRC = $(wildcard $(UNITY_PATH)/*.c)
 all: release
 
 release: CFLAGS += -Werror -O3
-release: enigma
+release: $(NAME)
 
-enigma: $(OBJ)
+$(NAME): $(OBJ)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/$@ $^
 
@@ -37,10 +38,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
-run: enigma
-	./$(BIN_DIR)/enigma
+run: $(NAME)
+	./$(BIN_DIR)/$(NAME)
 
-# unity testing framework and link to enigma
+# unity testing framework
 test: CFLAGS += -g
 test: $(TESTS) $(filter-out $(OBJ_DIR)/main.o, $(OBJ))
 	@mkdir -p $(BIN_DIR)
@@ -51,6 +52,6 @@ run_test: test
 
 # debug target, maybe use debug flags instead of manipulating CFLAGS
 debug: CFLAGS += -DDEBUG -g
-debug: enigma
+debug: $(NAME)
 
 .PHONY: all clean debug run test

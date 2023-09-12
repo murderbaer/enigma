@@ -1,4 +1,5 @@
-#include "../unity/unity.h"
+#include <unity.h>
+
 #include "exampleTest.h"
 
 void setUp(void) {}

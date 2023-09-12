@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.embeddedhtml": "html",
-        "exampletest.h": "c"
+        "exampletest.h": "c",
+        "unity.h": "c"
     }
 }

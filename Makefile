@@ -23,7 +23,7 @@ UNITY_SRC = $(wildcard $(UNITY_PATH)/*.c)
 all: release
 
 release: CFLAGS += -Werror -O3
-release: enigma 
+release: enigma
 
 enigma: $(OBJ)
 	@mkdir -p $(BIN_DIR)
@@ -41,9 +41,10 @@ run: enigma
 	./$(BIN_DIR)/enigma
 
 # unity testing framework and link to enigma
+test: CFLAGS += -g
 test: $(TESTS) $(filter-out $(OBJ_DIR)/main.o, $(OBJ))
 	@mkdir -p $(BIN_DIR)
-	$(CC) $(CFLAGS) -I$(UNITY_PATH) -o $(BIN_DIR)/$@ $^ $(UNITY_SRC) 
+	$(CC) $(CFLAGS) -I$(UNITY_PATH) -o $(BIN_DIR)/$@ $^ $(UNITY_SRC)
 
 run_test: test
 	./$(BIN_DIR)/test

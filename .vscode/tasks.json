@@ -1,5 +1,8 @@
 {
-    "tasks": [
+
+    "version": "2.0.0",
+    "tasks":
+    [
         {
             "type": "shell",
             "label": "run make debug",
@@ -8,7 +11,15 @@
                 "debug"
             ],
             "problemMatcher": [],
+        },
+        {
+            "type": "shell",
+            "label": "run make test",
+            "command": "/usr/bin/make",
+            "args": [
+                "test"
+            ],
+            "problemMatcher": [],
         }
-    ],
-    "version": "2.0.0"
+    ]
 }

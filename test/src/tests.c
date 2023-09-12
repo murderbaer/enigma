@@ -1,16 +1,12 @@
 #include "../unity/unity.h"
-#include "cliTest.h"
-#include "helperTest.h"
-#include "mathTest.h"
+#include "exampleTest.h"
 
-void setUp() {}
+void setUp(void) {}
 
-void tearDown() {}
+void tearDown(void) {}
 
-int main() {
+int main(void) {
     UNITY_BEGIN();
-    runMathTests();
-    runCliTests();
-    runHelperTest();
+    runExampleTest();
     return UNITY_END();
 }

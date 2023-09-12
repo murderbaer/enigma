@@ -6,7 +6,7 @@ OBJ_DIR = obj
 BIN_DIR = bin
 
 # set up modules
-MODULES = enigma math helper cli
+MODULES = example_module
 
 # set up source files
 SRC = $(foreach module, $(MODULES), $(wildcard $(SRC_DIR)/$(module)/*.c)) $(wildcard $(SRC_DIR)/*.c)

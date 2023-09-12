@@ -4,6 +4,10 @@ default:
   #   - apt-get update
   #   - apt-get install -y build-essential
 
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  GIT_SUBMODULE_FORCE_HTTPS: "true"
+
 stages:
   - build
   - test

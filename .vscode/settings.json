@@ -1,18 +1,7 @@
 {
     "files.associations": {
-        "stdio.h": "c",
-        "rotor.h": "c",
-        "cli.h": "c",
-        "math.h": "c",
-        "helper.h": "c",
-        "enigma.h": "c",
-        "mutex": "c",
-        "valarray": "c",
-        "array": "c",
-        "string_view": "c",
-        "format": "c",
-        "initializer_list": "c",
-        "span": "c",
-        "reflector.h": "c"
+        "*.embeddedhtml": "html",
+        "exampletest.h": "c",
+        "unity.h": "c"
     }
 }

@@ -1,13 +1,13 @@
-PROJECT_NAME = skeleton
+PROJECT_NAME = enigma
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Wstrict-prototypes -pedantic -std=c99
+CFLAGS = -Wall -Wextra -Wstrict-prototypes -std=c99
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
 
 # set up modules
-MODULES = example_module
+MODULES = rotor ukw
 
 # set up source files
 SRC = $(foreach module, $(MODULES), $(wildcard $(SRC_DIR)/$(module)/*.c)) $(wildcard $(SRC_DIR)/*.c)
@@ -24,7 +24,7 @@ TESTS = $(wildcard $(TEST_DIR)/src/*.c)
 
 all: release
 
-release: CFLAGS += -Werror -O3
+release: CFLAGS += -Werror -O3 -pedantic
 release: $(PROJECT_NAME)
 
 $(PROJECT_NAME): $(OBJ)
@@ -39,6 +39,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 # debug target, maybe use debug flags instead of manipulating CFLAGS
 debug: CFLAGS += -DDEBUG -g
 debug: $(PROJECT_NAME)
+
+run_debug: debug
+	./$(BIN_DIR)/$(PROJECT_NAME)
 
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)

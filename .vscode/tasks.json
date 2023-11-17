@@ -17,7 +17,7 @@
             "label": "run make test",
             "command": "/usr/bin/make",
             "args": [
-                "test"
+                "enigma"
             ],
             "problemMatcher": [],
         }

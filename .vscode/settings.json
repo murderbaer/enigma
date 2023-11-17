@@ -2,6 +2,9 @@
     "files.associations": {
         "*.embeddedhtml": "html",
         "exampletest.h": "c",
-        "unity.h": "c"
+        "unity.h": "c",
+        "rotor.h": "c",
+        "stdlib.h": "c",
+        "string.h": "c"
     }
 }

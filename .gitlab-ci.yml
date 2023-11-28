@@ -14,7 +14,7 @@ stages:
 
 build:
   tags:
-    - linux
+    - linux-docker
   script:
     - make
 

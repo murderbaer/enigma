@@ -9,7 +9,8 @@ int main(void) {
     Rotor *rotorThree = create_rotor(ROTOR_III, ROTOR_III_INV);
     Rotor *reflector = create_rotor(UKW_B, UKW_B);
 
-    int int_array[3] = {0};
+    int int_array[3] = {1,1,1};
+
 
     for (int i = 0; i < 3; i++) {
         rotorOne->position++;

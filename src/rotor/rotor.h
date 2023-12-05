@@ -12,13 +12,18 @@
 
 #define UKW_B "YRUHQSLDPXNGOKMIEBFZCWVJAT"
 
-typedef struct {
+typedef struct
+{
     int wiring[26];
     int inverse_wiring[26];
     int position;
-    int notch;
+    int *notch;
+    int notch_count;
 } Rotor;
 
-Rotor *create_rotor(char *wiring, char *inverse_wiring, char notch);
+Rotor *create_one_notch_rotor(char *wiring, char *inverse_wiring, char notch);
+Rotor *create_two_notch_rotor(char *wiring, char *inverse_wiring, char notch1,
+                              char notch2);
 int traverse_rotor(Rotor *rotor, int character);
 int traverse_rotor_inverse(Rotor *rotor, int character);
+int should_rotate(Rotor *rotor);

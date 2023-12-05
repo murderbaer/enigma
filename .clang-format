@@ -1,5 +1,8 @@
 BasedOnStyle: LLVM
 IndentWidth: 4
-ColumnLimit: 0
-AllowAllParametersOfDeclarationOnNextLine: false
-StrictMode: true
+AlignConsecutiveAssignments: true
+AlignEscapedNewlines: Left
+AlignTrailingComments: Always
+BreakBeforeBraces: Allman
+ColumnLimit: 80
+MaxEmptyLinesToKeep: 1

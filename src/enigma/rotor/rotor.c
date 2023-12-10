@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -66,6 +67,47 @@ Rotor *create_two_notch_rotor(char *wiring, char *inverse_wiring, char notch1,
     rotor->notch[1]    = notch2 - 'A';
 
     return rotor;
+}
+
+Rotor *create_rotor(int type)
+{
+    printf("Rotor as int type%d", type);
+
+    switch (type)
+    {
+    case 1:
+        return create_one_notch_rotor(ROTOR_I, ROTOR_I_INV, ROTOR_I_NOTCH);
+        break;
+    case 2:
+        return create_one_notch_rotor(ROTOR_II, ROTOR_II_INV, ROTOR_II_NOTCH);
+        break;
+    case 3:
+        return create_one_notch_rotor(ROTOR_III, ROTOR_III_INV,
+                                      ROTOR_III_NOTCH);
+        break;
+    case 4:
+        return create_one_notch_rotor(ROTOR_IV, ROTOR_IV_INV, ROTOR_IV_NOTCH);
+        break;
+    case 5:
+        return create_one_notch_rotor(ROTOR_V, ROTOR_V_INV, ROTOR_V_NOTCH);
+        break;
+    case 6:
+        return create_two_notch_rotor(ROTOR_VI, ROTOR_VI_INV,
+                                      ROTOR_VI_NOTCH_ONE, ROTOR_VI_NOTCH_TWO);
+        break;
+    case 7:
+        return create_two_notch_rotor(ROTOR_VII, ROTOR_VII_INV,
+                                      ROTOR_VII_NOTCH_ONE, ROTOR_VII_NOTCH_TWO);
+        break;
+    case 8:
+        return create_two_notch_rotor(ROTOR_VIII, ROTOR_VIII_INV,
+                                      ROTOR_VIII_NOTCH_ONE,
+                                      ROTOR_VIII_NOTCH_TWO);
+        break;
+    default:
+        printf("Error, Rotor defintion not found");
+        exit(1);
+    }
 }
 
 int traverse_rotor(Rotor *rotor, int character)

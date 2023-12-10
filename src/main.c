@@ -3,8 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "rotor/rotor.h"
-#include "ukw/ukw.h"
+#include "cli/cli.h"
+#include "enigma/enigma.h"
+#include "enigma/plugboard/plugboard.h"
+#include "enigma/reflector/reflector.h"
+#include "enigma/rotor/rotor.h"
 
 typedef struct SIZED_INT_ARRAY
 {
@@ -28,25 +31,21 @@ SIZED_INT_ARRAY string_to_int_array(char *string)
 
 int main(void)
 {
-    int notches[] = {
-        ('Q' - 'A'),
-        ('E' - 'A'),
-        ('V' - 'A'),
-    };
-
-    Rotor *rotorOne   = create_one_notch_rotor(ROTOR_I, ROTOR_I_INV, 'Q');
-    Rotor *rotorTwo   = create_one_notch_rotor(ROTOR_II, ROTOR_II_INV, 'E');
-    Rotor *rotorThree = create_one_notch_rotor(ROTOR_III, ROTOR_III_INV, 'V');
-    UKW *reflector    = create_ukw(UKW_B);
 
     char input[1000];
     printf("Plain text: ");
-    scanf("%[^\n]s", input);
+    fgets(input, 1000, stdin);
     SIZED_INT_ARRAY array_with_size = string_to_int_array(input);
     int *int_array                  = array_with_size.array;
     int array_size                  = array_with_size.size;
     char *output                    = malloc(array_size * sizeof(char));
     int real_size_of_output         = 0;
+    Enigma *enigma                  = query_input();
+    Rotor *rotorOne                 = enigma->rotor_one;
+    Rotor *rotorTwo                 = enigma->rotor_two;
+    Rotor *rotorThree               = enigma->rotor_three;
+    Rotor *rotorFour                = enigma->rotor_four;
+    Reflector *reflector            = enigma->reflector;
 
     for (int i = 0; i < array_size; i++)
     {

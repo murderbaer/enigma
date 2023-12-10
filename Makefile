@@ -6,8 +6,8 @@ SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
 
-# set up modules
-MODULES = rotor ukw
+# set up modules 
+MODULES = enigma/rotor enigma/plugboard enigma/reflector enigma cli
 
 # set up source files
 SRC = $(foreach module, $(MODULES), $(wildcard $(SRC_DIR)/$(module)/*.c)) $(wildcard $(SRC_DIR)/*.c)

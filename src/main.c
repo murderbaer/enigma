@@ -46,6 +46,12 @@ int main(void)
     Rotor *rotorThree               = enigma->rotor_three;
     Rotor *rotorFour                = enigma->rotor_four;
     Reflector *reflector            = enigma->reflector;
+    Plugboard *plugboard            = enigma->plugboard;
+
+    for (int i = 0; i < array_size; i++)
+    {
+        int_array[i] = plugboard->plugboard_data[int_array[i]];
+    }
 
     for (int i = 0; i < array_size; i++)
     {
@@ -69,18 +75,23 @@ int main(void)
         character     = traverse_rotor_inverse(rotorTwo, character);
         character     = traverse_rotor_inverse(rotorOne, character);
 
-        output[real_size_of_output] = character + 'a';
+        output[real_size_of_output] = character;
         real_size_of_output++;
     }
 
     for (int i = 0; i < real_size_of_output; i++)
+    {
+        output[i] = plugboard->plugboard_data[output[i]];
+    }
+
+    for (int i = 0; i < real_size_of_output - 1; i++)
     {
         if (i % 5 == 0 && i != 0)
         {
             printf(" ");
         }
 
-        printf("%c", output[i]);
+        printf("%c", output[i] + 'A');
     }
 
     printf("\n");

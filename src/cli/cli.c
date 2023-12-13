@@ -5,8 +5,8 @@
 #include "../enigma/enigma.h"
 #include "../enigma/reflector/reflector.h"
 #include "../enigma/rotor/rotor.h"
-#include "cli.h"
 #include "../helper/helper.h"
+#include "cli.h"
 
 #define INPUT_BUFFER_SIZE 50
 
@@ -20,7 +20,7 @@ Enigma *query_input()
     printf("First Rotor offset (0-25): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
     rotorOne->offset = get_number_from_string(input);
-    printf("Offset %d", rotorOne->offset); 
+    printf("Offset %d", rotorOne->offset);
 
     printf("Second Rotor (1, 2, 3, 4, 5, 6, 7): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
@@ -48,8 +48,8 @@ Enigma *query_input()
     enigma->rotor_one   = rotorOne;
     enigma->rotor_two   = rotorTwo;
     enigma->rotor_three = rotorThree;
-    // enigma->plugboard   = plugboard;
-    enigma->reflector = reflector;
+    enigma->plugboard   = plugboard;
+    enigma->reflector   = reflector;
 
     return enigma;
 }

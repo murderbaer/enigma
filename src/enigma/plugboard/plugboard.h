@@ -1,7 +1,7 @@
 #pragma once
 
 typedef struct Plugboard {
-    int plugboard[26];
+    int *plugboard_data;
 } Plugboard;
 
 Plugboard *create_plugboard(char* input);

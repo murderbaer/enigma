@@ -8,7 +8,7 @@
 #include "cli.h"
 #include "../helper/helper.h"
 
-#define INPUT_BUFFER_SIZE 200
+#define INPUT_BUFFER_SIZE 50
 
 Enigma *query_input()
 {

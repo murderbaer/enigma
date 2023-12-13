@@ -6,3 +6,4 @@ AlignTrailingComments: Always
 BreakBeforeBraces: Allman
 ColumnLimit: 80
 MaxEmptyLinesToKeep: 1
+MethodCase: lower_case

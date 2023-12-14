@@ -31,7 +31,6 @@ SIZED_INT_ARRAY string_to_int_array(char *string)
 
 int main(void)
 {
-
     char input[1000];
     printf("Plain text: ");
     fgets(input, 1000, stdin);
@@ -44,9 +43,9 @@ int main(void)
     Rotor *rotorOne                 = enigma->rotor_one;
     Rotor *rotorTwo                 = enigma->rotor_two;
     Rotor *rotorThree               = enigma->rotor_three;
-    Rotor *rotorFour                = enigma->rotor_four;
-    Reflector *reflector            = enigma->reflector;
-    Plugboard *plugboard            = enigma->plugboard;
+    //    Rotor *rotorFour                = enigma->rotor_four;
+    Reflector *reflector = enigma->reflector;
+    Plugboard *plugboard = enigma->plugboard;
 
     for (int i = 0; i < array_size; i++)
     {

@@ -29,7 +29,8 @@ int *char_to_int_array(char *string)
     return int_array;
 }
 
-Rotor *create_one_notch_rotor(char *wiring, char *inverse_wiring, char notch)
+Rotor *create_one_notch_rotor(char *wiring, char *inverse_wiring, char notch,
+                              int offset)
 {
     Rotor *rotor             = (Rotor *)malloc(sizeof(Rotor));
     int wiring_in_number[26] = {0};
@@ -40,10 +41,16 @@ Rotor *create_one_notch_rotor(char *wiring, char *inverse_wiring, char notch)
         rotor->inverse_wiring[i] = inverse_wiring[i] - 'A';
     }
 
-    rotor->position    = 0;
+    rotor->position = 26 - offset;
+    printf("Offset: %d\n", offset);
     rotor->notch_count = 1;
-    rotor->notch       = malloc(1 * sizeof(int));
-    rotor->notch[0]    = notch - 'A';
+    rotor->notch       = malloc(sizeof(int));
+    rotor->notch[0]    = (notch - 'A' - offset) % 26;
+
+    if (rotor->notch[0] < 0)
+    {
+        rotor->notch[0] += 26;
+    }
 
     return rotor;
 }
@@ -69,27 +76,29 @@ Rotor *create_two_notch_rotor(char *wiring, char *inverse_wiring, char notch1,
     return rotor;
 }
 
-Rotor *create_rotor(int type)
+Rotor *create_rotor(int type, int offset)
 {
-    printf("Rotor as int type%d", type);
-
     switch (type)
     {
     case 1:
-        return create_one_notch_rotor(ROTOR_I, ROTOR_I_INV, ROTOR_I_NOTCH);
+        return create_one_notch_rotor(ROTOR_I, ROTOR_I_INV, ROTOR_I_NOTCH,
+                                      offset);
         break;
     case 2:
-        return create_one_notch_rotor(ROTOR_II, ROTOR_II_INV, ROTOR_II_NOTCH);
+        return create_one_notch_rotor(ROTOR_II, ROTOR_II_INV, ROTOR_II_NOTCH,
+                                      offset);
         break;
     case 3:
-        return create_one_notch_rotor(ROTOR_III, ROTOR_III_INV,
-                                      ROTOR_III_NOTCH);
+        return create_one_notch_rotor(ROTOR_III, ROTOR_III_INV, ROTOR_III_NOTCH,
+                                      offset);
         break;
     case 4:
-        return create_one_notch_rotor(ROTOR_IV, ROTOR_IV_INV, ROTOR_IV_NOTCH);
+        return create_one_notch_rotor(ROTOR_IV, ROTOR_IV_INV, ROTOR_IV_NOTCH,
+                                      offset);
         break;
     case 5:
-        return create_one_notch_rotor(ROTOR_V, ROTOR_V_INV, ROTOR_V_NOTCH);
+        return create_one_notch_rotor(ROTOR_V, ROTOR_V_INV, ROTOR_V_NOTCH,
+                                      offset);
         break;
     case 6:
         return create_two_notch_rotor(ROTOR_VI, ROTOR_VI_INV,

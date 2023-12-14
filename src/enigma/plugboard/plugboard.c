@@ -36,8 +36,6 @@ Plugboard *create_plugboard(char *input)
         {
             plugboard->plugboard_data[i] = plugboard_data[i];
         }
-
-        printf("%d ", plugboard->plugboard_data[i]);
     }
 
     return plugboard;

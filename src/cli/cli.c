@@ -13,28 +13,28 @@
 Enigma *query_input()
 {
     char input[INPUT_BUFFER_SIZE];
+    char secondary_input[INPUT_BUFFER_SIZE];
 
     printf("First Rotor (1, 2, 3, 4, 5, 6, 7): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
-    Rotor *rotorOne = create_rotor(input[0] - '0');
     printf("First Rotor offset (0-25): ");
-    fgets(input, INPUT_BUFFER_SIZE, stdin);
-    rotorOne->offset = get_number_from_string(input);
-    printf("Offset %d", rotorOne->offset);
+    fgets(secondary_input, INPUT_BUFFER_SIZE, stdin);
+    Rotor *rotorOne =
+        create_rotor(input[0] - '0', get_number_from_string(secondary_input));
 
     printf("Second Rotor (1, 2, 3, 4, 5, 6, 7): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
-    Rotor *rotorTwo = create_rotor(input[0] - '0');
     printf("Second Rotor offset (0-25): ");
-    fgets(input, INPUT_BUFFER_SIZE, stdin);
-    rotorTwo->offset = get_number_from_string(input);
+    fgets(secondary_input, INPUT_BUFFER_SIZE, stdin);
+    Rotor *rotorTwo =
+        create_rotor(input[0] - '0', get_number_from_string(secondary_input));
 
     printf("Third Rotor (1, 2, 3, 4, 5, 6, 7): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
-    Rotor *rotorThree = create_rotor(input[0] - '0');
     printf("Third Rotor offset (0-25): ");
-    fgets(input, INPUT_BUFFER_SIZE, stdin);
-    rotorThree->offset = get_number_from_string(input);
+    fgets(secondary_input, INPUT_BUFFER_SIZE, stdin);
+    Rotor *rotorThree =
+        create_rotor(input[0] - '0', get_number_from_string(secondary_input));
 
     printf("Reflector (B, C): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);

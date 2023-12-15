@@ -14,33 +14,40 @@ Enigma *query_input()
 {
     char input[INPUT_BUFFER_SIZE];
     char secondary_input[INPUT_BUFFER_SIZE];
+    char ternary_input[INPUT_BUFFER_SIZE];
 
-    printf("First Rotor (1, 2, 3, 4, 5, 6, 7): ");
+    printf("First Rotor (1, 2, 3, 4, 5, 6, 7):   ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
-    printf("First Rotor offset (0-25): ");
+    printf("First Rotor offset ('A' or 'B' etc): ");
     fgets(secondary_input, INPUT_BUFFER_SIZE, stdin);
-    Rotor *rotorOne =
-        create_rotor(input[0] - '0', get_number_from_string(secondary_input));
+    printf("Position ('A' or 'B' etc): ");
+    fgets(ternary_input, INPUT_BUFFER_SIZE, stdin);
+    Rotor *rotorOne = create_rotor(input[0] - '0', ternary_input[0] - 'A',
+                                   secondary_input[0] - 'A');
 
-    printf("Second Rotor (1, 2, 3, 4, 5, 6, 7): ");
+    printf("Second Rotor (1, 2, 3, 4, 5, 6, 7):  ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
-    printf("Second Rotor offset (0-25): ");
+    printf("First Rotor offset ('A' or 'B' etc): ");
     fgets(secondary_input, INPUT_BUFFER_SIZE, stdin);
-    Rotor *rotorTwo =
-        create_rotor(input[0] - '0', get_number_from_string(secondary_input));
+    printf("Position ('A' or 'B' etc):           ");
+    fgets(ternary_input, INPUT_BUFFER_SIZE, stdin);
+    Rotor *rotorTwo = create_rotor(input[0] - '0', ternary_input[0] - 'A',
+                                   secondary_input[0] - 'A');
 
-    printf("Third Rotor (1, 2, 3, 4, 5, 6, 7): ");
+    printf("Third Rotor (1, 2, 3, 4, 5, 6, 7):   ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
-    printf("Third Rotor offset (0-25): ");
+    printf("First Rotor offset ('A' or 'B' etc): ");
     fgets(secondary_input, INPUT_BUFFER_SIZE, stdin);
-    Rotor *rotorThree =
-        create_rotor(input[0] - '0', get_number_from_string(secondary_input));
+    printf("Position ('A' or 'B' etc):           ");
+    fgets(ternary_input, INPUT_BUFFER_SIZE, stdin);
+    Rotor *rotorThree = create_rotor(input[0] - '0', ternary_input[0] - 'A',
+                                     secondary_input[0] - 'A');
 
-    printf("Reflector (B, C): ");
+    printf("Reflector (B, C):                    ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
     Reflector *reflector = create_reflector_by_type(input[0]);
 
-    printf("Plugboard (e.g. AB CD EF): ");
+    printf("Plugboard (e.g. AB CD EF):           ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
     Plugboard *plugboard = create_plugboard(input);
 

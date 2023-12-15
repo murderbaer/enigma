@@ -87,7 +87,7 @@ int main(void)
     {
         if (i % 5 == 0 && i != 0)
         {
-            printf(" ");
+            //           printf(" ");
         }
 
         printf("%c", output[i] + 'A');

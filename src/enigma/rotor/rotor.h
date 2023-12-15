@@ -39,10 +39,10 @@ typedef struct
     int offset;
 } Rotor;
 
-Rotor *create_one_notch_rotor(char *wiring, char *inverse_wiring, char notch, int offset);
+Rotor *create_one_notch_rotor(char *wiring, char *inverse_wiring, char notch, int position, int offset);
 Rotor *create_two_notch_rotor(char *wiring, char *inverse_wiring, char notch1,
                               char notch2);
-Rotor *create_rotor(int type, int offset);
+Rotor *create_rotor(int type, int postion, int offset);
 int traverse_rotor(Rotor *rotor, int character);
 int traverse_rotor_inverse(Rotor *rotor, int character);
 int should_rotate(Rotor *rotor);

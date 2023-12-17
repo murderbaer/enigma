@@ -22,4 +22,4 @@ test:
   tags:
     - linux
   script:
-    - make run_test
+    - make test

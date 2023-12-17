@@ -26,7 +26,7 @@ typedef struct CLI_OPTIONS
     int help;
 } CLI_OPTIONS;
 
-void print_help()
+void print_help(void)
 {
     printf("Usage: enigma [OPTION]...\n");
     printf("Encrypts/decrypts text using the Enigma machine\n");

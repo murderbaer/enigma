@@ -5,9 +5,8 @@
 
 Reflector *create_reflector(char *wiring)
 {
-    Reflector *ukw           = (Reflector *)malloc(sizeof(Reflector));
-    int wiring_in_number[26] = {0};
-    ukw->wiring              = malloc(26 * sizeof(char));
+    Reflector *ukw = (Reflector *)malloc(sizeof(Reflector));
+    ukw->wiring    = malloc(26 * sizeof(char));
 
     for (int i = 0; i < 26; i++)
     {

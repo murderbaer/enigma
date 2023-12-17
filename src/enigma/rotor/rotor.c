@@ -32,8 +32,7 @@ int *char_to_int_array(char *string)
 Rotor *create_one_notch_rotor(char *wiring, char *inverse_wiring, char notch,
                               int position, int offset)
 {
-    Rotor *rotor             = (Rotor *)malloc(sizeof(Rotor));
-    int wiring_in_number[26] = {0};
+    Rotor *rotor = (Rotor *)malloc(sizeof(Rotor));
 
     for (int i = 0; i < (int)strlen(wiring); i++)
     {
@@ -57,8 +56,7 @@ Rotor *create_one_notch_rotor(char *wiring, char *inverse_wiring, char notch,
 Rotor *create_two_notch_rotor(char *wiring, char *inverse_wiring, char notch1,
                               char notch2)
 {
-    Rotor *rotor             = (Rotor *)malloc(sizeof(Rotor));
-    int wiring_in_number[26] = {0};
+    Rotor *rotor = (Rotor *)malloc(sizeof(Rotor));
 
     for (int i = 0; i < (int)strlen(wiring); i++)
     {

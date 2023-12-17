@@ -52,7 +52,7 @@ test: CFLAGS += -DTEST -I$(UNITY_DIR)/src
 test: $(TEST_BIN)
 	./$(TEST_BIN)
 
-$(TEST_BIN): $(TEST_OBJ)
+$(TEST_BIN): $(TEST_OBJ) $(filter-out $(OBJ_DIR)/main.o, $(OBJ))
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -o $@ $^
 

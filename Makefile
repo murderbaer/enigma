@@ -13,18 +13,21 @@ MODULES = enigma/rotor enigma/plugboard enigma/reflector enigma helper cli
 SRC = $(foreach module, $(MODULES), $(wildcard $(SRC_DIR)/$(module)/*.c)) $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
-# set up unity testing framework
-UNITY_PATH = libraries/Unity/src
-UNITY_SRC = $(wildcard $(UNITY_PATH)/*.c)
+UNITY_DIR = libraries/Unity
+UNITY_SRC = $(wildcard $(UNITY_DIR)/src/*.c)
 
 TEST_DIR = test
-TESTS = $(wildcard $(TEST_DIR)/src/*.c)
+
+TEST_SRC = $(foreach module, $(MODULES), $(wildcard $(TEST_DIR)/$(module)/*.c)) $(wildcard $(TEST_DIR)/*.c)
+TEST_OBJ = $(patsubst $(TEST_DIR)/%.c, $(OBJ_DIR)/%.o, $(TEST_SRC))
+TEST_BIN = $(BIN_DIR)/test
+
+
 
 #############################################
 
 all: release
 
-release: CFLAGS += -Werror -O3 -pedantic
 release: $(PROJECT_NAME)
 
 $(PROJECT_NAME): $(OBJ)
@@ -40,22 +43,35 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 debug: CFLAGS += -DDEBUG -g
 debug: $(PROJECT_NAME)
 
-run_debug: debug
-	./$(BIN_DIR)/$(PROJECT_NAME)
-
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
 run: $(PROJECT_NAME)
 	./$(BIN_DIR)/$(PROJECT_NAME)
 
-# unity testing framework
-test: CFLAGS += -g
-test: $(TESTS) $(filter-out $(OBJ_DIR)/main.o, $(OBJ))
-	@mkdir -p $(BIN_DIR)
-	$(CC) $(CFLAGS) -I$(UNITY_PATH) -o $(BIN_DIR)/$@ $^ $(UNITY_SRC)
+test: CFLAGS += -DTEST -I$(UNITY_DIR)/src
+test: $(TEST_BIN)
+	./$(TEST_BIN)
 
-run_test: test
-	./$(BIN_DIR)/test
+$(TEST_BIN): $(TEST_OBJ) $(UNITY_SRC) $(OBJ : $(OBJ_DIR)/main.o=)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) -o $@ $^
+
+$(OBJ_DIR)/%.o: $(TEST_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(foreach module, $(MODULES), $(OBJ_DIR)/$(module))
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJ_DIR)/%.o: $(UNITY_DIR)/src/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(foreach module, $(MODULES), $(OBJ_DIR)/$(module))
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+
 
 .PHONY: all clean debug run test
+

@@ -1,13 +1,14 @@
 #include <unity.h>
 
-#include "exampleTest.h"
+#include "helper/helper.h"
 
 void setUp(void) {}
 
 void tearDown(void) {}
 
-int main(void) {
+int main(void)
+{
     UNITY_BEGIN();
-    runExampleTest();
+    run_helper_tests();
     return UNITY_END();
 }

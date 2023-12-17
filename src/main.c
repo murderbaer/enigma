@@ -29,7 +29,7 @@ SIZED_INT_ARRAY string_to_int_array(char *string)
     return array_with_size;
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
     char input[1000];
     printf("Plain text: ");
@@ -39,7 +39,7 @@ int main(void)
     int array_size                  = array_with_size.size;
     char *output                    = malloc(array_size * sizeof(char));
     int real_size_of_output         = 0;
-    Enigma *enigma                  = query_input();
+    Enigma *enigma                  = query_input(argc, argv);
     Rotor *rotorOne                 = enigma->rotor_one;
     Rotor *rotorTwo                 = enigma->rotor_two;
     Rotor *rotorThree               = enigma->rotor_three;
@@ -80,7 +80,7 @@ int main(void)
 
     for (int i = 0; i < real_size_of_output; i++)
     {
-        output[i] = plugboard->plugboard_data[output[i]];
+        output[i] = plugboard->plugboard_data[(int)output[i]];
     }
 
     for (int i = 0; i < real_size_of_output - 1; i++)

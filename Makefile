@@ -42,6 +42,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 debug: CFLAGS += -DDEBUG -g
 debug: $(PROJECT_NAME)
 
+run_debug: debug
+	./$(BIN_DIR)/$(PROJECT_NAME)
+
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)
 

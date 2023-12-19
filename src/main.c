@@ -15,37 +15,29 @@ typedef struct SIZED_INT_ARRAY
     int size;
 } SIZED_INT_ARRAY;
 
-SIZED_INT_ARRAY string_to_int_array(char *string)
-{
-    SIZED_INT_ARRAY array_with_size;
-    array_with_size.size  = strlen(string);
-    array_with_size.array = malloc(array_with_size.size * sizeof(int));
-
-    for (int i = 0; i < array_with_size.size; i++)
-    {
-        array_with_size.array[i] = string[i] - 'A';
-    }
-
-    return array_with_size;
-}
-
 int main(int argc, char **argv)
 {
-    char input[1000];
-    printf("Plain text: ");
-    fgets(input, 1000, stdin);
-    SIZED_INT_ARRAY array_with_size = string_to_int_array(input);
-    int *int_array                  = array_with_size.array;
-    int array_size                  = array_with_size.size;
-    char *output                    = malloc(array_size * sizeof(char));
-    int real_size_of_output         = 0;
-    Enigma *enigma                  = query_input(argc, argv);
-    Rotor *rotorOne                 = enigma->rotor_one;
-    Rotor *rotorTwo                 = enigma->rotor_two;
-    Rotor *rotorThree               = enigma->rotor_three;
+
+    Enigma *enigma = query_input(argc, argv);
+    char *input    = enigma->plaintext;
+    int array_size = strlen(input);
+    int *int_array = malloc(array_size * sizeof(int));
+
+    for (int i = 0; i < array_size; i++)
+    {
+        int_array[i] = input[i] - 'A';
+    }
+
+    char *output            = malloc(array_size * sizeof(char));
+    int real_size_of_output = 0;
+    Rotor *rotorOne         = enigma->rotor_one;
+    Rotor *rotorTwo         = enigma->rotor_two;
+    Rotor *rotorThree       = enigma->rotor_three;
     //    Rotor *rotorFour                = enigma->rotor_four;
     Reflector *reflector = enigma->reflector;
     Plugboard *plugboard = enigma->plugboard;
+
+    printf("Input: %s\n", input);
 
     for (int i = 0; i < array_size; i++)
     {
@@ -83,7 +75,7 @@ int main(int argc, char **argv)
         output[i] = plugboard->plugboard_data[(int)output[i]];
     }
 
-    for (int i = 0; i < real_size_of_output - 1; i++)
+    for (int i = 0; i < real_size_of_output; i++)
     {
         if (i % 5 == 0 && i != 0)
         {

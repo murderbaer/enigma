@@ -31,19 +31,20 @@ void print_help(void)
     printf("Usage: enigma [OPTION]...\n");
     printf("Encrypts/decrypts text using the Enigma machine\n");
     printf("\n");
-    printf("  -i, --interactive  interactive mode\n");
-    printf("  -h, --help         display this help and exit\n");
+    printf("  -i,  --interactive  interactive mode\n");
+    printf("  -h,  --help         display this help and exit\n");
     printf("\n");
     printf("Enigma options:\n");
-    printf("  -e, --enigma        Enigma type (M3, M4)\n");
-    printf("  -r1, --rotor-one    first rotor type (1, 2, 3, 4, 5, 6, 7)\n");
-    printf("  -r2, --rotor-two    second rotor type (1, 2, 3, 4, 5, 6, 7)\n");
-    printf("  -r3, --rotor-three  third rotor type (1, 2, 3, 4, 5, 6, 7)\n");
-    printf("  -r4, --rotor-four   fourth rotor type (1, 2, 3, 4, 5, 6, 7)\n");
-    printf("  -o, --offsets       rotor offset (ABC, AABC, etc)\n");
-    printf("  -p, --positions     rotor position (ABC, AABC, etc)\n");
-    printf("  -r, --reflector     reflector type (B, C)\n");
-    printf("  -b, --plugboard     plugboard (e.g. AB CD EF)\n");
+    printf("  -e,  --enigma        Enigma type (M3, M4)\n");
+    printf("  -r1, --rotor-one     first rotor type (1, 2, 3, 4, 5, 6, 7)\n");
+    printf("  -r2, --rotor-two     second rotor type (1, 2, 3, 4, 5, 6, 7)\n");
+    printf("  -r3, --rotor-three   third rotor type (1, 2, 3, 4, 5, 6, 7)\n");
+    printf("  -r4, --rotor-four    fourth rotor type (1, 2, 3, 4, 5, 6, 7)\n");
+    printf("  -o,  --offsets       rotor offset (ABC, AABC, etc)\n");
+    printf("  -p,  --positions     rotor position (ABC, AABC, etc)\n");
+    printf("  -r,  --reflector     reflector type (B, C)\n");
+    printf("  -b,  --plugboard     plugboard (e.g. AB CD EF)\n");
+    printf("  -t,  --plaintext     plaintext (A secret Text)\n");
     printf("\n");
     printf("Examples:\n");
     printf("  enigma -i\n");
@@ -62,76 +63,89 @@ void init_cli_options(CLI_OPTIONS *options)
     options->rotor_positions  = NULL;
     options->reflector_type   = NULL;
     options->plugboard        = NULL;
-    options->interactive      = 0;
-    options->help             = 0;
+    options->interactive      = -1;
+    options->help             = -1;
+}
+
+int string_equals(const char *str1, const char *str2)
+{
+    return strcmp(str1, str2) == 0;
 }
 
 void save_input(CLI_OPTIONS *options, int argc, char **argv)
 {
-    int i = 0;
+    int i = 1;
 
     while (i < argc)
     {
-        if (strcmp(HELP, argv[i]) || strcmp(HELP_SHORT, argv[i]))
+        printf("argv[%d]: %s\n", i, argv[i]);
+
+        if (string_equals(HELP, argv[i]) || string_equals(HELP_SHORT, argv[i]))
         {
+            printf("Help\n");
             options->help = 1;
         }
-        else if (strcmp(INTERACTIVE, argv[i]) ||
-                 strcmp(INTERACTIVE_SHORT, argv[i]))
+        else if (string_equals(INTERACTIVE, argv[i]) ||
+                 string_equals(INTERACTIVE_SHORT, argv[i]))
         {
             options->interactive = 1;
         }
-        else if (strcmp(ENIGMA, argv[i]) || strcmp(ENIGMA_SHORT, argv[i]))
+        else if (string_equals(ENIGMA, argv[i]) ||
+                 string_equals(ENIGMA_SHORT, argv[i]))
         {
             options->enigma_type = argv[i + 1];
             i++;
         }
-        else if (strcmp(ROTOR_ONE, argv[i]) || strcmp(ROTOR_ONE_SHORT, argv[i]))
+        else if (string_equals(ROTOR_ONE, argv[i]) ||
+                 string_equals(ROTOR_ONE_SHORT, argv[i]))
         {
             options->rotor_one_type = argv[i + 1];
             i++;
         }
-        else if (strcmp(ROTOR_TWO, argv[i]) || strcmp(ROTOR_TWO_SHORT, argv[i]))
+        else if (string_equals(ROTOR_TWO, argv[i]) ||
+                 string_equals(ROTOR_TWO_SHORT, argv[i]))
         {
             options->rotor_two_type = argv[i + 1];
             i++;
         }
-        else if (strcmp(ROTOR_THREE, argv[i]) ||
-                 strcmp(ROTOR_THREE_SHORT, argv[i]))
+        else if (string_equals(ROTOR_THREE, argv[i]) ||
+                 string_equals(ROTOR_THREE_SHORT, argv[i]))
         {
             options->rotor_three_type = argv[i + 1];
             i++;
         }
-        else if (strcmp(ROTOR_FOUR, argv[i]) ||
-                 strcmp(ROTOR_FOUR_SHORT, argv[i]))
+        else if (string_equals(ROTOR_FOUR, argv[i]) ||
+                 string_equals(ROTOR_FOUR_SHORT, argv[i]))
         {
             options->rotor_four_type = argv[i + 1];
             i++;
         }
-        else if (strcmp(ROTOR_OFFSETS, argv[i]) ||
-                 strcmp(ROTOR_OFFSETS_SHORT, argv[i]))
+        else if (string_equals(ROTOR_OFFSETS, argv[i]) ||
+                 string_equals(ROTOR_OFFSETS_SHORT, argv[i]))
         {
             options->rotor_offsets = argv[i + 1];
             i++;
         }
-        else if (strcmp(ROTOR_POSITIONS, argv[i]) ||
-                 strcmp(ROTOR_POSITIONS_SHORT, argv[i]))
+        else if (string_equals(ROTOR_POSITIONS, argv[i]) ||
+                 string_equals(ROTOR_POSITIONS_SHORT, argv[i]))
         {
             options->rotor_positions = argv[i + 1];
             i++;
         }
-        else if (strcmp(REFLECTOR, argv[i]) || strcmp(REFLECTOR_SHORT, argv[i]))
+        else if (string_equals(REFLECTOR, argv[i]) ||
+                 string_equals(REFLECTOR_SHORT, argv[i]))
         {
             options->reflector_type = argv[i + 1];
             i++;
         }
-        else if (strcmp(PLUGBOARD, argv[i]) ||
-                 strcmp(PLUGBOARD_SHORT, argv[i]) == 0)
+        else if (string_equals(PLUGBOARD, argv[i]) ||
+                 string_equals(PLUGBOARD_SHORT, argv[i]))
         {
             options->plugboard = argv[i + 1];
             i++;
         }
-        else if (strcmp(PLAINTEXT, argv[i]) || strcmp(PLAINTEXT_SHORT, argv[i]))
+        else if (string_equals(PLAINTEXT, argv[i]) ||
+                 string_equals(PLAINTEXT_SHORT, argv[i]))
         {
             options->plaintext = argv[i + 1];
             i++;
@@ -141,21 +155,106 @@ void save_input(CLI_OPTIONS *options, int argc, char **argv)
             printf("Invalid option: %s\n", argv[i]);
             exit(1);
         }
+
+        i++;
+
+        if (i >= argc)
+        {
+            break;
+        }
     }
 }
 
+int validate_cli_options(CLI_OPTIONS *options)
+{
+    if (options->enigma_type == NULL)
+    {
+        printf("Enigma type is required\n");
+        return 1;
+    }
+
+    return 0;
+}
+
+int enigma_type_char_to_int(char *enigma_type)
+{
+    printf("Enigma type: %s\n", enigma_type);
+
+    if (strcmp("M3", enigma_type) == 0)
+    {
+        return M3;
+    }
+    else if (strcmp("M4", enigma_type) == 0)
+    {
+        return M4;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+Enigma *querry_input_non_interactive(CLI_OPTIONS *options)
+{
+    Enigma *enigma = (Enigma *)malloc(sizeof(Enigma));
+
+    if (validate_cli_options(options) != 0)
+    {
+        // printf("Invalid options\n");
+        exit(1);
+    }
+
+    enigma->type        = enigma_type_char_to_int(options->enigma_type);
+    enigma->rotor_one   = create_rotor(options->rotor_one_type[0] - '0',
+                                       options->rotor_positions[0] - 'A',
+                                       options->rotor_offsets[0] - 'A');
+    enigma->rotor_two   = create_rotor(options->rotor_two_type[0] - '0',
+                                       options->rotor_positions[1] - 'A',
+                                       options->rotor_offsets[1] - 'A');
+    enigma->rotor_three = create_rotor(options->rotor_three_type[0] - '0',
+                                       options->rotor_positions[2] - 'A',
+                                       options->rotor_offsets[2] - 'A');
+    if (enigma->type == M4)
+    {
+        enigma->rotor_four = create_rotor(options->rotor_four_type[0] - '0',
+                                          options->rotor_positions[3] - 'A',
+                                          options->rotor_offsets[3] - 'A');
+    }
+
+    enigma->reflector = create_reflector_by_type(options->reflector_type[0]);
+    if (options->plugboard == NULL)
+    {
+        enigma->plugboard = create_plugboard("");
+    }
+    else
+    {
+        enigma->plugboard = create_plugboard(options->plugboard);
+    }
+    enigma->plaintext = options->plaintext;
+
+    return enigma;
+}
 Enigma *query_input(int argc, char **argv)
 {
     CLI_OPTIONS *options = malloc(sizeof(CLI_OPTIONS));
     init_cli_options(options);
     save_input(options, argc, argv);
-    if (options->help)
+
+    if (options->help == 1)
     {
         print_help();
         exit(0);
     }
 
-    return NULL;
+    // if (options->interactive)
+    // {
+    //     return query_input_interactive();
+    // }
+    // elseconst char *restrict format, ...
+
+    return querry_input_non_interactive(options);
+
+    // return NULL;
 }
 
 // Enigma *query_input()

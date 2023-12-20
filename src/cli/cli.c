@@ -173,7 +173,6 @@ int validate_cli_options(CLI_OPTIONS *options)
 {
     if (options->enigma_type == NULL)
     {
-        printf("Enigma type is required\n");
         return 1;
     }
 
@@ -182,8 +181,6 @@ int validate_cli_options(CLI_OPTIONS *options)
 
 int enigma_type_char_to_int(char *enigma_type)
 {
-    printf("Enigma type: %s\n", enigma_type);
-
     if (strcmp("M3", enigma_type) == 0)
     {
         return M3;

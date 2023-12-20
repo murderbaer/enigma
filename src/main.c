@@ -30,12 +30,30 @@ int main(int argc, char **argv)
 
     char *output            = malloc(array_size * sizeof(char));
     int real_size_of_output = 0;
-    Rotor *rotorOne         = enigma->rotor_one;
-    Rotor *rotorTwo         = enigma->rotor_two;
-    Rotor *rotorThree       = enigma->rotor_three;
-    Rotor *rotorFour        = enigma->rotor_four;
-    Reflector *reflector    = enigma->reflector;
-    Plugboard *plugboard    = enigma->plugboard;
+
+
+        Rotor *rotorOne   = NULL;
+        Rotor *rotorTwo   = NULL;
+        Rotor *rotorThree = NULL;
+        Rotor *rotorFour  = NULL;
+
+    // TODO: This is a mess. Clean it up.
+    if (enigma->type == M4)
+    {
+        rotorOne   = enigma->rotor_four;
+        rotorTwo   = enigma->rotor_three;
+        rotorThree = enigma->rotor_two;
+        rotorFour  = enigma->rotor_one;
+    }
+    else
+    {
+        rotorOne   = enigma->rotor_three;
+        rotorTwo   = enigma->rotor_two;
+        rotorThree = enigma->rotor_one;
+    }
+
+    Reflector *reflector = enigma->reflector;
+    Plugboard *plugboard = enigma->plugboard;
 
     for (int i = 0; i < array_size; i++)
     {

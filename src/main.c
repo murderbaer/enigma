@@ -33,11 +33,9 @@ int main(int argc, char **argv)
     Rotor *rotorOne         = enigma->rotor_one;
     Rotor *rotorTwo         = enigma->rotor_two;
     Rotor *rotorThree       = enigma->rotor_three;
-    //    Rotor *rotorFour                = enigma->rotor_four;
-    Reflector *reflector = enigma->reflector;
-    Plugboard *plugboard = enigma->plugboard;
-
-    printf("Input: %s\n", input);
+    Rotor *rotorFour        = enigma->rotor_four;
+    Reflector *reflector    = enigma->reflector;
+    Plugboard *plugboard    = enigma->plugboard;
 
     for (int i = 0; i < array_size; i++)
     {
@@ -55,6 +53,11 @@ int main(int argc, char **argv)
             if (should_rotate(rotorTwo))
             {
                 rotorThree->position = (rotorThree->position + 1) % 26;
+            }
+
+            if (enigma->type == M4 && should_rotate(rotorThree))
+            {
+                rotorFour->position = (rotorFour->position + 1) % 26;
             }
         }
 
@@ -75,11 +78,11 @@ int main(int argc, char **argv)
         output[i] = plugboard->plugboard_data[(int)output[i]];
     }
 
-    for (int i = 0; i < real_size_of_output; i++)
+    for (int i = 0; i < real_size_of_output - 1; i++)
     {
         if (i % 5 == 0 && i != 0)
         {
-            //           printf(" ");
+            printf(" ");
         }
 
         printf("%c", output[i] + 'A');

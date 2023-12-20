@@ -29,4 +29,4 @@ printf "reverse: Cybhertext FVWYT Expected Plaintext HALLO: Plaintext: "
     --ring-positions HAS \
     --rotor-positions OIJ \
     --reflector C \
-    --plaintext FVWYT
+    --plaintext HALLO

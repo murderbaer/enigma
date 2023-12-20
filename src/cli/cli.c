@@ -316,6 +316,12 @@ Enigma *query_input_interactive(void)
 
 Enigma *query_input(int argc, char **argv)
 {
+    if (argc == 1)
+    {
+        print_help();
+        exit(0);
+    }
+
     CLI_OPTIONS *options = malloc(sizeof(CLI_OPTIONS));
     init_cli_options(options);
     save_input(options, argc, argv);

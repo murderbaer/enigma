@@ -78,7 +78,7 @@ int main(int argc, char **argv)
         output[i] = plugboard->plugboard_data[(int)output[i]];
     }
 
-    for (int i = 0; i < real_size_of_output - 1; i++)
+    for (int i = 0; i < real_size_of_output; i++)
     {
         if (i % 5 == 0 && i != 0)
         {

@@ -16,7 +16,7 @@
 #define ROTOR_THREE_SHORT "-r3"
 #define ROTOR_FOUR "--rotor-four"
 #define ROTOR_FOUR_SHORT "-r4"
-#define ROTOR_OFFSETS "--rotor-offsets"
+#define ROTOR_OFFSETS "--ring-positions"
 #define ROTOR_OFFSETS_SHORT "-ro"
 #define ROTOR_POSITIONS "--rotor-positions"
 #define ROTOR_POSITIONS_SHORT "-rp"

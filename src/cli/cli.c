@@ -198,7 +198,7 @@ int enigma_type_char_to_int(char *enigma_type)
     }
 }
 
-Enigma *querry_input_non_interactive(CLI_OPTIONS *options)
+Enigma *query_input_none_interactive(CLI_OPTIONS *options)
 {
     Enigma *enigma = (Enigma *)malloc(sizeof(Enigma));
 
@@ -236,13 +236,16 @@ Enigma *querry_input_non_interactive(CLI_OPTIONS *options)
         enigma->plugboard = create_plugboard(options->plugboard);
     }
 
+    enigma->plaintext =
+        (char *)malloc(sizeof(char) * strlen(options->plaintext));
+
     memcpy(enigma->plaintext, options->plaintext,
            sizeof(char) * strlen(options->plaintext));
 
     return enigma;
 }
 
-Enigma *query_input_interactive()
+Enigma *query_input_interactive(void)
 {
     char input[INPUT_BUFFER_SIZE];
     char secondary_input[INPUT_BUFFER_SIZE];
@@ -262,6 +265,7 @@ Enigma *query_input_interactive()
     enigma->rotor_one = create_rotor(input[0] - '0', secondary_input[0] - 'A',
                                      ternary_input[0] - 'A');
 
+    printf("\n");
     printf("Second rotor type (1, 2, 3, 4, 5, 6, 7, 8): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
     printf("Second rotor position (A, B, C, etc): ");
@@ -270,6 +274,7 @@ Enigma *query_input_interactive()
     fgets(ternary_input, INPUT_BUFFER_SIZE, stdin);
     enigma->rotor_two = create_rotor(input[0] - '0', secondary_input[0] - 'A',
                                      ternary_input[0] - 'A');
+    printf("\n");
 
     printf("Third rotor type (1, 2, 3, 4, 5, 6, 7, 8): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
@@ -279,6 +284,7 @@ Enigma *query_input_interactive()
     fgets(ternary_input, INPUT_BUFFER_SIZE, stdin);
     enigma->rotor_three = create_rotor(input[0] - '0', secondary_input[0] - 'A',
                                        ternary_input[0] - 'A');
+    printf("\n");
 
     if (enigma->type == M4)
     {
@@ -290,19 +296,23 @@ Enigma *query_input_interactive()
         fgets(ternary_input, INPUT_BUFFER_SIZE, stdin);
         enigma->rotor_four = create_rotor(
             input[0] - '0', secondary_input[0] - 'A', ternary_input[0] - 'A');
+        printf("\n");
     }
 
     printf("Reflector type (B, C): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
     enigma->reflector = create_reflector_by_type(input[0]);
+    printf("\n");
 
     printf("Plugboard (e.g. AB CD EF): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
     enigma->plugboard = create_plugboard(input);
+    printf("\n");
 
     printf("Plaintext: ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
     enigma->plaintext = input;
+    printf("\n");
 
     return enigma;
 }
@@ -319,13 +329,13 @@ Enigma *query_input(int argc, char **argv)
         exit(0);
     }
 
-    if (options->interactive)
+    if (options->interactive != -1)
     {
         return query_input_interactive();
     }
     else
     {
-        return querry_input_non_interactive(options);
+        return query_input_none_interactive(options);
     }
 
     // return NULL;

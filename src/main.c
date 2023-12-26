@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "server/server.h"
+
 #include "cli/cli.h"
 #include "enigma/enigma.h"
 #include "enigma/plugboard/plugboard.h"
@@ -18,6 +20,7 @@ typedef struct SIZED_INT_ARRAY
 int main(int argc, char **argv)
 {
 
+    server_run();
     Enigma *enigma = query_input(argc, argv);
     char *input    = enigma->plaintext;
     int array_size = strlen(input);
@@ -31,11 +34,10 @@ int main(int argc, char **argv)
     char *output            = malloc(array_size * sizeof(char));
     int real_size_of_output = 0;
 
-
-        Rotor *rotorOne   = NULL;
-        Rotor *rotorTwo   = NULL;
-        Rotor *rotorThree = NULL;
-        Rotor *rotorFour  = NULL;
+    Rotor *rotorOne   = NULL;
+    Rotor *rotorTwo   = NULL;
+    Rotor *rotorThree = NULL;
+    Rotor *rotorFour  = NULL;
 
     // TODO: This is a mess. Clean it up.
     if (enigma->type == M4)

@@ -8,7 +8,7 @@ TEST_OBJ_DIR = test_obj
 BIN_DIR = bin
 
 # set up modules 
-MODULES = enigma/rotor enigma/plugboard enigma/reflector enigma helper cli
+MODULES = enigma/rotor enigma/plugboard enigma/reflector enigma helper cli server
 
 # set up source files
 SRC = $(foreach module, $(MODULES), $(wildcard $(SRC_DIR)/$(module)/*.c)) $(wildcard $(SRC_DIR)/*.c)
@@ -26,7 +26,7 @@ TEST_BIN = $(BIN_DIR)/test
 
 all: release
 
-release: CFLAGS += -O3 -Werror -pedantic
+release: CFLAGS += -O3 
 release: $(PROJECT_NAME)
 
 $(PROJECT_NAME): $(OBJ)

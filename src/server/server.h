@@ -13,21 +13,6 @@ enum HTTP_REQUEST_HEADER {
     HTTP_BODY,
 };
 
-char *http_request_header_str[] = {
-    "Accept",
-    "Accept-Encoding",
-    "Connection",
-    "Cookie",
-    "Content-Type",
-    "Content-Length",
-    "User-Agent",
-    "Host",
-    "Method",
-    "Path",
-    "Version",
-    "Body",
-};
-
 
 
 typedef struct Request {

@@ -1,9 +1,0 @@
-[submodule "libraries/Unity"]
-	path = libraries/Unity
-	url = https://github.com/ThrowTheSwitch/Unity
-[submodule "cJSON"]
-	path = cJSON
-	url = https://github.com/DaveGamble/cJSON.git
-[submodule "libraries/cJSON"]
-	path = libraries/cJSON
-	url = https://github.com/DaveGamble/cJSON.git

@@ -1,10 +1,11 @@
 {
-    "files.associations": {
-        "*.embeddedhtml": "html",
-        "exampletest.h": "c",
-        "unity.h": "c",
-        "rotor.h": "c",
-        "stdlib.h": "c",
-        "string.h": "c"
-    }
+  "files.associations": {
+    "*.embeddedhtml": "html",
+    "exampletest.h": "c",
+    "unity.h": "c",
+    "rotor.h": "c",
+    "stdlib.h": "c",
+    "string.h": "c"
+  },
+  "C_Cpp.default.compileCommands": "/home/arif/code/enigma/builddir/compile_commands.json"
 }

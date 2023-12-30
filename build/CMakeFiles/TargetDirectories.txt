@@ -1,0 +1,2 @@
+/home/arif/code/enigma/build/CMakeFiles/edit_cache.dir
+/home/arif/code/enigma/build/CMakeFiles/rebuild_cache.dir

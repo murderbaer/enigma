@@ -6,8 +6,7 @@ project(enigma VERSION 0.1.0
 
 set(CMAKE_C_STANDARD 17)
 
-add_executable(enigma
-    main.c
+add_library(enigma_lib STATIC 
     enigma/enigma.c
     enigma/enigma.h
     enigma/rotor/rotor.c
@@ -23,3 +22,9 @@ add_executable(enigma
     server/server.c
     server/server.h
 )
+
+add_executable(enigma
+    main.c 
+)
+
+target_link_libraries(enigma enigma_lib)

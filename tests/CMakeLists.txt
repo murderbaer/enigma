@@ -7,7 +7,7 @@ add_executable(
 
 target_link_libraries(
     enigma_test
-    src
+    enigma_lib
     unity
 )
 

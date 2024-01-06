@@ -1,12 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
-
-project(enigma VERSION 0.1.0
-    DESCRIPTION "Enigma machine simulator"
-    LANGUAGES C)
-
-set(CMAKE_C_STANDARD 17)
-
-add_library(enigma_lib STATIC 
+add_library(enigma_lib
     enigma/enigma.c
     enigma/enigma.h
     enigma/rotor/rotor.c
@@ -23,8 +15,4 @@ add_library(enigma_lib STATIC
     server/server.h
 )
 
-add_executable(enigma
-    main.c 
-)
-
-target_link_libraries(enigma enigma_lib)
+target_include_directories(enigma_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

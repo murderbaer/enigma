@@ -1,17 +1,13 @@
-add_executable(
-    enigma_test
-    src/main.c
+add_library(
+    enigma_test_lib
     src/helper/helper.c
     src/helper/helper.h
 )
 
+add_subdirectory(libraries/unity)
+
 target_link_libraries(
-    enigma_test
+    enigma_test_lib
     enigma_lib
     unity
-)
-
-add_test(
-    NAME enigma_test
-    COMMAND enigma
 )

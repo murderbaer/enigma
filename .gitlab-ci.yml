@@ -1,22 +1,19 @@
 default:
-  image: gcc:latest
+  image: gcc-cmake:latest
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
   GIT_SUBMODULE_FORCE_HTTPS: "true"
 
 stages:
-  - build
   - test
-
-build:
-  tags:
-    - linux-docker
-  script:
-    - make
 
 test:
   tags:
-    - linux
+    - linux-docker
+  stage: test
   script:
-    - make test
+    - mkdir build
+    - cd build
+    - cmake ..
+    - make

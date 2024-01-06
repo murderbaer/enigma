@@ -1,25 +1,22 @@
 default:
-  image: gcc:latest
-  # before_script:
-  #   - apt-get update
-  #   - apt-get install -y build-essential
+  image: registry.rivercry.com/arifhasanic/cmake/cmake:latest
+
+before_script:
+  - apt-get update -qq && apt-get install -y -qq cmake
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
   GIT_SUBMODULE_FORCE_HTTPS: "true"
 
 stages:
-  - build
   - test
-
-build:
-  tags:
-    - linux-docker
-  script:
-    - make
 
 test:
   tags:
-    - linux
+    - linux-docker
+  stage: test
   script:
-    - make test
+    - mkdir build
+    - cd build
+    - cmake ..
+    - make

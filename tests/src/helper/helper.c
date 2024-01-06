@@ -1,6 +1,6 @@
 #include <unity.h>
+#include <helper/helper.h>
 
-#include "../../src/helper/helper.h"
 #include "helper.h"
 
 void test_get_number_from_string(void)

@@ -1,5 +1,8 @@
 default:
-  image: gcc-cmake:latest
+  image: gcc:latest
+
+before_script:
+  - apt-get update -qq && apt-get install -y -qq cmake
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive

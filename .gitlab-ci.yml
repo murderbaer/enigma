@@ -1,5 +1,5 @@
 default:
-  image: gcc:latest
+  image: registry.rivercry.com/arifhasanic/cmake/cmake:latest
 
 before_script:
   - apt-get update -qq && apt-get install -y -qq cmake

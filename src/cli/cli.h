@@ -26,5 +26,7 @@
 #define PLUGBOARD_SHORT "-pb"
 #define PLAINTEXT "--plaintext"
 #define PLAINTEXT_SHORT "-pt"
+#define SERVER "--server"
+#define SERVER_SHORT "-s"
 
-Enigma *query_input(int argc, char ** argv);
+void query_input(int argc, char ** argv);

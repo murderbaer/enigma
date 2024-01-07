@@ -6,6 +6,7 @@
 #include "../enigma/reflector/reflector.h"
 #include "../enigma/rotor/rotor.h"
 #include "../helper/helper.h"
+#include "../server/server.h"
 #include "cli.h"
 
 #define INPUT_BUFFER_SIZE 50
@@ -26,6 +27,7 @@ typedef struct CLI_OPTIONS
     char *plaintext;
     int interactive;
     int help;
+    int server;
 } CLI_OPTIONS;
 
 void print_help(void)
@@ -91,6 +93,13 @@ void save_input(CLI_OPTIONS *options, int argc, char **argv)
                  string_equals(INTERACTIVE_SHORT, argv[i]))
         {
             options->interactive = 1;
+
+            return;
+        }
+        else if (string_equals(SERVER, argv[i]) ||
+                 string_equals(SERVER_SHORT, argv[i]))
+        {
+            options->server = 1;
 
             return;
         }
@@ -314,7 +323,7 @@ Enigma *query_input_interactive(void)
     return enigma;
 }
 
-Enigma *query_input(int argc, char **argv)
+void query_input(int argc, char **argv)
 {
     if (argc == 1)
     {
@@ -332,14 +341,29 @@ Enigma *query_input(int argc, char **argv)
         exit(0);
     }
 
+    if (options->server == 1)
+    {
+        server_run();
+        exit(0);
+    }
+
+    Enigma *enigma = NULL;
+
     if (options->interactive != -1)
     {
-        return query_input_interactive();
+        enigma = query_input_interactive();
     }
     else
     {
-        return query_input_none_interactive(options);
+        enigma = query_input_none_interactive(options);
     }
 
-    // return NULL;
+    char *text = traverse_enigma(enigma);
+
+    for (int i = 0; i < strlen(text); i++)
+    {
+        printf("%c", text[i] + 'A');
+    }
+
+    printf("\n");
 }

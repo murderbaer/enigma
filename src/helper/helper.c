@@ -92,3 +92,15 @@ int remove_none_alnum(char *input, char *output)
 
     return 0;
 }
+
+int *get_int_array_from_string(char *str, int size)
+{
+    int *array = malloc(size * sizeof(int));
+
+    for (int i = 0; i < size; i++)
+    {
+        array[i] = str[i] - 'A';
+    }
+
+    return array;
+}

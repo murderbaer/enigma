@@ -323,6 +323,7 @@ Enigma *query_input_interactive(void)
     return enigma;
 }
 
+// TODO: refactor into more functions
 void query_input(int argc, char **argv)
 {
     if (argc == 1)

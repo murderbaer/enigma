@@ -8,12 +8,14 @@ set(CMAKE_C_STANDARD 17)
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin) # We declare a variable to select what to build
 
-# 
-add_subdirectory(src)
-add_executable(enigma src/main.c)
+# ################### Backend ##################
+add_subdirectory(enigma_backend)
+add_executable(enigma enigma_backend/src/main.c)
 target_link_libraries(enigma enigma_lib)
 
-# Tests
+# ##############################################
+
+# ################### TESTS ####################
 add_subdirectory(tests)
 add_executable(enigma_test tests/src/main.c)
 
@@ -29,3 +31,5 @@ add_test(
     NAME enigma_test
     COMMAND enigma_test
 )
+
+# ##############################################

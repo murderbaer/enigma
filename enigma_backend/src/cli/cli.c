@@ -39,6 +39,7 @@ void print_help(void)
     printf("  -h,  --help         display this help and exit\n");
     printf("\n");
     printf("Enigma options:\n");
+    printf("  -s,  --server        run as server\n");
     printf("  -e,  --enigma        Enigma type (M3, M4)\n");
     printf("  -r1, --rotor-one     first rotor type (1, 2, 3, 4, 5, 6, 7)\n");
     printf("  -r2, --rotor-two     second rotor type (1, 2, 3, 4, 5, 6, 7)\n");

@@ -1,3 +1,6 @@
 [submodule "tests/libraries/unity"]
 	path = tests/libraries/unity
 	url = https://github.com/ThrowTheSwitch/Unity
+[submodule "cJson"]
+	path = enigma_backend/libraries/cJSON
+	url = https://github.com/DaveGamble/cJSON

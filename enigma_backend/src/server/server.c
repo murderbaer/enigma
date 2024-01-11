@@ -7,6 +7,8 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include <cJSON.h>
+
 #define PORT 17576
 #define OK_RESPONSE "HTTP/1.1 200 OK\r\n\r\n"
 

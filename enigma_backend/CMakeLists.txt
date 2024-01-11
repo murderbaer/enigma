@@ -15,4 +15,14 @@ add_library(enigma_lib
     src/server/server.h
 )
 
+# cJson is located in libraries/cJSON, don't build tests for it
+option(DENABLE_CJSON_TEST "" OFF)
+add_subdirectory(libraries/cJSON)
+
+
+target_link_libraries(enigma_lib PUBLIC cJSON)
+
 target_include_directories(enigma_lib PUBLIC src)
+
+
+

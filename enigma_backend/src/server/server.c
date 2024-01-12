@@ -13,11 +13,6 @@
 
 #define HTTP_OK_HEADER "HTTP/1.1 200 OK\r\n"
 
-
-int i = 0;
-
-
-
 void *handle_client(void *arg)
 {
     int client_socket = *(int *)arg;
@@ -41,8 +36,9 @@ void *handle_client(void *arg)
     // Prepare response
     char response[2048];
 
-    cJSON *json =  cJSON_Parse(body);
+    cJSON *json      = cJSON_Parse(body);
     cJSON *json_name = cJSON_GetObjectItemCaseSensitive(json, "name");
+    printf("name: %s\n", json_name->valuestring);
 
     // write hello message
     sprintf(response, "Hello %s!\n", json_name->valuestring);
@@ -55,9 +51,6 @@ void *handle_client(void *arg)
     write(client_socket, "\r\n\r\n", 4);
     write(client_socket, response, strlen(response));
     write(client_socket, "\r\n", 2);
-
-
-
 
     close(client_socket);
     return NULL;
@@ -109,14 +102,16 @@ int server_run()
 
     while (1)
     {
-        unsigned int addr_len   = sizeof(struct sockaddr_in);
-        int new_socket = accept(server_socket, NULL, &addr_len);
+        unsigned int addr_len = sizeof(struct sockaddr_in);
+        int new_socket        = accept(server_socket, NULL, &addr_len);
 
         if (new_socket == -1)
         {
             perror("accept");
             return 1;
         }
+
+        int i = 0;
 
         int thread_result =
             pthread_create(&thread[i++], NULL, handle_client, &new_socket);

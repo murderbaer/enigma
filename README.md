@@ -21,11 +21,8 @@ sudo pacman -S cjson
 # debian based
 sudo apt install libcjson-dev
 
-# MacOS with
+# MacOS (homebrew), you may need to install homebrew first (https://brew.sh/)
 brew install cjson
-# add the following to your .bashrc or .zshrc
-export CPATH=$CPATH:/opt/homebrew/include
-export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/lib
 ```
 
 Submodules are generally used to include other git repositories in a project. If you want to learn more about submodules you can read the [official git documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules).

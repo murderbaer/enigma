@@ -16,6 +16,12 @@ add_library(enigma_lib
 )
 
 target_link_libraries(enigma_lib PUBLIC pthread)
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    include_directories(/opt/homebrew/include)
+    link_directories(/opt/homebrew/lib)
+endif()
+
 target_link_libraries(enigma_lib PUBLIC cjson)
 
 target_include_directories(enigma_lib PUBLIC src)

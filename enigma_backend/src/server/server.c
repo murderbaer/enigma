@@ -1,70 +1,125 @@
-#include "server.h"
-
+#include <cjson/cJSON.h>
 #include <netinet/in.h>
+#include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
-#include <cJSON.h>
-
 #define PORT 17576
-#define OK_RESPONSE "HTTP/1.1 200 OK\r\n\r\n"
+#define THREAD_NUM 10
+#define CONNECTION_NUM 10
 
-int server_run(void)
+int i = 0;
+
+void *handle_client(void *arg)
 {
-    int _socket = socket(AF_INET, SOCK_STREAM, 0);
+    int client_socket = *(int *)arg;
+    char buffer[1024] = {0};
 
-    if (_socket < 0)
+    // Read request
+    read(client_socket, buffer, 1024);
+
+    // Simple parsing to find the end of the headers
+    char *header_end = strstr(buffer, "\r\n\r\n");
+    if (!header_end)
     {
-        perror("Could not create socket\n");
+        // Error: malformed request
+        close(client_socket);
+        return NULL;
     }
 
-    setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int));
+    // Extract body (if any)
+    char *body = header_end + 4;
 
-    struct sockaddr_in server = {0};
-    server.sin_family         = AF_INET;
-    server.sin_port           = htons(PORT);
-    server.sin_addr.s_addr    = INADDR_ANY;
-    memset(server.sin_zero, '\0', 8);
+    // Prepare response
+    char response[2048];
 
-    if (bind(_socket, (struct sockaddr *)&server, sizeof(server)) < 0)
+    cJSON *json = cJSON_Parse(body);
+
+    // Send response and i variable
+    // write(client_socket, response, strlen(response));
+
+    close(client_socket);
+    return NULL;
+}
+
+int server_run()
+{
+    srand(time(NULL));
+
+    int server_socket = socket(AF_INET, SOCK_STREAM, 0);
+
+    if (server_socket == -1)
     {
-        perror("Could not bind socket\n");
+        perror("socket");
+        return 1;
     }
 
-    if (listen(_socket, 10) < 0)
+    if (setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &(int){1},
+                   sizeof(int)) < 0)
     {
-        perror("Could not listen on socket\n");
+        perror("setsockopt(SO_REUSEADDR) failed");
+        return 1;
     }
 
-    printf("Listening on port %d\n", PORT);
+    struct sockaddr_in server_addr = {
+        .sin_family      = AF_INET,
+        .sin_port        = htons(PORT),
+        .sin_addr.s_addr = INADDR_ANY,
+    };
 
-    // TODO: Add signal handlers
-    // TODO: Add thread pool
-    // TODO: Add request handler
-    // TODO: Add response handler
-    // TODO: Add logging
+    int bind_result = bind(server_socket, (struct sockaddr *)&server_addr,
+                           sizeof(server_addr));
+
+    if (bind_result == -1)
+    {
+        perror("bind");
+        return 1;
+    }
+
+    int listen_result = listen(server_socket, CONNECTION_NUM);
+
+    if (listen_result == -1)
+    {
+        perror("listen");
+        return 1;
+    }
+
+    pthread_t thread[THREAD_NUM];
+
     while (1)
     {
-        struct sockaddr_in client = {0};
-        socklen_t client_len      = sizeof(client);
-        int client_socket =
-            accept(_socket, (struct sockaddr *)&client, &client_len);
+        int addr_len   = sizeof(struct sockaddr_in);
+        int new_socket = accept(server_socket, NULL, &addr_len);
 
-        if (client_socket < 0)
+        if (new_socket == -1)
         {
-            perror("Could not establish new connection\n");
+            perror("accept");
+            return 1;
         }
 
-        char buffer[1024] = {0};
-        read(client_socket, buffer, 1024);
+        int thread_result =
+            pthread_create(&thread[i++], NULL, handle_client, &new_socket);
 
-        char *response = "HTTP/1.1 200 OK\r\n\r\nHello, World!\r\n";
+        if (thread_result != 0)
+        {
+            perror("pthread_create");
+            return 1;
+        }
 
-        write(client_socket, response, strlen(response));
-        close(client_socket);
+        if (i >= THREAD_NUM)
+        {
+            i = 0;
+
+            for (int j = 0; j < THREAD_NUM; j++)
+            {
+                pthread_join(thread[j], NULL);
+            }
+
+            i = 0;
+        }
     }
 
     return 0;

@@ -1,0 +1,23 @@
+{
+    "enigmaType": "M3",
+    "rotors": [
+        {
+            "type": "III",
+            "ringSetting": 1,
+            "initialPosition": "A"
+        },
+        {
+            "type": "II",
+            "ringSetting": 1,
+            "initialPosition": "A"
+        },
+        {
+            "type": "I",
+            "ringSetting": 1,
+            "initialPosition": "A"
+        }
+    ],
+    "reflector": "B",
+    "plugboard": "AB CD EF GH IJ KL MN OP QR ST UV WX YZ",
+    "plaintext": "AAAAA",
+}

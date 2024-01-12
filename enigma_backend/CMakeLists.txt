@@ -16,6 +16,7 @@ add_library(enigma_lib
 )
 
 target_link_libraries(enigma_lib PUBLIC pthread)
+target_link_libraries(enigma_lib PUBLIC cjson)
 
 target_include_directories(enigma_lib PUBLIC src)
 

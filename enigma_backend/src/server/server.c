@@ -11,7 +11,12 @@
 #define THREAD_NUM 10
 #define CONNECTION_NUM 10
 
+#define HTTP_OK_HEADER "HTTP/1.1 200 OK\r\n"
+
+
 int i = 0;
+
+
 
 void *handle_client(void *arg)
 {
@@ -36,10 +41,23 @@ void *handle_client(void *arg)
     // Prepare response
     char response[2048];
 
-    cJSON *json = cJSON_Parse(body);
+    cJSON *json =  cJSON_Parse(body);
+    cJSON *json_name = cJSON_GetObjectItemCaseSensitive(json, "name");
 
-    // Send response and i variable
-    // write(client_socket, response, strlen(response));
+    // write hello message
+    sprintf(response, "Hello %s!\n", json_name->valuestring);
+
+    // Send response
+    write(client_socket, HTTP_OK_HEADER, strlen(HTTP_OK_HEADER));
+    write(client_socket, "Content-Type: text/plain\r\n", 25);
+    write(client_socket, "Content-Length: ", 16);
+    sprintf(buffer, "%ld", strlen(response));
+    write(client_socket, "\r\n\r\n", 4);
+    write(client_socket, response, strlen(response));
+    write(client_socket, "\r\n", 2);
+
+
+
 
     close(client_socket);
     return NULL;
@@ -91,7 +109,7 @@ int server_run()
 
     while (1)
     {
-        int addr_len   = sizeof(struct sockaddr_in);
+        unsigned int addr_len   = sizeof(struct sockaddr_in);
         int new_socket = accept(server_socket, NULL, &addr_len);
 
         if (new_socket == -1)

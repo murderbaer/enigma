@@ -50,7 +50,6 @@ void *handle_client(void *arg)
     sprintf(buffer, "%ld", strlen(response));
     write(client_socket, "\r\n\r\n", 4);
     write(client_socket, response, strlen(response));
-    write(client_socket, "\r\n", 2);
 
     close(client_socket);
     return NULL;

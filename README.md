@@ -1,6 +1,7 @@
 # Enigma Backend
 
 [![pipeline status](https://gitlab.rivercry.com/arifhasanic/enigma/badges/main/pipeline.svg)](https://gitlab.rivercry.com/arifhasanic/enigma/commits/main)
+[![coverage report](https://gitlab.rivercry.com/arifhasanic/enigma/badges/main/coverage.svg)](https://gitlab.rivercry.com/arifhasanic/enigma/-/commits/main)
 
 ## Quickstart
 
@@ -14,6 +15,7 @@ git submodule update
 ```
 
 ### Install necessary dependencies
+
 ```bash
 # arch
 sudo pacman -S cjson

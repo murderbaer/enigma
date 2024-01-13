@@ -20,9 +20,4 @@ test:
     - make
     - make test
     - make coverage
-  artifacts:
-    reports:
-      coverage_report:
-          coverage_format: cobertura
-          path: enigma_c/build/coverage/coverage.info
-    expire_in: 1 week
+  coverage: '/^TOTAL.*\s+(\d+\%)$/'

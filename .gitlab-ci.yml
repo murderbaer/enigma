@@ -20,4 +20,12 @@ test:
     - make
     - make test
     - make coverage
-  coverage: '/^TOTAL.*\s+(\d+\%)$/'
+    - gcovr --xml-pretty --exclude-unreachable-branches --print-summary -o coverage.xml --root ../
+  coverage: /^\s*lines:\s*\d+.\d+\%/
+  artifacts:
+    name: ${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}
+    expire_in: 2 days
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: enigma_c/build/coverage.xml

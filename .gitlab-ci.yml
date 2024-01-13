@@ -18,8 +18,8 @@ test:
     - cmake -DENABLE_COVERAGE=ON ../enigma_c
     - make
     - make test
-    - gcovr --xml-pretty --exclude-unreachable-branches --print-summary -o coverage.xml --root ${CI_PROJECT_DIR}
-  artifacts:
+    - gcovr --xml-pretty --exclude-unreachable-branches --print-summary -o coverage.xml --root ${CI_PROJECT_DIR} --exclude ${CI_PROJECT_DIR}/enigma_c/test
+  artifacts: 
     name: ${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}
     expire_in: 2 days
     reports:

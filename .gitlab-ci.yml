@@ -13,10 +13,9 @@ test:
   tags:
     - linux-docker
   script:    
-    - cd enigma_c
     - mkdir build
     - cd build
-    - cmake -DENABLE_COVERAGE=ON ..
+    - cmake -DENABLE_COVERAGE=ON ../enigma_c
     - make
     - make test
     - gcovr --xml-pretty --exclude-unreachable-branches --print-summary -o coverage.xml --root ${CI_PROJECT_DIR}
@@ -26,4 +25,4 @@ test:
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: enigma_c/build/coverage.xml
+        path: build/coverage.xml

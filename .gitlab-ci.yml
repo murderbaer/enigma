@@ -24,5 +24,5 @@ test:
     reports:
       coverage_report:
           coverage_format: cobertura
-          path: coverage/coverage.info
+          path: enigma_c/build/coverage/coverage.info
     expire_in: 1 week

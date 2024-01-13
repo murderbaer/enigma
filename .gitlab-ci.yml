@@ -19,7 +19,6 @@ test:
     - cmake -DENABLE_COVERAGE=ON ..
     - make
     - make test
-    - make coverage
     - gcovr --xml-pretty --exclude-unreachable-branches --print-summary -o coverage.xml --root ../
   coverage: /^\s*lines:\s*\d+.\d+\%/
   artifacts:

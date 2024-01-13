@@ -1,4 +1,5 @@
 #include <cjson/cJSON.h>
+#include <errno.h>
 #include <netinet/in.h>
 #include <pthread.h>
 #include <stdio.h>
@@ -8,8 +9,8 @@
 #include <unistd.h>
 
 #define PORT 17576
-#define THREAD_NUM 10
-#define CONNECTION_NUM 10
+#define THREAD_NUM 100
+#define CONNECTION_NUM 100
 
 #define HTTP_OK_HEADER "HTTP/1.1 200 OK\r\n"
 
@@ -18,38 +19,38 @@ void *handle_client(void *arg)
     int client_socket = *(int *)arg;
     char buffer[1024] = {0};
 
-    // Read request
-    read(client_socket, buffer, 1024);
-
-    // Simple parsing to find the end of the headers
-    char *header_end = strstr(buffer, "\r\n\r\n");
-    if (!header_end)
+    if (read(client_socket, buffer, 1024) == -1)
     {
-        // Error: malformed request
+        perror("Error reading from socket");
         close(client_socket);
+
         return NULL;
     }
 
-    // Extract body (if any)
+    char *header_end = strstr(buffer, "\r\n\r\n");
+    if (!header_end)
+    {
+        sprintf(buffer, "HTTP/1.1 400 Bad Request\r\n");
+        write(client_socket, buffer, strlen(buffer));
+        close(client_socket);
+
+        return NULL;
+    }
+
     char *body = header_end + 4;
 
-    // Prepare response
     char response[2048];
 
-    cJSON *json      = cJSON_Parse(body);
-    cJSON *json_name = cJSON_GetObjectItemCaseSensitive(json, "name");
-    printf("name: %s\n", json_name->valuestring);
+    cJSON *json = cJSON_Parse(body);
 
-    // write hello message
-    sprintf(response, "Hello %s!\n", json_name->valuestring);
-
-    // Send response
     write(client_socket, HTTP_OK_HEADER, strlen(HTTP_OK_HEADER));
-    write(client_socket, "Content-Type: text/plain\r\n", 25);
-    write(client_socket, "Content-Length: ", 16);
-    sprintf(buffer, "%ld", strlen(response));
-    write(client_socket, "\r\n\r\n", 4);
-    write(client_socket, response, strlen(response));
+    write(client_socket, "Content-Type: application/json\r\n\r\n",
+          strlen("Content-Type: application/json\r\n\r\n"));
+    write(client_socket, "{\"enigma\": \"", strlen("{\"enigma\": \""));
+    write(client_socket, cJSON_GetObjectItem(json, "enigmaType")->valuestring,
+          strlen(cJSON_GetObjectItem(json, "enigmaType")->valuestring));
+    write(client_socket, "\"}", strlen("\"}"));
+    write(client_socket, "\r\n", strlen("\r\n"));
 
     close(client_socket);
     return NULL;
@@ -57,20 +58,18 @@ void *handle_client(void *arg)
 
 int server_run()
 {
-    srand(time(NULL));
-
     int server_socket = socket(AF_INET, SOCK_STREAM, 0);
 
     if (server_socket == -1)
     {
-        perror("socket");
+        perror("Error creating socket");
         return 1;
     }
 
     if (setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &(int){1},
                    sizeof(int)) < 0)
     {
-        perror("setsockopt(SO_REUSEADDR) failed");
+        perror("Error setting socket options");
         return 1;
     }
 
@@ -85,7 +84,7 @@ int server_run()
 
     if (bind_result == -1)
     {
-        perror("bind");
+        perror("Error binding socket");
         return 1;
     }
 
@@ -93,11 +92,12 @@ int server_run()
 
     if (listen_result == -1)
     {
-        perror("listen");
+        perror("Error listening on socket");
         return 1;
     }
 
     pthread_t thread[THREAD_NUM];
+    int i = 0;
 
     while (1)
     {
@@ -106,7 +106,7 @@ int server_run()
 
         if (new_socket == -1)
         {
-            perror("accept");
+            perror("Error accepting connection");
             return 1;
         }
 
@@ -117,7 +117,7 @@ int server_run()
 
         if (thread_result != 0)
         {
-            perror("pthread_create");
+            perror("Error creating thread");
             return 1;
         }
 

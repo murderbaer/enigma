@@ -9,12 +9,19 @@ stages:
   - test
 
 test:
+  stage: test
   tags:
     - linux-docker
-  stage: test
-  script:
+  script:    
+    - cd enigma_c
     - mkdir build
-    - cd build
-    - cmake ..
-    - cmake --build .
-    - ctest -V
+    - cmake -DENABLE_COVERAGE=ON .
+    - make
+    - make test
+    - make coverage
+  artifacts:
+    reports:
+      coverage_report:
+          coverage_format: cobertura
+          path: coverage/coverage.info
+    expire_in: 1 week

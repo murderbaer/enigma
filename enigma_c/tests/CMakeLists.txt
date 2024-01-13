@@ -1,7 +1,7 @@
 add_library(
     enigma_test_lib
-    src/helper/helper.c
-    src/helper/helper.h
+    helper/helper.c
+    helper/helper.h
 )
 
 add_subdirectory(libraries/unity)

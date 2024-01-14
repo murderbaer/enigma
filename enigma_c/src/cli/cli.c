@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -258,7 +259,6 @@ Enigma *query_input_interactive(void)
     char secondary_input[INPUT_BUFFER_SIZE];
     char ternary_input[INPUT_BUFFER_SIZE];
     Enigma *enigma = (Enigma *)malloc(sizeof(Enigma));
-    Rotor *rotor   = NULL;
 
     printf("Enigma type (M3, M4): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
@@ -363,7 +363,7 @@ void query_input(int argc, char **argv)
 
     int *text = traverse_enigma(enigma);
 
-    for (int i = 0; i < strlen(text); i++)
+    for (size_t i = 0; i < strlen(enigma->plaintext); i++)
     {
         printf("%c", text[i] + 'A');
     }

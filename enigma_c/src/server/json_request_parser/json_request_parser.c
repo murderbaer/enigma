@@ -1,4 +1,5 @@
 #include <cjson/cJSON.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -82,7 +83,7 @@ int validate_enigma_json(const char *const json_string,
     }
     else
     {
-        for (int j = 0; j < strlen(ring_settings->valuestring); j++)
+        for (size_t j = 0; j < strlen(ring_settings->valuestring); j++)
         {
             if (ring_settings->valuestring[j] < 'A' ||
                 ring_settings->valuestring[j] > 'Z')
@@ -103,7 +104,7 @@ int validate_enigma_json(const char *const json_string,
     }
     else
     {
-        for (int j = 0; j < strlen(rotor_positions->valuestring); j++)
+        for (size_t j = 0; j < strlen(rotor_positions->valuestring); j++)
         {
             if (rotor_positions->valuestring[j] < 'A' ||
                 rotor_positions->valuestring[j] > 'Z')

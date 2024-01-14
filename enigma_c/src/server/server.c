@@ -115,7 +115,6 @@ int server_run()
     }
 
     pthread_t thread[THREAD_NUM];
-    int i = 0;
 
     while (1)
     {

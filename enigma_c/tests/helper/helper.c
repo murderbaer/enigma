@@ -1,5 +1,5 @@
-#include <unity.h>
 #include <helper/helper.h>
+#include <unity.h>
 
 #include "helper.h"
 
@@ -67,8 +67,6 @@ void test_remove_none_alnum(void)
     TEST_ASSERT_EQUAL_STRING("abcde", output);
 }
 
-void test_remove_none_alnum_error(void) { char output[6] = {0}; }
-
 void run_helper_tests(void)
 {
     RUN_TEST(test_get_number_from_string);
@@ -76,5 +74,4 @@ void run_helper_tests(void)
     RUN_TEST(test_to_upper_case);
     RUN_TEST(test_to_upper_case_error);
     RUN_TEST(test_remove_none_alnum);
-    RUN_TEST(test_remove_none_alnum_error);
 }

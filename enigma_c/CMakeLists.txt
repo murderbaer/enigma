@@ -5,6 +5,9 @@ project(enigma VERSION 0.1.0
     LANGUAGES C)
 
 set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wpedantic -Werror")
 
 option(ENABLE_COVERAGE "Enable coverage reporting" OFF)
 

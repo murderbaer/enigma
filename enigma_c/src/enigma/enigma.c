@@ -8,19 +8,6 @@
 #include "reflector/reflector.h"
 #include "rotor/rotor.h"
 
-Enigma *create_m3_enigma(Rotor *rotor_one, Rotor *rotor_two, Rotor *rotor_three,
-                         Reflector *reflector, Plugboard *plugboard)
-{
-    return malloc(sizeof(Enigma));
-}
-
-Enigma *create_m4_enigma(Rotor *rotor_one, Rotor *rotor_two, Rotor *rotor_three,
-                         Rotor *rotor_four, Reflector *reflector,
-                         Plugboard *plugboard)
-{
-    return malloc(sizeof(Enigma));
-}
-
 /**
  * @brief This function is used to traverse the enigma machine.
  *
@@ -94,33 +81,13 @@ int *traverse_m3_enigma(Enigma *enigma, int *text_in_integer, int array_size)
  * @param array_size The size of the text.
  * @return char* The traversed text.
  */
-int *traverse_m4_enigma(Enigma *enigma, int *text_in_integer, int array_size)
-{
-    return NULL;
-}
-
-/**
- * @brief This function is used to traverse the enigma machine.
- *
- * @param enigma The enigma machine to traverse.
- * @param text_in_integer The text to traverse.
- * @param array_size The size of the text.
- * @return char* The traversed text.
- */
 int *traverse_enigma(Enigma *enigma)
 {
     char *plaintext      = enigma->plaintext;
     int array_size       = strlen(plaintext);
     int *text_in_numbers = get_int_array_from_string(plaintext, array_size);
 
-    if (enigma->type == M3)
-    {
-        return traverse_m3_enigma(enigma, text_in_numbers, array_size);
-    }
-    else
-    {
-        return traverse_m4_enigma(enigma, text_in_numbers, array_size);
-    }
+    return traverse_m3_enigma(enigma, text_in_numbers, array_size);
 }
 
 /**

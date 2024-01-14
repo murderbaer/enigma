@@ -1,22 +1,8 @@
 {
   "enigmaType": "M3",
-  "rotors": [
-    {
-      "rotor": 3,
-      "ringPosition": "A",
-      "rotorPosition": "A"
-    },
-    {
-      "rotor": 2,
-      "ringPosition": "A",
-      "rotorPosition": "A"
-    },
-    {
-      "rotor": 1,
-      "ringPosition": "A",
-      "rotorPosition": "A"
-    }
-  ],
+  "rotors": [1, 2, 3],
+  "ringSettings": "AAA",
+  "rotorPositions": "ABC",
   "reflector": "B",
   "plugboard": "",
   "message": "AAAAA"

@@ -18,7 +18,6 @@ if(ENABLE_COVERAGE)
         COMMAND lcov --capture --directory . --output-file coverage/coverage.info
         COMMAND lcov --list coverage/coverage.info
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-        COMMENT "Generating coverage report in ${CMAKE_BINARY_DIR}/coverage"
     )
 endif()
 

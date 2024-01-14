@@ -8,9 +8,13 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include "../enigma/enigma.h"
+#include "../helper/helper.h"
+#include "json_request_parser/json_request_parser.h"
+
 #define PORT 17576
-#define THREAD_NUM 100
-#define CONNECTION_NUM 100
+#define THREAD_NUM 10
+#define CONNECTION_NUM 10
 
 #define HTTP_OK_HEADER "HTTP/1.1 200 OK\r\n"
 
@@ -39,18 +43,32 @@ void *handle_client(void *arg)
 
     char *body = header_end + 4;
 
+    printf("client connected\n");
+
     char response[2048];
 
-    cJSON *json = cJSON_Parse(body);
+    EnigmaConfiguration enigma_configuration;
 
-    write(client_socket, HTTP_OK_HEADER, strlen(HTTP_OK_HEADER));
-    write(client_socket, "Content-Type: application/json\r\n\r\n",
-          strlen("Content-Type: application/json\r\n\r\n"));
-    write(client_socket, "{\"enigma\": \"", strlen("{\"enigma\": \""));
-    write(client_socket, cJSON_GetObjectItem(json, "enigmaType")->valuestring,
-          strlen(cJSON_GetObjectItem(json, "enigmaType")->valuestring));
-    write(client_socket, "\"}", strlen("\"}"));
-    write(client_socket, "\r\n", strlen("\r\n"));
+    if (validate_enigma_json(body, &enigma_configuration) == 0)
+    {
+        sprintf(response, "HTTP/1.1 400 Bad Request\r\n");
+        write(client_socket, response, strlen(response));
+        close(client_socket);
+
+        return NULL;
+    }
+
+    Enigma *enigma = create_enigma_from_configuration(&enigma_configuration);
+
+    char *traversed_text = get_string_from_int_array(
+        traverse_enigma(enigma), strlen(enigma_configuration.message));
+
+    // send traversed text but first we need to create a response
+    sprintf(response,
+            "HTTP/1.1 200 OK\r\nContent-Type: "
+            "application/json\r\n\r\n{\"traversedText\":\"%s\"}",
+            traversed_text);
+    write(client_socket, response, strlen(response));
 
     close(client_socket);
     return NULL;

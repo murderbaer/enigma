@@ -1,7 +1,7 @@
 #!/bin/bash
 
 printf "Plaintext HALLO Expected Cyphertext MTNCZ: Cybhertext: "
-./bin/enigma --enigma M3 \
+./build/enigma --enigma M3 \
     --rotor-one 3 \
     --rotor-two 2   \
     --rotor-three 1 \
@@ -12,7 +12,7 @@ printf "Plaintext HALLO Expected Cyphertext MTNCZ: Cybhertext: "
 
 printf "Plaintext HALLO Expected Cyphertext FVWYT: Cybhertext: "
 
-./bin/enigma --enigma M3 \
+./build/enigma --enigma M3 \
     --rotor-one 2 \
     --rotor-two 1 \
     --rotor-three 3 \
@@ -22,7 +22,7 @@ printf "Plaintext HALLO Expected Cyphertext FVWYT: Cybhertext: "
     --plaintext HALLO
 
 printf "reverse: Cybhertext FVWYT Expected Plaintext HALLO: Plaintext: "
-./bin/enigma --enigma M3 \
+./build/enigma --enigma M3 \
     --rotor-one 2 \
     --rotor-two 1 \
     --rotor-three 3 \

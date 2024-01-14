@@ -1,15 +1,7 @@
 {
-  "files.associations": {
-    "*.embeddedhtml": "html",
-    "exampletest.h": "c",
-    "unity.h": "c",
-    "rotor.h": "c",
-    "stdlib.h": "c",
-    "string.h": "c"
-  },
-  "C_Cpp.default.compileCommands": "/home/arif/code/enigma/enigma_backend/tests/libraries/unity/builddir/compile_commands.json",
+  "cmake.configureArgs": ["-DENABLE_COVERAGE=ON"],
   "cmake.debugConfig": {
     "args": ["--server"]
   },
-  "cmake.sourceDirectory": "/home/arif/code/enigma/enigma_backend"
+  "cmake.sourceDirectory": "/home/arif/code/enigma/enigma_c"
 }

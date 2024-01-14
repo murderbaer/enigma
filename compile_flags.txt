@@ -1,2 +1,0 @@
--Ilibraries/Unity/src
--std=gnu17

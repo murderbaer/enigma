@@ -215,21 +215,21 @@ Enigma *query_input_none_interactive(CLI_OPTIONS *options)
         exit(1);
     }
 
-    enigma->type        = enigma_type_char_to_int(options->enigma_type);
-    enigma->rotor_one   = create_rotor(options->rotor_one_type[0] - '0',
-                                       options->rotor_positions[0] - 'A',
-                                       options->rotor_offsets[0] - 'A');
-    enigma->rotor_two   = create_rotor(options->rotor_two_type[0] - '0',
-                                       options->rotor_positions[1] - 'A',
-                                       options->rotor_offsets[1] - 'A');
-    enigma->rotor_three = create_rotor(options->rotor_three_type[0] - '0',
-                                       options->rotor_positions[2] - 'A',
-                                       options->rotor_offsets[2] - 'A');
+    enigma->type      = enigma_type_char_to_int(options->enigma_type);
+    enigma->rotors[0] = create_rotor(options->rotor_one_type[0] - '0',
+                                     options->rotor_positions[0] - 'A',
+                                     options->rotor_offsets[0] - 'A');
+    enigma->rotors[1] = create_rotor(options->rotor_two_type[0] - '0',
+                                     options->rotor_positions[1] - 'A',
+                                     options->rotor_offsets[1] - 'A');
+    enigma->rotors[2] = create_rotor(options->rotor_three_type[0] - '0',
+                                     options->rotor_positions[2] - 'A',
+                                     options->rotor_offsets[2] - 'A');
     if (enigma->type == M4)
     {
-        enigma->rotor_four = create_rotor(options->rotor_four_type[0] - '0',
-                                          options->rotor_positions[3] - 'A',
-                                          options->rotor_offsets[3] - 'A');
+        enigma->rotors[3] = create_rotor(options->rotor_four_type[0] - '0',
+                                         options->rotor_positions[3] - 'A',
+                                         options->rotor_offsets[3] - 'A');
     }
 
     enigma->reflector = create_reflector_by_type(options->reflector_type[0]);
@@ -258,6 +258,7 @@ Enigma *query_input_interactive(void)
     char secondary_input[INPUT_BUFFER_SIZE];
     char ternary_input[INPUT_BUFFER_SIZE];
     Enigma *enigma = (Enigma *)malloc(sizeof(Enigma));
+    Rotor *rotor   = NULL;
 
     printf("Enigma type (M3, M4): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
@@ -269,7 +270,7 @@ Enigma *query_input_interactive(void)
     fgets(secondary_input, INPUT_BUFFER_SIZE, stdin);
     printf("First rotor offset (A, B, C, etc): ");
     fgets(ternary_input, INPUT_BUFFER_SIZE, stdin);
-    enigma->rotor_one = create_rotor(input[0] - '0', secondary_input[0] - 'A',
+    enigma->rotors[0] = create_rotor(input[0] - '0', secondary_input[0] - 'A',
                                      ternary_input[0] - 'A');
 
     printf("\n");
@@ -279,7 +280,7 @@ Enigma *query_input_interactive(void)
     fgets(secondary_input, INPUT_BUFFER_SIZE, stdin);
     printf("Second rotor offset (A, B, C, etc): ");
     fgets(ternary_input, INPUT_BUFFER_SIZE, stdin);
-    enigma->rotor_two = create_rotor(input[0] - '0', secondary_input[0] - 'A',
+    enigma->rotors[1] = create_rotor(input[0] - '0', secondary_input[0] - 'A',
                                      ternary_input[0] - 'A');
     printf("\n");
 
@@ -289,8 +290,8 @@ Enigma *query_input_interactive(void)
     fgets(secondary_input, INPUT_BUFFER_SIZE, stdin);
     printf("Third rotor offset (A, B, C, etc): ");
     fgets(ternary_input, INPUT_BUFFER_SIZE, stdin);
-    enigma->rotor_three = create_rotor(input[0] - '0', secondary_input[0] - 'A',
-                                       ternary_input[0] - 'A');
+    enigma->rotors[2] = create_rotor(input[0] - '0', secondary_input[0] - 'A',
+                                     ternary_input[0] - 'A');
     printf("\n");
 
     if (enigma->type == M4)
@@ -301,7 +302,7 @@ Enigma *query_input_interactive(void)
         fgets(secondary_input, INPUT_BUFFER_SIZE, stdin);
         printf("Fourth rotor offset (A, B, C, etc): ");
         fgets(ternary_input, INPUT_BUFFER_SIZE, stdin);
-        enigma->rotor_four = create_rotor(
+        enigma->rotors[3] = create_rotor(
             input[0] - '0', secondary_input[0] - 'A', ternary_input[0] - 'A');
         printf("\n");
     }
@@ -360,7 +361,7 @@ void query_input(int argc, char **argv)
         enigma = query_input_none_interactive(options);
     }
 
-    char *text = traverse_enigma(enigma);
+    int *text = traverse_enigma(enigma);
 
     for (int i = 0; i < strlen(text); i++)
     {

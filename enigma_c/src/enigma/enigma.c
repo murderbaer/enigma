@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -26,22 +27,28 @@ Enigma *create_m4_enigma(Rotor *rotor_one, Rotor *rotor_two, Rotor *rotor_three,
  * @param enigma The enigma machine to traverse.
  * @param text_in_integer The text to traverse.
  * @param array_size The size of the text.
- * @return char* The traversed text.
+ * @return int* The traversed text as an integer array.
  */
-char *traverse_m3_enigma(Enigma *enigma, int *text_in_integer, int array_size)
+int *traverse_m3_enigma(Enigma *enigma, int *text_in_integer, int array_size)
 {
-    char *output = malloc(array_size * sizeof(char) + 1);
+    int *output = malloc(array_size * sizeof(int) + 1);
+    int text[array_size];
 
-    Rotor *rotorOne      = enigma->rotor_three;
-    Rotor *rotorTwo      = enigma->rotor_two;
-    Rotor *rotorThree    = enigma->rotor_one;
+    for (int i = 0; i < array_size; i++)
+    {
+        text[i] = text_in_integer[i];
+    }
+
+    Rotor *rotorOne   = enigma->rotors[0];
+    Rotor *rotorTwo   = enigma->rotors[1];
+    Rotor *rotorThree = enigma->rotors[2];
+
     Plugboard *plugboard = enigma->plugboard;
     Reflector *reflector = enigma->reflector;
 
     for (int i = 0; i < array_size; i++)
     {
-        // #TODO: This changes the parameter, which is not good.
-        text_in_integer[i] = plugboard->plugboard_data[text_in_integer[i]];
+        text[i] = plugboard->plugboard_data[text[i]];
     }
 
     for (int i = 0; i < array_size; i++)
@@ -58,7 +65,7 @@ char *traverse_m3_enigma(Enigma *enigma, int *text_in_integer, int array_size)
             }
         }
 
-        int character = traverse_rotor(rotorOne, text_in_integer[i]);
+        int character = traverse_rotor(rotorOne, text[i]);
         character     = traverse_rotor(rotorTwo, character);
         character     = traverse_rotor(rotorThree, character);
         character     = reflector->wiring[character];
@@ -87,7 +94,7 @@ char *traverse_m3_enigma(Enigma *enigma, int *text_in_integer, int array_size)
  * @param array_size The size of the text.
  * @return char* The traversed text.
  */
-char *traverse_m4_enigma(Enigma *enigma, int *text_in_integer, int array_size)
+int *traverse_m4_enigma(Enigma *enigma, int *text_in_integer, int array_size)
 {
     return NULL;
 }
@@ -100,7 +107,7 @@ char *traverse_m4_enigma(Enigma *enigma, int *text_in_integer, int array_size)
  * @param array_size The size of the text.
  * @return char* The traversed text.
  */
-char *traverse_enigma(Enigma *enigma)
+int *traverse_enigma(Enigma *enigma)
 {
     char *plaintext      = enigma->plaintext;
     int array_size       = strlen(plaintext);
@@ -114,4 +121,36 @@ char *traverse_enigma(Enigma *enigma)
     {
         return traverse_m4_enigma(enigma, text_in_numbers, array_size);
     }
+}
+
+/**
+ * @brief This function is used to create an enigma machine.
+ *
+ * @param enigma_configuration The configuration of the enigma machine.
+ * @return Enigma* The created enigma machine.
+ */
+Enigma *
+create_enigma_from_configuration(EnigmaConfiguration *enigma_configuration)
+{
+    Enigma *enigma = malloc(sizeof(Enigma));
+
+    enigma->type = enigma_configuration->type;
+
+    enigma->rotors = malloc(sizeof(Rotor) * enigma->type);
+
+    for (int i = 0; i < enigma->type; i++)
+    {
+        int rotor_type    = enigma_configuration->rotors[i];
+        int position      = enigma_configuration->rotor_positions[i];
+        int offset        = enigma_configuration->ring_settings[i];
+        Rotor *rotor      = create_rotor(rotor_type, position, offset);
+        enigma->rotors[i] = rotor;
+    }
+
+    enigma->reflector =
+        create_reflector_by_type(enigma_configuration->reflector);
+    enigma->plugboard = create_plugboard(enigma_configuration->plugboard);
+    enigma->plaintext = enigma_configuration->message;
+
+    return enigma;
 }

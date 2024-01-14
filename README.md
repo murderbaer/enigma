@@ -1,7 +1,7 @@
 # Enigma Backend
 
 [![pipeline status](https://gitlab.rivercry.com/arifhasanic/enigma/badges/main/pipeline.svg)](https://gitlab.rivercry.com/arifhasanic/enigma/commits/main)
-[![coverage report](https://gitlab.rivercry.com/arifhasanic/enigma/badges/main/coverage.svg)](https://gitlab.rivercry.com/arifhasanic/enigma/-/commits/main)
+[![coverage report: backend](https://gitlab.rivercry.com/arifhasanic/enigma/badges/main/coverage.svg)](https://gitlab.rivercry.com/arifhasanic/enigma/-/commits/main)
 
 ## Quickstart
 
@@ -36,7 +36,7 @@ This project uses CMake as its build system. To build the project first make sur
 ```bash
 mkdir build
 cd build
-cmake ..
+cmake ../enigma_c
 cmake --build .
 ```
 

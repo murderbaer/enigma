@@ -104,3 +104,17 @@ int *get_int_array_from_string(char *str, int size)
 
     return array;
 }
+
+char *get_string_from_int_array(int *array, int size)
+{
+    char *str = malloc((size + 1) * sizeof(char));
+
+    for (int i = 0; i < size; i++)
+    {
+        str[i] = array[i] + 'A';
+    }
+
+    str[size] = '\0';
+
+    return str;
+}

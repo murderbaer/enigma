@@ -1,137 +1,172 @@
-#include "json_request_parser.h"
-
-#include "enigma/enigma.h"
-#include "helper/helper.h"
 #include <cjson/cJSON.h>
+#include <stdlib.h>
 #include <string.h>
+
+#include "../../helper/helper.h"
+#include "json_request_parser.h"
 
 #define ENIGMA_TYPE_KEY "enigmaType"
 
 #define ROTORS_KEY "rotors"
 #define ROTOR_KEY "ring"
-#define RING_SETTINGS_KEY "ringPosition"
-#define ROTOR_SETTINGS_KEY "rotorPosition"
+#define RING_SETTINGS_KEY "ringSettings"
+#define ROTOR_POSITIONS_KEY "rotorPositions"
 
 #define REFLECTOR_KEY "reflector"
 #define PLUGBOARD_KEY "plugboard"
 #define MESSAGE_KEY "message"
 
-typedef struct EnigmaConfiguration
+int validate_enigma_json(const char *const json_string,
+                         EnigmaConfiguration *enigma_configuration)
 {
-    int rotors[3];
-    int enigma_type;
-    int rotor_settings[3];
-    int ring_settings[3];
-    int reflector;
-    char plugboard[26];
-    char message[1024];
-} EnigmaConfiguration;
-
-int validate_enigma_type(cJSON *json)
-{
-    cJSON *enigma_type = cJSON_GetObjectItem(json, ENIGMA_TYPE_KEY);
-    EnigmaConfiguration enigma_configuration;
-
-    if (!enigma_type)
+    cJSON *json = cJSON_Parse(json_string);
+    if (json == NULL)
     {
         return 0;
     }
 
-    char *enigma_type_value = enigma_type->valuestring;
-
-    if (strcmp(enigma_type_value, "M3") == 0)
+    cJSON *enigma_type =
+        cJSON_GetObjectItemCaseSensitive(json, ENIGMA_TYPE_KEY);
+    if (cJSON_IsString(enigma_type) == 0)
     {
-        enigma_configuration.enigma_type = M3;
-    }
-    else if (strcmp(enigma_type_value, "M4") == 0)
-    {
-        enigma_configuration.enigma_type = M4;
+        return 0;
     }
     else
     {
-        return 0;
+        if (strcmp(enigma_type->valuestring, "M3") == 0)
+        {
+            enigma_configuration->type = M3;
+        }
+        else if (strcmp(enigma_type->valuestring, "M4") == 0)
+        {
+            enigma_configuration->type = M4;
+        }
+        else
+        {
+            return 0;
+        }
+
+        enigma_configuration->rotors =
+            malloc(sizeof(int) * enigma_configuration->type);
+        enigma_configuration->ring_settings =
+            malloc(sizeof(int) * enigma_configuration->type);
+        enigma_configuration->rotor_positions =
+            malloc(sizeof(int) * enigma_configuration->type);
     }
 
-    cJSON *rotors = cJSON_GetObjectItem(json, ROTORS_KEY);
-    if (!rotors)
+    cJSON *rotors = cJSON_GetObjectItemCaseSensitive(json, ROTORS_KEY);
+    if (cJSON_IsArray(rotors) == 0)
     {
         return 0;
     }
 
-    cJSON *rotor = rotors->child;
-    int i        = 0;
-    while (rotor)
+    int i = 0;
+
+    cJSON *rotor = NULL;
+    cJSON_ArrayForEach(rotor, rotors)
     {
-        enigma_configuration.rotors[i] = rotor->valueint;
-        rotor                          = rotor->next;
+        if (cJSON_IsNumber(rotor) == 0)
+        {
+            return 0;
+        }
+
+        enigma_configuration->rotors[i] = rotor->valueint;
         i++;
     }
 
-    cJSON *ring_settings = cJSON_GetObjectItem(json, RING_SETTINGS_KEY);
-    if (!ring_settings)
+    cJSON *ring_settings =
+        cJSON_GetObjectItemCaseSensitive(json, RING_SETTINGS_KEY);
+    if (cJSON_IsString(ring_settings) == 0)
     {
         return 0;
     }
-
-    cJSON *ring_setting = ring_settings->child;
-    i                   = 0;
-    while (ring_setting)
+    else
     {
-        enigma_configuration.ring_settings[i] = ring_setting->valueint;
-        ring_setting                          = ring_setting->next;
-        i++;
+        for (int j = 0; j < strlen(ring_settings->valuestring); j++)
+        {
+            if (ring_settings->valuestring[j] < 'A' ||
+                ring_settings->valuestring[j] > 'Z')
+            {
+                return 0;
+            }
+
+            enigma_configuration->ring_settings[j] =
+                ring_settings->valuestring[j] - 'A';
+        }
     }
 
-    cJSON *rotor_settings = cJSON_GetObjectItem(json, ROTOR_SETTINGS_KEY);
-    if (!rotor_settings)
-    {
-        return 0;
-    }
-
-    cJSON *rotor_setting = rotor_settings->child;
-    i                    = 0;
-    while (rotor_setting)
-    {
-        enigma_configuration.rotor_settings[i] = rotor_setting->valueint;
-        rotor_setting                          = rotor_setting->next;
-        i++;
-    }
-
-    cJSON *reflector = cJSON_GetObjectItem(json, REFLECTOR_KEY);
-    if (!reflector)
+    cJSON *rotor_positions =
+        cJSON_GetObjectItemCaseSensitive(json, ROTOR_POSITIONS_KEY);
+    if (cJSON_IsString(rotor_positions) == 0)
     {
         return 0;
     }
+    else
+    {
+        for (int j = 0; j < strlen(rotor_positions->valuestring); j++)
+        {
+            if (rotor_positions->valuestring[j] < 'A' ||
+                rotor_positions->valuestring[j] > 'Z')
+            {
+                return 0;
+            }
 
-    enigma_configuration.reflector = reflector->valueint;
+            enigma_configuration->rotor_positions[j] =
+                rotor_positions->valuestring[j] - 'A';
+        }
+    }
 
-    cJSON *plugboard = cJSON_GetObjectItem(json, PLUGBOARD_KEY);
-    if (!plugboard)
+    cJSON *reflector = cJSON_GetObjectItemCaseSensitive(json, REFLECTOR_KEY);
+    if (cJSON_IsString(reflector) == 0)
     {
         return 0;
     }
+    else
+    {
+        if (strcmp(reflector->valuestring, "B") == 0)
+        {
+            enigma_configuration->reflector = 'B';
+        }
+        else if (strcmp(reflector->valuestring, "C") == 0)
+        {
+            enigma_configuration->reflector = 'C';
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
-    char *plugboard_value = plugboard->valuestring;
-    if (strlen(plugboard_value) > 26)
+    cJSON *plugboard = cJSON_GetObjectItemCaseSensitive(json, PLUGBOARD_KEY);
+    if (cJSON_IsString(plugboard) == 0)
     {
         return 0;
     }
+    else
+    {
+        int plugboard_length = strlen(plugboard->valuestring);
+        for (int j = 0; j < plugboard_length && j < 26; j++)
+        {
+            if (plugboard->valuestring[j] < 'A' ||
+                plugboard->valuestring[j] > 'Z')
+            {
+                return 0;
+            }
 
-    strcpy(enigma_configuration.plugboard, plugboard_value);
+            enigma_configuration->plugboard[j] = plugboard->valuestring[j];
+        }
+    }
 
-    cJSON *message = cJSON_GetObjectItem(json, MESSAGE_KEY);
-    if (!message)
+    cJSON *message = cJSON_GetObjectItemCaseSensitive(json, MESSAGE_KEY);
+    if (cJSON_IsString(message) == 0)
     {
         return 0;
     }
-
-    char *message_value = message->valuestring;
-    if (strlen(message_value) > 1024)
+    else
     {
-        return 0;
+        strncpy(enigma_configuration->message, message->valuestring,
+                strlen(message->valuestring));
     }
-
-    strcpy(enigma_configuration.message, message_value);
 
     return 1;
 }

@@ -18,7 +18,13 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@redux/*": ["./src/redux/*"],
+      "@customTypes/*": ["./src/types/*"] // can't use @types because it's reserved
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

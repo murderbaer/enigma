@@ -61,7 +61,6 @@ function EnigmaComponents(props: { enigma: EnigmaType }) {
             method: "POST",
 
             body: JSON.stringify(enigma),
-            mode: "no-cors",
           });
           console.log(response);
 

@@ -72,6 +72,7 @@ void *handle_client(void *arg)
             "Content-Type: application/json\r\n"
             "Content-Length: %ld\r\n"
             "Connection: close\r\n"
+            "Origin: *\r\n"
             "Access-Control-Allow-Origin: *\r\n",
             strlen(traversed_text_json) + strlen(traversed_text));
     sprintf(response + strlen(response), "\r\n");
@@ -96,7 +97,7 @@ void *handle_client(void *arg)
     return NULL;
 }
 
-int server_run()
+int server_run(void)
 {
     int server_socket = socket(AF_INET, SOCK_STREAM, 0);
 

@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
-import { EnigmaRotor } from "../../types/EnigmaType";
-import { RootState } from "../../redux/store";
-import Dropdown from "react-dropdown";
+import { EnigmaRotor } from "@customTypes/EnigmaType";
+import { RootState } from "@redux/store";
 
 import style from "./styles.module.css";
 import "react-dropdown/style.css";
+import PlusMinus from "@components/PlusMinus/PlusMinus";
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -18,15 +18,29 @@ type RotorProps = {
 
 const RotorComponent = (props: RotorProps) => {
   const { model } = props;
-  const enigmaRotorKeys = Object.keys(EnigmaRotor);
+  const rotorValues = Object.values(EnigmaRotor);
+  const currentRotor = rotorValues[model];
 
   return (
     <div className={style.rotor}>
-      <Dropdown
-        options={enigmaRotorKeys}
-        value={enigmaRotorKeys[model - 1]}
-        placeholder="Select an option"
-      />
+      <PlusMinus
+        onPlus={() => {}}
+        onMinus={() => {}}
+        value={currentRotor}
+        label="Rotor"
+        />
+            <PlusMinus
+        onPlus={() => {}}
+        onMinus={() => {}}
+        value={currentRotor}
+        label="Rotor Position"
+        />
+          <PlusMinus
+        onPlus={() => {}}
+        onMinus={() => {}}
+        value={currentRotor}
+        label="Ring Setting"
+        />
     </div>
   );
 };

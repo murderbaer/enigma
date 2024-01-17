@@ -6,6 +6,7 @@ function TextInput(props: TextInputProps) {
   const labelComponent = props.label ? (
     <label className={styles.label}>{props.label}</label>
   ) : null;
+  const changeFunction = onValueChange ? onValueChange : () => {};
 
   return (
     <div className={styles.textInputContainer}>
@@ -13,7 +14,7 @@ function TextInput(props: TextInputProps) {
       <input
         type="text"
         value={text}
-        onChange={(e) => onValueChange(e.target.value)}
+        onChange={(event) => changeFunction(event.target.value)}
         className={`${styles.textInput} ${disabledClass}`}
         disabled={disabled}
       />
@@ -23,7 +24,7 @@ function TextInput(props: TextInputProps) {
 
 type TextInputProps = {
   text: string;
-  onValueChange: (value: string) => void;
+  onValueChange?: (value: string) => void;
   disabled?: boolean;
   label?: string;
 };

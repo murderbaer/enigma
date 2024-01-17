@@ -1,0 +1,14 @@
+.label {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 1rem;
+  text-align: left;
+}
+
+.plusMinus {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

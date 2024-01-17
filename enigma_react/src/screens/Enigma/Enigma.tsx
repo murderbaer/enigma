@@ -8,7 +8,6 @@ import styles from "./styles.module.css";
 import TextInput from "@components/TextInput/TextInput";
 import { useState } from "react";
 import { enigma_post } from "@api/enigma_api";
-import { async } from "../../api/enigma_api";
 
 function setValidText(text: string) {
   const upperCaseText = text.toUpperCase();
@@ -26,6 +25,7 @@ const mapStateToProps = (state: RootState) => {
 function EnigmaComponents(props: { enigma: EnigmaType }) {
   const { enigma } = props;
   const [text, setText] = useState<string>("");
+  const [encryptedText, setEncryptedText] = useState<string>("");
   const [plugboard, setPlugboard] = useState<string>("");
 
   const rotors = enigma.rotors.map((rotor: number) => {
@@ -45,8 +45,7 @@ function EnigmaComponents(props: { enigma: EnigmaType }) {
         label="Text to encrypt:"
       />
       <TextInput
-        text={text}
-        onValueChange={(value: string) => setText(setValidText(value))}
+        text={encryptedText}
         disabled
         label="Encrypted text"
       />
@@ -57,15 +56,9 @@ function EnigmaComponents(props: { enigma: EnigmaType }) {
       />
       <button
         onClick={async () => {
-          const response = await fetch("http://127.0.0.1:17576", {
-            method: "POST",
-
-            body: JSON.stringify(enigma),
-          });
-          console.log(response);
-
-          const data = await response.json();
-          console.log(data);
+          const response = await enigma_post(enigma);
+          const json = await response.json();
+          setEncryptedText(json.traversedText);
         }}
       >
         Encrypt

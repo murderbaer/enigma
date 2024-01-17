@@ -3,5 +3,5 @@
   "cmake.debugConfig": {
     "args": ["--server"]
   },
-  "cmake.sourceDirectory": "/home/arif/code/enigma/enigma_c"
+  "cmake.sourceDirectory": "/Users/work/side/enigma/enigma_c"
 }

@@ -26,6 +26,13 @@ sudo apt install libcjson-dev
 # MacOS (homebrew), you may need to install homebrew first (https://brew.sh/)
 brew install cjson
 ```
+If you are on Mac and get and error that `cjson` try adding the homebrew library path to your `.zshrc` or `.bashrc` file:
+```bash
+export LDFLAGS="-L/opt/homebrew/lib"
+export CPPFLAGS="-I/opt/homebrew/include"
+```
+It should work without this as there already is a condition in the `CMakeLists.txt` file that checks for the homebrew path.
+
 
 Submodules are generally used to include other git repositories in a project. If you want to learn more about submodules you can read the [official git documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 

@@ -12,6 +12,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@api": path.resolve(__dirname, "./src/api"),
       "@components": path.resolve(__dirname, "./src/components"),
       "@redux": path.resolve(__dirname, "./src/redux"),
       "@customTypes": path.resolve(__dirname, "./src/types"), // can't use @types because it's reserved

@@ -4,14 +4,14 @@ export enum EnigmaModel {
 }
 
 export const EnigmaRotor = {
-  I: "I",
-  II: "II",
-  III: "III",
-  IV: "IV",
-  V: "V",
-  VI: "VI",
-  VII: "VII",
-  VIII: "VIII",
+  I: 1,
+  II: 2,
+  III: 3,
+  IV: 4,
+  V: 5,
+  VI: 6,
+  VII: 7,
+  VIII: 8,
 };
 
 export const EnigmaReflector = {
@@ -23,7 +23,7 @@ export const EnigmaReflector = {
 
 export type EnigmaType = {
   model: EnigmaModel;
-  rotors: string[];
+  rotors: number[];
   reflector: string;
   ringSettings: string;
   rotorPositions: string;

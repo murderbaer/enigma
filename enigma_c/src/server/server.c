@@ -62,15 +62,37 @@ void *handle_client(void *arg)
 
     char *traversed_text = get_string_from_int_array(
         traverse_enigma(enigma), strlen(enigma_configuration.message));
+    char *traversed_text_json = "{\"traversedText\":\"%s\"}";
 
-    // send traversed text but first we need to create a response
-    sprintf(response,
-            "HTTP/1.1 200 OK\r\nContent-Type: "
-            "application/json\r\n\r\n{\"traversedText\":\"%s\"}",
-            traversed_text);
+    // add content type, length and Connection: close header
+    // add cors
+
+    sprintf(response, HTTP_OK_HEADER);
+    sprintf(response + strlen(response),
+            "Content-Type: application/json\r\n"
+            "Content-Length: %ld\r\n"
+            "Connection: close\r\n"
+            "Access-Control-Allow-Origin: *\r\n",
+            strlen(traversed_text_json) + strlen(traversed_text));
+    sprintf(response + strlen(response), "\r\n");
+
+    sprintf(response + strlen(response), traversed_text_json, traversed_text);
+    sprintf(response + strlen(response), "\r\n");
+
     write(client_socket, response, strlen(response));
 
+    printf("traversed text: %s\n", traversed_text);
+
+    free(traversed_text);
+    free(enigma_configuration.rotors);
+    free(enigma_configuration.ring_settings);
+    free(enigma_configuration.rotor_positions);
+    free(enigma);
+
     close(client_socket);
+
+    printf("client disconnected\n");
+
     return NULL;
 }
 

@@ -13,7 +13,7 @@ const initialState: EnigmaType = {
   rotorPositions: "ABC",
   reflector: EnigmaReflector.B,
   plugboard: "",
-  message: "",
+  message: "AAA",
 };
 
 const EnigmaSlice = createSlice({

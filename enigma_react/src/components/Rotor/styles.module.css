@@ -1,0 +1,6 @@
+.rotor {
+  align-items: center;
+  height: 100%;
+  color: var(--text);
+  background-color: var(--secondary);
+}

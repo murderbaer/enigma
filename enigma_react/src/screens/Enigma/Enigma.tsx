@@ -7,6 +7,8 @@ import { EnigmaType } from "@customTypes/EnigmaType";
 import styles from "./styles.module.css";
 import TextInput from "@components/TextInput/TextInput";
 import { useState } from "react";
+import { enigma_post } from "@api/enigma_api";
+import { async } from "../../api/enigma_api";
 
 function setValidText(text: string) {
   const upperCaseText = text.toUpperCase();
@@ -26,7 +28,7 @@ function EnigmaComponents(props: { enigma: EnigmaType }) {
   const [text, setText] = useState<string>("");
   const [plugboard, setPlugboard] = useState<string>("");
 
-  const rotors = enigma.rotors.map((rotor: string) => {
+  const rotors = enigma.rotors.map((rotor: number) => {
     return <Rotor model={rotor} key={rotor} />;
   });
 
@@ -54,8 +56,17 @@ function EnigmaComponents(props: { enigma: EnigmaType }) {
         label="Plugboard"
       />
       <button
-        onClick={() => {
-          console.log("encrypt");
+        onClick={async () => {
+          const response = await fetch("http://127.0.0.1:17576", {
+            method: "POST",
+
+            body: JSON.stringify(enigma),
+            mode: "no-cors",
+          });
+          console.log(response);
+
+          const data = await response.json();
+          console.log(data);
         }}
       >
         Encrypt

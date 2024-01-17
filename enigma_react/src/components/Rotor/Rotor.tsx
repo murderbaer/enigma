@@ -13,7 +13,7 @@ const mapStateToProps = (state: RootState) => {
 };
 
 type RotorProps = {
-  model: string;
+  model: number;
 };
 
 const RotorComponent = (props: RotorProps) => {
@@ -24,7 +24,7 @@ const RotorComponent = (props: RotorProps) => {
     <div className={style.rotor}>
       <Dropdown
         options={enigmaRotorKeys}
-        value={model}
+        value={enigmaRotorKeys[model - 1]}
         placeholder="Select an option"
       />
     </div>

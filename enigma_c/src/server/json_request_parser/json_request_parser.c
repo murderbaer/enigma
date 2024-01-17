@@ -6,7 +6,7 @@
 #include "../../helper/helper.h"
 #include "json_request_parser.h"
 
-#define ENIGMA_TYPE_KEY "enigmaType"
+#define ENIGMA_TYPE_KEY "model"
 
 #define ROTORS_KEY "rotors"
 #define ROTOR_KEY "ring"

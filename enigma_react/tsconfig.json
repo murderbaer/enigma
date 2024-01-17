@@ -23,7 +23,8 @@
       "@components/*": ["./src/components/*"],
       "@screens/*": ["./src/screens/*"],
       "@redux/*": ["./src/redux/*"],
-      "@customTypes/*": ["./src/types/*"] // can't use @types because it's reserved
+      "@customTypes/*": ["./src/types/*"],
+      "@api/*": ["./src/api/*"]
     }
   },
   "include": ["src"],

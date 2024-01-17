@@ -30,23 +30,35 @@ const RotorComponent = (props: RotorProps) => {
     <div className={style.rotor}>
       <h3>Rotor {props.position + 1}</h3>
       <PlusMinus
-        onPlus={() => dispatch(EnigmaActions.setRotor({ position: props.position, model: (model  % rotorValues.length) +1 }))}
-        onMinus={() => {}}
+        onPlus={() =>
+          dispatch(
+            EnigmaActions.addToRotor({
+              position: props.position,
+            })
+          )
+        }
+        onMinus={() =>
+          dispatch(
+            EnigmaActions.subractToRotor({
+              position: props.position,
+            })
+          )
+        }
         value={currentRotor}
         label="Rotor"
-        />
-            <PlusMinus
+      />
+      <PlusMinus
         onPlus={() => {}}
         onMinus={() => {}}
         value={currentRotor}
         label="Rotor Position"
-        />
-          <PlusMinus
+      />
+      <PlusMinus
         onPlus={() => {}}
         onMinus={() => {}}
         value={currentRotor}
         label="Ring Setting"
-        />
+      />
     </div>
   );
 };

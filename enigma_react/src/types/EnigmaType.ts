@@ -25,8 +25,8 @@ export type EnigmaType = {
   model: EnigmaModel;
   rotors: number[];
   reflector: string;
-  ringSettings: string;
-  rotorPositions: string;
+  ringSettings: number[];
+  rotorPositions: number[];
   plugboard: string;
   message: string;
 };

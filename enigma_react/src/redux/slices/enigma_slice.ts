@@ -11,7 +11,7 @@ const initialState: EnigmaType = {
   rotors: [EnigmaRotor.I, EnigmaRotor.II, EnigmaRotor.III],
   ringSettings: "AAA",
   rotorPositions: "ABC",
-  reflector: EnigmaReflector.B,
+  reflector: EnigmaReflector.C,
   plugboard: "",
   message: "AAA",
 };
@@ -23,8 +23,10 @@ const EnigmaSlice = createSlice({
     setEnigmaType: (state: EnigmaType, action) => {
       state.model = action.payload;
     },
-    setRotors: (state: EnigmaType, action) => {
-      state.rotors = action.payload;
+    setRotor: (state: EnigmaType, action) => {
+      console.log(action);
+      const { position, model } = action.payload;
+      state.rotors[position] = model;
     },
     setRingSettings: (state: EnigmaType, action) => {
       state.ringSettings = action.payload;

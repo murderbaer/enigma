@@ -16,7 +16,7 @@ function PlusMinus(props: PlusMinusProps) {
 type PlusMinusProps = {
     onPlus: () => void;
     onMinus: () => void;
-    value: number;
+    value: string;
     label?: string;
 };
 

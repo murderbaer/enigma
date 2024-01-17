@@ -1,6 +1,9 @@
 import { connect } from "react-redux";
 import { EnigmaRotor } from "@customTypes/EnigmaType";
 import { RootState } from "@redux/store";
+import { useDispatch } from "react-redux";
+
+import { EnigmaActions } from "@redux/slices/enigma_slice";
 
 import style from "./styles.module.css";
 import "react-dropdown/style.css";
@@ -13,18 +16,21 @@ const mapStateToProps = (state: RootState) => {
 };
 
 type RotorProps = {
+  position: number;
   model: number;
 };
 
 const RotorComponent = (props: RotorProps) => {
   const { model } = props;
-  const rotorValues = Object.values(EnigmaRotor);
-  const currentRotor = rotorValues[model];
+  const dispatch = useDispatch();
+  const rotorValues = Object.keys(EnigmaRotor);
+  const currentRotor = rotorValues[model - 1];
 
   return (
     <div className={style.rotor}>
+      <h3>Rotor {props.position + 1}</h3>
       <PlusMinus
-        onPlus={() => {}}
+        onPlus={() => dispatch(EnigmaActions.setRotor({ position: props.position, model: (model  % rotorValues.length) +1 }))}
         onMinus={() => {}}
         value={currentRotor}
         label="Rotor"

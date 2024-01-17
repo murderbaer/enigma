@@ -28,8 +28,8 @@ function EnigmaComponents(props: { enigma: EnigmaType }) {
   const [encryptedText, setEncryptedText] = useState<string>("");
   const [plugboard, setPlugboard] = useState<string>("");
 
-  const rotors = enigma.rotors.map((rotor: number) => {
-    return <Rotor model={rotor} key={rotor} />;
+  const rotors = enigma.rotors.map((rotor: number, index: number) => {
+    return <Rotor model={rotor} key={index} position={index} />;
   });
 
   return (

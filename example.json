@@ -1,6 +1,10 @@
 {
   "model": "M3",
-  "rotors": [1, 2, 3],
+  "rotors": [
+    1,
+    2,
+    3
+  ],
   "ringSettings": "AAA",
   "rotorPositions": "ABC",
   "reflector": "B",

@@ -1,3 +1,7 @@
 {
-    "cmake.sourceDirectory": "/Users/work/side/enigma/enigma_c"
+  "cmake.sourceDirectory": "/home/arif/code/enigma/enigma_c",
+  "cmake.debugConfig": {
+    "args": ["-s"]
+  },
+  "mesonbuild.configureOnOpen": false
 }

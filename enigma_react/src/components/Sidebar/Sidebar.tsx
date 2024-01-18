@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
-// Home page and one extra page
+
 const Sidebar = () => {
   return (
     <div className={styles.sidebar}>
-      <Link to="/">Home</Link>
-      <Link to="/info">About</Link>
+      <div className={styles.buttons}>
+        <Link to="/">Home</Link>
+        <Link to="/enigmaInfo">Enigma Info</Link>
+      </div>
     </div>
   );
 };

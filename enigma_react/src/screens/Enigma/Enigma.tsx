@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { RootState } from "@redux/store";
 import Rotor from "@components/Rotor/Rotor";
 import Reflector from "@components/Reflector/Reflector";
@@ -8,12 +8,24 @@ import styles from "./styles.module.css";
 import TextInput from "@components/TextInput/TextInput";
 import { useState } from "react";
 import { enigma_post } from "@api/enigma_api";
+import { EnigmaActions } from "@redux/slices/enigma_slice";
 
-function setValidText(text: string) {
+function setValidMessage(text: string) {
   const upperCaseText = text.toUpperCase();
   const validText = upperCaseText.replace(/[^A-Z]/g, "");
 
   return validText;
+}
+
+function setValidPlugboard(text: string) {
+  const upperCaseText = text.toUpperCase();
+  const validText = upperCaseText.replace(/[^A-Z]/g, "");
+
+  //don't allow repeated letters
+  const uniqueLetters = new Set(validText);
+  const uniqueText = [...uniqueLetters].join("");
+
+  return uniqueText;
 }
 
 const mapStateToProps = (state: RootState) => {
@@ -24,42 +36,43 @@ const mapStateToProps = (state: RootState) => {
 
 function EnigmaComponents(props: { enigma: EnigmaType }) {
   const { enigma } = props;
-  const [text, setText] = useState<string>("");
+  const dispatch = useDispatch();
   const [encryptedText, setEncryptedText] = useState<string>("");
-  const [plugboard, setPlugboard] = useState<string>("");
-
   const rotors = enigma.rotors.map((rotor: number, index: number) => {
     return <Rotor model={rotor} key={index} position={index} />;
   });
+  const disableButton = enigma.plugboard.length % 2 !== 0;
 
   return (
     <div className={styles.enigma}>
       <h1>Enigma: {enigma.model} </h1>
+
       <div className={styles.rotors}>
         <Reflector model={enigma.reflector} />
         {rotors}
       </div>
       <TextInput
-        text={text}
-        onValueChange={(value: string) => setText(setValidText(value))}
+        text={enigma.message}
+        onValueChange={async (value: string) =>
+          dispatch(EnigmaActions.setMessage(setValidMessage(value)))
+        }
         label="Text to encrypt:"
       />
       <TextInput
-        text={encryptedText}
-        disabled
-        label="Encrypted text"
-      />
-      <TextInput
-        text={plugboard}
-        onValueChange={(value: string) => setPlugboard(value)}
+        text={enigma.plugboard}
+        onValueChange={(value: string) =>
+          dispatch(EnigmaActions.setPlugboard(setValidPlugboard(value)))
+        }
         label="Plugboard"
       />
+      <TextInput text={encryptedText} disabled label="Encrypted text" />
       <button
         onClick={async () => {
           const response = await enigma_post(enigma);
           const json = await response.json();
           setEncryptedText(json.traversedText);
         }}
+        disabled={disableButton}
       >
         Encrypt
       </button>

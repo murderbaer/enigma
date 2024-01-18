@@ -116,6 +116,7 @@ create_enigma_from_configuration(EnigmaConfiguration *enigma_configuration)
 
     enigma->reflector =
         create_reflector_by_type(enigma_configuration->reflector);
+    printf("reflector: %s\n", enigma_configuration->plugboard);
     enigma->plugboard = create_plugboard(enigma_configuration->plugboard);
     enigma->plaintext = enigma_configuration->message;
 

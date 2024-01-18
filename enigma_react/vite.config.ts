@@ -16,6 +16,7 @@ export default defineConfig({
       "@components": path.resolve(__dirname, "./src/components"),
       "@redux": path.resolve(__dirname, "./src/redux"),
       "@customTypes": path.resolve(__dirname, "./src/types"), // can't use @types because it's reserved
+      "@screens": path.resolve(__dirname, "./src/screens"),
     },
   },
 });

@@ -18,29 +18,33 @@ const mapStateToProps = (state: RootState) => {
 type RotorProps = {
   position: number;
   model: number;
+  enigma: RootState["enigma"];
 };
 
 const RotorComponent = (props: RotorProps) => {
-  const { model } = props;
+  const { model, enigma, position } = props;
+  const rotorCount = enigma.rotors.length;
   const dispatch = useDispatch();
   const rotorValues = Object.keys(EnigmaRotor);
   const currentRotor = rotorValues[model - 1];
+  const currentRingSetting = enigma.ringSettings[position];
+  const currentRotorPosition = enigma.rotorPositions[position];
 
   return (
     <div className={style.rotor}>
-      <h3>Rotor {props.position + 1}</h3>
+      <p>Rotor {rotorCount - position}</p>
       <PlusMinus
         onPlus={() =>
           dispatch(
             EnigmaActions.addToRotor({
-              position: props.position,
+              position: position,
             })
           )
         }
         onMinus={() =>
           dispatch(
-            EnigmaActions.subractToRotor({
-              position: props.position,
+            EnigmaActions.subtractToRotor({
+              position: position,
             })
           )
         }
@@ -48,15 +52,39 @@ const RotorComponent = (props: RotorProps) => {
         label="Rotor"
       />
       <PlusMinus
-        onPlus={() => {}}
-        onMinus={() => {}}
-        value={currentRotor}
+        onPlus={() =>
+          dispatch(
+            EnigmaActions.addToRotorPosition({
+              position: position,
+            })
+          )
+        }
+        onMinus={() =>
+          dispatch(
+            EnigmaActions.subtractToRotorPosition({
+              position: position,
+            })
+          )
+        }
+        value={String(currentRotorPosition)}
         label="Rotor Position"
       />
       <PlusMinus
-        onPlus={() => {}}
-        onMinus={() => {}}
-        value={currentRotor}
+        onPlus={() =>
+          dispatch(
+            EnigmaActions.addToRingSetting({
+              position: position,
+            })
+          )
+        }
+        onMinus={() =>
+          dispatch(
+            EnigmaActions.subtractToRingSetting({
+              position: position,
+            })
+          )
+        }
+        value={String(currentRingSetting)}
         label="Ring Setting"
       />
     </div>

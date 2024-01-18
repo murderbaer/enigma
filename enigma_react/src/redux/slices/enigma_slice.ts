@@ -28,7 +28,7 @@ const EnigmaSlice = createSlice({
       state.rotors[position] =
         (state.rotors[position] % Object.keys(EnigmaRotor).length) + 1;
     },
-    subractToRotor: (state: EnigmaType, action) => {
+    subtractToRotor: (state: EnigmaType, action) => {
       const { position } = action.payload;
       let newValue = state.rotors[position] - 1;
 
@@ -68,7 +68,7 @@ const EnigmaSlice = createSlice({
       state.rotorPositions[position] = newValue;
     },
     setReflector: (state: EnigmaType, action) => {
-      state.reflector = action.payload;
+      state.reflector = action.payload.model;
     },
     setPlugboard: (state: EnigmaType, action) => {
       state.plugboard = action.payload;

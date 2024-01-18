@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Enigma from "./screens/Enigma/Enigma";
 import Sidebar from "./components/Sidebar/Sidebar";
+import EnigmaInfo from "@screens/EnigmaInfo/EnigmaInfo";
 
 import "./index.css";
-import Info from './screens/Info/Info';
 
 export default function App() {
   return (
@@ -14,9 +14,9 @@ export default function App() {
             <Sidebar />
           </div>
           <div className="main">
-            <Routes> {/* Use Routes instead of Switch */}
+            <Routes>
               <Route path="/" element={<Enigma />} />
-              <Route path="/info" element={<Info />} />
+              <Route path="/enigmaInfo" element={<EnigmaInfo />} />
             </Routes>
           </div>
         </div>

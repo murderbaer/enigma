@@ -32,13 +32,9 @@ Plugboard *create_plugboard(char *input)
         {
             plugboard_data[i] = i;
         }
-        else
-        {
-            plugboard_data[i] = plugboard_data[plugboard_data[i]];
-        }
-    }
 
-    memcpy(plugboard->plugboard_data, plugboard_data, sizeof(int) * 26);
+        plugboard->plugboard_data[i] = plugboard_data[i];
+    }
 
     return plugboard;
 }

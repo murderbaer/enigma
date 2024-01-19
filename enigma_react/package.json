@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "classnames": "^2.5.1",
     "localforage": "^1.10.0",
+    "lorem-ipsum": "^2.0.8",
     "match-sorter": "^6.3.1",
     "module-alias": "^2.2.3",
     "react": "^18.2.0",

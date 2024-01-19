@@ -2,12 +2,11 @@ import { connect } from "react-redux";
 import { EnigmaRotor } from "@customTypes/EnigmaType";
 import { RootState } from "@redux/store";
 import { useDispatch } from "react-redux";
+import PlusMinus from "@components/PlusMinus/PlusMinus";
 
 import { EnigmaActions } from "@redux/slices/enigma_slice";
 
 import style from "./styles.module.css";
-import "react-dropdown/style.css";
-import PlusMinus from "@components/PlusMinus/PlusMinus";
 
 const mapStateToProps = (state: RootState) => {
   return {

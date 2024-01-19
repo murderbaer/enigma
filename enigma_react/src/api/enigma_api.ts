@@ -23,7 +23,7 @@ export async function enigma_post(data: EnigmaType) {
 
   console.log(request);
 
-  const response = await fetch("http://127.0.0.1:17576", {
+  const response = await fetch("http://enigma-backend-1:17576", {
     method: "POST",
     body: JSON.stringify(request),
   });

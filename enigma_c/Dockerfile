@@ -14,6 +14,5 @@ RUN cmake --build build
 
 EXPOSE 17576
 
-CMD ["/app/build/enigma", "--server", "&" ]
-
+CMD ["nohup", "/app/build/enigma", "--server", "&"]
 

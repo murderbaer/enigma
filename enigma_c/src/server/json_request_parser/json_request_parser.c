@@ -17,6 +17,8 @@
 #define PLUGBOARD_KEY "plugboard"
 #define MESSAGE_KEY "message"
 
+#define MAX_MESSAGE_LENGTH 1000
+
 int validate_enigma_json(const char *const json_string,
                          EnigmaConfiguration *enigma_configuration)
 {
@@ -166,7 +168,7 @@ int validate_enigma_json(const char *const json_string,
     else
     {
         strncpy(enigma_configuration->message, message->valuestring,
-                strlen(message->valuestring));
+                MAX_MESSAGE_LENGTH);
     }
 
     return 1;

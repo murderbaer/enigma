@@ -1,4 +1,9 @@
+
+set(CMAKE_CXX_FLAGS_RELEASE_INIT "-Wall -Wextra -Werror -O3 -std=c17")
+
 add_library(enigma_lib
+    cyclometer/cyclometer.c
+    cyclometer/cyclometer.h
     enigma/enigma.c
     enigma/enigma.h
     enigma/rotor/rotor.c

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../cyclometer/cyclometer.h"
 #include "../enigma/enigma.h"
 #include "../enigma/reflector/reflector.h"
 #include "../enigma/rotor/rotor.h"
@@ -42,6 +43,7 @@ void print_help(void)
     printf("Enigma options:\n");
     printf("  -s,  --server        run as server\n");
     printf("  -e,  --enigma        Enigma type (M3, M4)\n");
+    printf("  -c,  --cyclometer    generate all possible cycles\n");
     printf("  -r1, --rotor-one     first rotor type (1, 2, 3, 4, 5, 6, 7)\n");
     printf("  -r2, --rotor-two     second rotor type (1, 2, 3, 4, 5, 6, 7)\n");
     printf("  -r3, --rotor-three   third rotor type (1, 2, 3, 4, 5, 6, 7)\n");
@@ -110,6 +112,13 @@ void save_input(CLI_OPTIONS *options, int argc, char **argv)
         {
             options->enigma_type = argv[i + 1];
             i++;
+        }
+        else if (string_equals(CYCLOMETER, argv[i]) ||
+                 string_equals(CYCLOMETER_SHORT, argv[i]))
+        {
+            Cycle *cycles = create_cycles();
+            free(cycles);
+            exit(0);
         }
         else if (string_equals(ROTOR_ONE, argv[i]) ||
                  string_equals(ROTOR_ONE_SHORT, argv[i]))
@@ -217,6 +226,7 @@ Enigma *query_input_none_interactive(CLI_OPTIONS *options)
     }
 
     enigma->type      = enigma_type_char_to_int(options->enigma_type);
+    enigma->rotors    = (Rotor **)malloc(sizeof(Rotor *) * enigma->type);
     enigma->rotors[0] = create_rotor(options->rotor_one_type[0] - '0',
                                      options->rotor_positions[0] - 'A',
                                      options->rotor_offsets[0] - 'A');
@@ -369,4 +379,6 @@ void query_input(int argc, char **argv)
     }
 
     printf("\n");
+
+    free(options);
 }

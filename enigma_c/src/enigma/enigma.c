@@ -70,6 +70,8 @@ int *traverse_m3_enigma(Enigma *enigma, int *text_in_integer, int array_size)
 
     output[array_size] = '\0';
 
+    free(text_in_integer);
+
     return output;
 }
 

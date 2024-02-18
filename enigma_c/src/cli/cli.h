@@ -8,6 +8,8 @@
 #define INTERACTIVE_SHORT "-i"
 #define ENIGMA "--enigma"
 #define ENIGMA_SHORT "-e"
+#define CYCLOMETER "--cyclometer"
+#define CYCLOMETER_SHORT "-c"
 #define ROTOR_ONE "--rotor-one"
 #define ROTOR_ONE_SHORT "-r1"
 #define ROTOR_TWO "--rotor-two"
@@ -29,4 +31,4 @@
 #define SERVER "--server"
 #define SERVER_SHORT "-s"
 
-void query_input(int argc, char ** argv);
+void query_input(int argc, char **argv);

@@ -1,7 +1,7 @@
 import { EnigmaType } from "@customTypes/EnigmaType";
 
 export async function enigma_post(data: EnigmaType) {
-  // rotorposition is a number array, it needs to be a string where A=1 etc
+  // rotorPositions is a number array, it needs to be a string where A=1 etc
   const rotorPositions = data.rotorPositions
     .map((position) => String.fromCharCode(64 + position))
     .toString()
@@ -23,7 +23,7 @@ export async function enigma_post(data: EnigmaType) {
 
   console.log(request);
 
-  const response = await fetch("http://enigma-backend-1:17576", {
+  const response = await fetch("http://localhost:17576", {
     method: "POST",
     body: JSON.stringify(request),
   });

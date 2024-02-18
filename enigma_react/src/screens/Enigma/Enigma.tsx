@@ -20,8 +20,6 @@ function setValidMessage(text: string) {
 function setValidPlugboard(text: string) {
   const upperCaseText = text.toUpperCase();
   const validText = upperCaseText.replace(/[^A-Z]/g, "");
-
-  //don't allow repeated letters
   const uniqueLetters = new Set(validText);
   const uniqueText = [...uniqueLetters].join("");
 
@@ -46,7 +44,6 @@ function EnigmaComponents(props: { enigma: EnigmaType }) {
   return (
     <div className={styles.enigma}>
       <h1>Enigma: {enigma.model} </h1>
-
       <div className={styles.rotors}>
         <Reflector model={enigma.reflector} />
         {rotors}
@@ -70,7 +67,7 @@ function EnigmaComponents(props: { enigma: EnigmaType }) {
         onClick={async () => {
           const response = await enigma_post(enigma);
           const json = await response.json();
-          setEncryptedText(json.traversedText);
+          setEncryptedText(json.traversed_text);
         }}
         disabled={disableButton}
       >

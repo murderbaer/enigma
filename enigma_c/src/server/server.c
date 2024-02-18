@@ -18,6 +18,46 @@
 
 #define HTTP_OK_HEADER "HTTP/1.1 200 OK\r\n"
 
+char *build_response(char *traversed_text)
+{
+    // create response in json
+    cJSON *response_json = cJSON_CreateObject();
+    cJSON_AddStringToObject(response_json, "traversed_text", traversed_text);
+    char *response_json_string = cJSON_Print(response_json);
+    cJSON_Delete(response_json);
+
+    // create response in http
+    char *response = malloc(2048);
+    sprintf(response, "%s", HTTP_OK_HEADER);
+    sprintf(response + strlen(response),
+            "Content-Type: application/json\r\n"
+            "Content-Length: %ld\r\n"
+            "Connection: close\r\n"
+            "Origin: *\r\n"
+            "Access-Control-Allow-Origin: *\r\n",
+            strlen(response_json_string));
+    sprintf(response + strlen(response), "\r\n");
+    sprintf(response + strlen(response), "%s", response_json_string);
+
+    free(response_json_string);
+
+    return response;
+}
+
+char *build_error_response(void)
+{
+    char *response = malloc(2048);
+    sprintf(response, "HTTP/1.1 400 Bad Request\r\n");
+    sprintf(response + strlen(response), "Content-Type: text/plain\r\n"
+                                         "Content-Length: 0\r\n"
+                                         "Connection: close\r\n"
+                                         "Origin: *\r\n"
+                                         "Access-Control-Allow-Origin: *\r\n");
+    sprintf(response + strlen(response), "\r\n");
+
+    return response;
+}
+
 void *handle_client(void *arg)
 {
     int client_socket = *(int *)arg;
@@ -32,57 +72,33 @@ void *handle_client(void *arg)
     }
 
     char *header_end = strstr(buffer, "\r\n\r\n");
-    if (!header_end)
+
+    if (header_end == NULL)
     {
-        sprintf(buffer, "HTTP/1.1 400 Bad Request\r\n");
-        write(client_socket, buffer, strlen(buffer));
-        close(client_socket);
+        char *response = build_error_response();
+        write(client_socket, response, strlen(response));
 
         return NULL;
     }
 
     char *body = header_end + 4;
 
-    printf("client connected\n");
-
-    char response[2048];
-
     EnigmaConfiguration enigma_configuration;
 
     if (validate_enigma_json(body, &enigma_configuration) == 0)
     {
-        sprintf(response, "HTTP/1.1 400 Bad Request\r\n");
+        char *response = build_error_response();
         write(client_socket, response, strlen(response));
-        close(client_socket);
 
         return NULL;
     }
 
     Enigma *enigma = create_enigma_from_configuration(&enigma_configuration);
-
     char *traversed_text = get_string_from_int_array(
         traverse_enigma(enigma), strlen(enigma_configuration.message));
-    char *traversed_text_json = "{\"traversedText\":\"%s\"}";
 
-    // add content type, length and Connection: close header
-    // add cors
-
-    sprintf(response, HTTP_OK_HEADER);
-    sprintf(response + strlen(response),
-            "Content-Type: application/json\r\n"
-            "Content-Length: %ld\r\n"
-            "Connection: close\r\n"
-            "Origin: *\r\n"
-            "Access-Control-Allow-Origin: *\r\n",
-            strlen(traversed_text_json) + strlen(traversed_text));
-    sprintf(response + strlen(response), "\r\n");
-
-    sprintf(response + strlen(response), traversed_text_json, traversed_text);
-    sprintf(response + strlen(response), "\r\n");
-
+    char *response = build_response(traversed_text);
     write(client_socket, response, strlen(response));
-
-    printf("traversed text: %s\n", traversed_text);
 
     free(traversed_text);
     free(enigma_configuration.rotors);
@@ -91,8 +107,6 @@ void *handle_client(void *arg)
     free(enigma);
 
     close(client_socket);
-
-    printf("client disconnected\n");
 
     return NULL;
 }

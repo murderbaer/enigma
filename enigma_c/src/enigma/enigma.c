@@ -123,3 +123,19 @@ create_enigma_from_configuration(EnigmaConfiguration *enigma_configuration)
 
     return enigma;
 }
+
+void free_enigma(Enigma *enigma)
+{
+    free(enigma->rotors[0]->notch);
+    free(enigma->rotors[0]);
+    free(enigma->rotors[1]->notch);
+    free(enigma->rotors[1]);
+    free(enigma->rotors[2]->notch);
+    free(enigma->rotors[2]);
+    free(enigma->rotors);
+    free(enigma->plugboard->plugboard_data);
+    free(enigma->plugboard);
+    free(enigma->reflector->wiring);
+    free(enigma->reflector);
+    free(enigma);
+}

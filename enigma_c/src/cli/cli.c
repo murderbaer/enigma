@@ -116,7 +116,7 @@ void save_input(CLI_OPTIONS *options, int argc, char **argv)
         else if (string_equals(CYCLOMETER, argv[i]) ||
                  string_equals(CYCLOMETER_SHORT, argv[i]))
         {
-            Cycle *cycles = create_cycles();
+            Cycle **cycles = create_cycles();
             free(cycles);
             exit(0);
         }

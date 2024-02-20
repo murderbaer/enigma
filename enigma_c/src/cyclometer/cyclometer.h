@@ -6,6 +6,7 @@ typedef struct
     char **cycles;
     char message_key[3];
     int rotor_positions[3];
+    int rotors[3];
 } Cycle;
 
-Cycle *create_cycles(void);
+Cycle **create_cycles(void);

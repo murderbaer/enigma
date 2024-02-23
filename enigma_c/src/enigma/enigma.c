@@ -18,7 +18,7 @@
  */
 int *traverse_m3_enigma(Enigma *enigma, int *text_in_integer, int array_size)
 {
-    int *output = malloc(array_size * sizeof(int) + 1);
+    int *output = malloc(array_size * sizeof(int));
     int text[array_size];
 
     for (int i = 0; i < array_size; i++)
@@ -67,8 +67,6 @@ int *traverse_m3_enigma(Enigma *enigma, int *text_in_integer, int array_size)
     {
         output[i] = plugboard->plugboard_data[(int)output[i]];
     }
-
-    output[array_size] = '\0';
 
     free(text_in_integer);
 

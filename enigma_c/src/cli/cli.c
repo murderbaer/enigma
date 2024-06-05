@@ -39,11 +39,14 @@ void print_help(void)
     printf("\n");
     printf("  -i,  --interactive  interactive mode\n");
     printf("  -h,  --help         display this help and exit\n");
+    printf("  -s,  --server        run as server\n");
+    printf("  -c,  --cyclometer    generate all possible cycles\n");
     printf("\n");
     printf("Enigma options:\n");
     printf("  -s,  --server        run as server\n");
+    printf("  -c,  --cyclometer    generate all possible cycles of an enigma "
+           "M3 with Rotors 1 - 3\n");
     printf("  -e,  --enigma        Enigma type (M3, M4)\n");
-    printf("  -c,  --cyclometer    generate all possible cycles\n");
     printf("  -r1, --rotor-one     first rotor type (1, 2, 3, 4, 5, 6, 7)\n");
     printf("  -r2, --rotor-two     second rotor type (1, 2, 3, 4, 5, 6, 7)\n");
     printf("  -r3, --rotor-three   third rotor type (1, 2, 3, 4, 5, 6, 7)\n");
@@ -273,6 +276,7 @@ Enigma *query_input_interactive(void)
     fgets(input, INPUT_BUFFER_SIZE, stdin);
     enigma->type = enigma_type_char_to_int(input);
 
+    enigma->rotors = (Rotor **)malloc(sizeof(Rotor *) * enigma->type);
     printf("First rotor type (1, 2, 3, 4, 5, 6, 7, 8): ");
     fgets(input, INPUT_BUFFER_SIZE, stdin);
     printf("First rotor position (A, B, C, etc): ");

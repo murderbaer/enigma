@@ -6,7 +6,6 @@ services:
     ports:
       - "8081:80"
 
-
   backend:
     build: ./enigma_c
     ports:

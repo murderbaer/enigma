@@ -1,6 +1,6 @@
 # CMakeLists
 
-## Why CMakelists?
+## Why CMakeLists?
 
 At the beginning I tried to only use a singel Makefile. The handling became very clunky,
 especially after trying to create a test suite. I decided to use CMake because it is fairly

@@ -1,3 +1,3 @@
-[submodule "enigma_c/tests/libraries/unity"]
-	path = enigma_c/tests/libraries/unity
+[submodule "enigma/tests/libraries/unity"]
+	path = enigma/tests/libraries/unity
 	url = https://github.com/ThrowTheSwitch/Unity

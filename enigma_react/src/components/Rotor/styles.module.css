@@ -1,9 +1,0 @@
-.rotor {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.5rem;
-  width: 18%;
-  padding-bottom: 1rem;
-}

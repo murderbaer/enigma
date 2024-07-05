@@ -55,7 +55,7 @@ The last important thing is understanding how to rotate the rotors. As they are 
 
 Instead of rotating the array, an was offset is introduced. This offset is increased before a letter is being encrypted being applied to the letter by subtracting it.
 ```c
-int encrypted_letter = rotor[letter_index - offset]; # Mock-Code
+int encrypted_letter = rotor[letter_index - offset]; // Mock-Code
 ```
 
 
@@ -64,7 +64,7 @@ int encrypted_letter = rotor[letter_index - offset]; # Mock-Code
 The Reflector works basically the same as a Rotor but it doesn't rotate.
 
 ### Plugboard
-The plugboard is defined as pairs of char which represent the letters to switch 'AB CD'. Some checks are done so no invalid options are allowed ('AB AC' is not valid). At first an array with 26 entries is defined. Each cell holds its index as its value. If the plugboard is defined correctly, the array will be modified by switching the index values in the cells according to the definition. Example
+The plugboard is defined as pairs of char which represent the letters to switch 'AB CD'. Some checks are done so no invalid options are allowed ('AB AC' is not valid). At first an array with 26 entries is defined. Each cell holds its index as its value. If the plugboard is defined correctly, the array will be modified by switching the index values in the cells according to the definition. Example:
 ```C
 [0,1,2,3,4,5] // initially
 [1,0,3,2,4,5] // A and B switch positions and C and D too

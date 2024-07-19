@@ -48,7 +48,7 @@ Cycle get_cycle_count(int *rotor_permutation)
         }
     }
 
-    // TODO: Sort the cycles earlier
+    // Soert the cycles
     for (int i = 0; i < cycle.length; i++)
     {
         for (int j = i + 1; j < cycle.length; j++)
@@ -65,10 +65,6 @@ Cycle get_cycle_count(int *rotor_permutation)
     return cycle;
 }
 
-/**
- * @brief Print the cycle values
- * @param cycle: Cycle to print
- */
 void print_cycle(Cycle cycle)
 {
     printf("( ");
@@ -152,7 +148,12 @@ CycleOfRotorSetting *create_cycle(CycleConfiguration *cycle_configuration,
     print_cycle(cycle->cycles[1]);
     printf(" / ");
     print_cycle(cycle->cycles[2]);
-    printf("\n");
+
+    printf(": %d %d %d: ", cycle_configuration->rotor_one,
+           cycle_configuration->rotor_two, cycle_configuration->rotor_three);
+    printf("%d %d %d\n", configuration->rotors[0], configuration->rotors[1],
+           configuration->rotors[2]);
+
     free(configuration->rotor_positions);
     free(configuration->rotors);
     free(configuration);
@@ -163,7 +164,7 @@ CycleOfRotorSetting *create_cycle(CycleConfiguration *cycle_configuration,
 void create_cycles(void)
 {
     // 3 rotors and 26 possible settings for each rotor, 5 * 4 * 3 rotor
-    // permutations
+    // permutations, 2 reflectors
     CycleOfRotorSetting **cycles =
         malloc(TOTAL_CYCLES * sizeof(CycleOfRotorSetting));
     int iterations = 0;

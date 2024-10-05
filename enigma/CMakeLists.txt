@@ -7,7 +7,7 @@ project(enigma VERSION 0.1.0
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wpedantic -Werror")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wpedantic -Werror -march=native")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     include_directories(/opt/homebrew/include)
@@ -15,6 +15,8 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 endif()
 
 option(ENABLE_COVERAGE "Enable coverage reporting" OFF)
+
+
 
 if(ENABLE_COVERAGE)
     # add compiler flags

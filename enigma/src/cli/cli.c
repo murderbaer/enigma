@@ -7,7 +7,6 @@
 #include "../enigma/enigma.h"
 #include "../enigma/reflector/reflector.h"
 #include "../enigma/rotor/rotor.h"
-#include "../helper/helper.h"
 #include "../server/server.h"
 #include "cli.h"
 
@@ -126,7 +125,7 @@ void save_input(CLI_OPTIONS *options, int argc, char **argv)
         else if (string_equals(ROTOR_ONE, argv[i]) ||
                  string_equals(ROTOR_ONE_SHORT, argv[i]))
         {
-            options->rotor_one_type = argv[i + 1];
+            options->rotor_three_type = argv[i + 1];
             i++;
         }
         else if (string_equals(ROTOR_TWO, argv[i]) ||
@@ -138,7 +137,7 @@ void save_input(CLI_OPTIONS *options, int argc, char **argv)
         else if (string_equals(ROTOR_THREE, argv[i]) ||
                  string_equals(ROTOR_THREE_SHORT, argv[i]))
         {
-            options->rotor_three_type = argv[i + 1];
+            options->rotor_one_type = argv[i + 1];
             i++;
         }
         else if (string_equals(ROTOR_FOUR, argv[i]) ||
@@ -228,17 +227,20 @@ Enigma *query_input_none_interactive(CLI_OPTIONS *options)
         exit(1);
     }
 
-    enigma->type      = enigma_type_char_to_int(options->enigma_type);
-    enigma->rotors    = (Rotor **)malloc(sizeof(Rotor *) * enigma->type);
+    enigma->type   = enigma_type_char_to_int(options->enigma_type);
+    enigma->rotors = (Rotor **)malloc(sizeof(Rotor *) * enigma->type);
+
     enigma->rotors[0] = create_rotor(options->rotor_one_type[0] - '0',
-                                     options->rotor_positions[0] - 'A',
-                                     options->rotor_offsets[0] - 'A');
+                                     options->rotor_positions[2] - 'A',
+                                     options->rotor_offsets[2] - 'A');
+
     enigma->rotors[1] = create_rotor(options->rotor_two_type[0] - '0',
                                      options->rotor_positions[1] - 'A',
                                      options->rotor_offsets[1] - 'A');
+
     enigma->rotors[2] = create_rotor(options->rotor_three_type[0] - '0',
-                                     options->rotor_positions[2] - 'A',
-                                     options->rotor_offsets[2] - 'A');
+                                     options->rotor_positions[0] - 'A',
+                                     options->rotor_offsets[0] - 'A');
     if (enigma->type == M4)
     {
         enigma->rotors[3] = create_rotor(options->rotor_four_type[0] - '0',

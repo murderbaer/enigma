@@ -34,7 +34,6 @@ Cycle get_cycle_count(int *rotor_permutation)
             visited[base]            = true;
             int current              = rotor_permutation[base];
             int current_cycle_length = 1;
-            // TODO: cycles should be sorted
 
             while (current != base)
             {
@@ -48,7 +47,6 @@ Cycle get_cycle_count(int *rotor_permutation)
         }
     }
 
-    // Soert the cycles
     for (int i = 0; i < cycle.length; i++)
     {
         for (int j = i + 1; j < cycle.length; j++)
@@ -101,13 +99,12 @@ CycleOfRotorSetting *create_cycle(CycleConfiguration *cycle_configuration,
     configuration->ring_settings[0] = 0;
     configuration->ring_settings[1] = 0;
     configuration->ring_settings[2] = 0;
-    // FIXME: Rotor 1,1,1 should not be possible, values have to be unique
-    configuration->rotors[0] = rotor_permutation[0];
-    configuration->rotors[1] = rotor_permutation[1];
-    configuration->rotors[2] = rotor_permutation[2];
-    cycle->rotors[0]         = rotor_permutation[0];
-    cycle->rotors[1]         = rotor_permutation[1];
-    cycle->rotors[2]         = rotor_permutation[2];
+    configuration->rotors[0]        = rotor_permutation[0];
+    configuration->rotors[1]        = rotor_permutation[1];
+    configuration->rotors[2]        = rotor_permutation[2];
+    cycle->rotors[0]                = rotor_permutation[0];
+    cycle->rotors[1]                = rotor_permutation[1];
+    cycle->rotors[2]                = rotor_permutation[2];
 
     for (int i = 0; i < 26; i++)
     {
